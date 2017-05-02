@@ -5,33 +5,57 @@ TIM_Base_InitTypeDef tim1_conf;
 
 void init_echos(void)
 {
-	static GPIO_InitTypeDef  GPIO_InitStruct;
+	static GPIO_InitTypeDef  Right, Left, Front;
 
-	GPIO_InitStruct.Pin = GPIO_PIN_11;
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
-	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	Right.Pin = GPIO_PIN_11;
+	Right.Mode = GPIO_MODE_IT_RISING_FALLING;
+	Right.Pull = GPIO_PULLDOWN;
+	Right.Speed = GPIO_SPEED_FREQ_LOW;
+
+	Left.Pin = GPIO_PIN_13;
+	Left.Mode = GPIO_MODE_IT_RISING_FALLING;
+	Left.Pull = GPIO_PULLDOWN;
+	Left.Speed = GPIO_SPEED_FREQ_LOW;
+
+	Front.Pin = GPIO_PIN_6;
+	Front.Mode = GPIO_MODE_IT_RISING_FALLING;
+	Front.Pull = GPIO_PULLDOWN;
+	Front.Speed = GPIO_SPEED_FREQ_LOW;
 
 	__HAL_RCC_GPIOE_CLK_ENABLE();
+	__HAL_RCC_GPIOF_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
 
-	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	HAL_GPIO_Init(GPIOE, &Right);
+	HAL_GPIO_Init(GPIOA, &Left);
+	HAL_GPIO_Init(GPIOF, &Front);
 
 	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 3, 4);
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 3, 4);
+    HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
 }
 
 void init_triggers(void)
 {
-	static GPIO_InitTypeDef  GPIO_InitStruct;
+	static GPIO_InitTypeDef  Right, Left; // Front uses same GPIO group as Left
 
-	GPIO_InitStruct.Pin = GPIO_PIN_10;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	Right.Pin = GPIO_PIN_10;
+	Right.Mode = GPIO_MODE_OUTPUT_PP;
+	Right.Pull = GPIO_PULLDOWN;
+	Right.Speed = GPIO_SPEED_FREQ_LOW;
+
+	Left.Pin = GPIO_PIN_11 | GPIO_PIN_12;
+	Left.Mode = GPIO_MODE_OUTPUT_PP;
+	Left.Pull = GPIO_PULLDOWN;
+	Left.Speed = GPIO_SPEED_FREQ_LOW;
 
 	__HAL_RCC_GPIOE_CLK_ENABLE();
+	__HAL_RCC_GPIOA_CLK_ENABLE();
 
-	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	HAL_GPIO_Init(GPIOE, &Right);
+	HAL_GPIO_Init(GPIOA, &Left);
 }
 
 void init_timers() {
@@ -63,6 +87,11 @@ void EXTI15_10_IRQHandler(void)
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
 }
 
+void EXTI9_5_IRQHandler(void)
+{
+	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_6);
+}
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == GPIO_PIN_11 /*&& triggered == 1*/) {
 		state = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_11);
@@ -83,51 +112,3 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		}
 	}	
 }
-
-
-
-/*
-void init_echos(void)
-{
-	tim_init.Instance = TIM1;
-	tim_init.Channel = HAL_TIM_ACTIVE_CHANNEL_2;
-	
-	tim_init.Init.CounterMode = TIM_COUNTERMODE_UP;
-	tim_init.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;
-	tim_init.Init.Prescaler = 10;
-	tim_init.Init.Period = TIMER_PERIOD_1KHZ;
-	tim_init.Init.AutoReloadPreload = 0;
-
-	TIM_ClockConfigTypeDef tim_clk_init;
-	tim_clk_init.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-	tim_clk_init.ClockPrescaler = TIM_CLOCKPRESCALER_DIV1;
-
-	HAL_TIM_IC_Init(&tim_init);
-
-	tim1_conf.ICPolarity = TIM_ICPOLARITY_BOTHEDGE;
-	tim1_conf.ICSelection = TIM_ICSELECTION_DIRECTTI;
-	tim1_conf.Prescaler = 10;
-	tim1_conf.ICFilter = 0xFU;
-
-	HAL_TIM_IC_Start_IT(&tim_init, TIM_CHANNEL_2);
-}*/
-
-/*int get_counter() {
-	if (__HAL_TIM_GET_COUNTER(&tim_init) > 6000) {
-		HAL_TIM_Base_Stop(&tim_init);
-		return 1;
-	}
-	else return 0;
-}*/
-
-/*void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
-	state = HAL_GPIO_ReadPin(GPIOE, GPIO_PIN_11);
-
-	if (state == HIGH_STATE) {
-		__HAL_TIM_SET_COUNTER(&tim_init, 0);
-	}
-	else if (state == LOW_STATE) {
-		uint32_t count = __HAL_TIM_GET_COUNTER(&tim_init);
-		uint32_t period = tim_init.Instance->CCR1 / (TIM1_CLK*(tim_init.Init.Prescaler+1)*(tim1_conf.ICPolarity));
-	}
-}*/
