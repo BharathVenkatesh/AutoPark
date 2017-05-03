@@ -21,7 +21,7 @@ void init_pwm(void)
 	HAL_TIM_PWM_Init(&timWheels_init);
 
 	timWheels_conf.OCNPolarity = TIM_OCNPOLARITY_HIGH;
-	timWheels_conf.OCMode = TIM_OCMODE_PWM1; // Timer PWM mode 2, if Counter > Pulse, we set the output pin LOW till end of cycle
+	timWheels_conf.OCMode = TIM_OCMODE_PWM1;
 	timWheels_conf.OCNIdleState = TIM_OCIDLESTATE_RESET;
 	timWheels_conf.Pulse = 500;
 

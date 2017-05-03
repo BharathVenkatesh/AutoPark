@@ -17,6 +17,16 @@ void init_timers();
 void EXTI15_10_IRQHandler(void);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 
-//int get_counter();
+struct ECHOSPINS {
+	uint16_t left;
+	uint16_t right;
+	uint16_t front;
+} echosPins;
+
+struct TRIGGERPINS {
+	uint16_t left;
+	uint16_t right;
+	uint16_t front;
+} triggerPins;
 
 #endif
