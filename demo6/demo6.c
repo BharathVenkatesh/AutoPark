@@ -11,9 +11,9 @@
 
 // Custom user APIs needed for hardware access specific to this board:
 #include "cpu.h"
-#include "board_led.h"
 #include "pwm_hal.h"
-#include "timers.h"
+#include "sensor_hal.h"
+#include "general.h"
 
 // Custom user APIs needed for generic algorithmic libraries that are hardware-independent:
 #include "foo.h"
@@ -24,23 +24,38 @@ int main()
      Initialize the PLL, clock tree to all peripherals, flash and Systick 1 ms time reference:
      */
     cpu_init();
-    
-    /*
-     WARNING: We cannot use one of the GPIOs (PE9) from board_led since it is now being used for PWM!!
-     */
-    
-    /*
-     Initialize the PWM outputs for PE9 and PE11 which are connected to LD3 and LD7:
-     */
+
+    /* Initialization state */
+    right_triggered = 0;
+    front_triggered = 0;
+    left_triggered = 0;
+    motorState = STRAIGHT;
+
+    /* Initialize Pins definitions */
+    echosPins.right = GPIO_PIN_11;
+    echosPins.front = GPIO_PIN_6;
+    echosPins.left = GPIO_PIN_9;
+
+    triggerPins.right = GPIO_PIN_10;
+    triggerPins.front = GPIO_PIN_0;
+    triggerPins.left = GPIO_PIN_0;
+
+    extiRet.front == STRAIGHT;
+    extiRet.right == STRAIGHT;
+    extiRet.left == STRAIGHT;
+
     init_pwm();
-    //sensor_trigger_init();
-    
+    init_triggers();
+    init_echos();
+    init_timers();
     int i = 0;
-    count = 0;
-    
-    /*
-     In an infinite loop, keep toggling the LEDs in an alternating pattern:
-     */
+
+    // set_pwm(right_pwmPD6, 0.6f);
+    // set_pwm(right_pwmPD7, 0.0f);
+    // set_pwm(left_pwmPD3, 0.0f);
+    // set_pwm(left_pwmPD4, 0.6f);
+    // cpu_sw_delay_us(1000000);
+
     while(1)
     {
         /*
@@ -56,12 +71,62 @@ int main()
         }
         else
         {
-            set_pwm(right_pwmPD6, 1.0f);
+            /* Trigger sensors */
+            if (front_triggered == 0) {
+                front_triggered = 1;
+                HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_SET);
+                // Delay to simulate 10us pulse
+                cpu_sw_delay_us(10);
+                HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_RESET);
+            }
+            if (right_triggered == 0) {
+                right_triggered = 1;
+                HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_SET);
+                // Delay to simulate 10us pulse
+                cpu_sw_delay_us(10);
+                HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_RESET);
+            }
+            if (left_triggered == 0) {
+                left_triggered = 1;
+                HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_SET);
+                // Delay to simulate 10us pulse
+                cpu_sw_delay_us(10);
+                HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_RESET);
+            }
+
+            /* Car movement */
+            if (extiRet.front == STOP || extiRet.right == STOP || extiRet.left == STOP)
+                motorState = STOP;
+            if (extiRet.front == STRAIGHT && extiRet.right == STRAIGHT && extiRet.left == STRAIGHT)
+                motorState = STRAIGHT;
+
+            if (motorState == STRAIGHT) {
+                /* Make car go forward */
+                set_pwm(right_pwmPD6, 0.6f);
+                set_pwm(right_pwmPD7, 0.0f);
+                set_pwm(left_pwmPD3, 0.0f);
+                set_pwm(left_pwmPD4, 0.6f);
+                //cpu_sw_delay_us(100000);
+            }
+            else if (motorState == STOP) {
+                /* Stop car */
+                set_pwm(right_pwmPD6, 0.0f);
+                set_pwm(right_pwmPD7, 0.0f);
+                set_pwm(left_pwmPD3, 0.0f);
+                set_pwm(left_pwmPD4, 0.0f);
+                //cpu_sw_delay_us(100000);
+                //motorState = STRAIGHT;
+            }
+            /*set_pwm(right_pwmPD6, 0.6f);
             set_pwm(right_pwmPD7, 0.0f);
             set_pwm(left_pwmPD3, 0.0f);
-            set_pwm(left_pwmPD4, 1.0f);
-            
-            //set_sensor();
+            set_pwm(left_pwmPD4, 0.6f);
+            cpu_sw_delay_us(1000000);*/
+            //triggered = 1;
+            // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_SET);
+            // cpu_sw_delay_us(10);
+            // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_RESET);
+            // cpu_sw_delay_us(1000000);
         }
     }
     

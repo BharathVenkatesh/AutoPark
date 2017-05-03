@@ -18,3 +18,15 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef* htim_pwm)
 		HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 	}
 }
+
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_pwm)
+{
+	if(htim_pwm->Instance == TIM1)
+		__HAL_RCC_TIM1_CLK_ENABLE();
+
+	if(htim_pwm->Instance == TIM3)
+		__HAL_RCC_TIM3_CLK_ENABLE();
+
+	if(htim_pwm->Instance == TIM4)
+		__HAL_RCC_TIM4_CLK_ENABLE();
+}

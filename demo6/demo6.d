@@ -65,6 +65,8 @@ demo6.o: demo6.c user_include/hal_interface/cpu.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_usart.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_usart_ex.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_wwdg.h \
- user_include/hal_interface/board_led.h \
- user_include/hal_interface/pwm_hal.h user_include/hal_interface/timers.h \
- user_include/foo.h
+ user_include/hal_interface/pwm_hal.h \
+ user_include/hal_interface/sensor_hal.h \
+ user_include/hal_interface/pwm_hal.h \
+ user_include/hal_interface/general.h user_include/hal_interface/cpu.h \
+ user_include/hal_interface/general.h user_include/foo.h
