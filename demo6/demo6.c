@@ -40,9 +40,12 @@ int main()
     triggerPins.front = GPIO_PIN_0;
     triggerPins.left = GPIO_PIN_0;
 
-    extiRet.front == STRAIGHT;
-    extiRet.right == STRAIGHT;
-    extiRet.left == STRAIGHT;
+    extiRet.front = STRAIGHT;
+    extiRet.right = STRAIGHT;
+    extiRet.left = STRAIGHT;
+
+    distances.right = 0.0f;
+    distances.left = 0.0f;
 
     init_pwm();
     init_triggers();
@@ -95,10 +98,10 @@ int main()
             }
 
             /* Car movement */
-            if (extiRet.front == STOP || extiRet.right == STOP || extiRet.left == STOP)
-                motorState = STOP;
-            if (extiRet.front == STRAIGHT && extiRet.right == STRAIGHT && extiRet.left == STRAIGHT)
-                motorState = STRAIGHT;
+            // if (extiRet.front == STOP || extiRet.right == STOP || extiRet.left == STOP)
+            //     motorState = STOP;
+            // if (extiRet.front == STRAIGHT && extiRet.right == STRAIGHT && extiRet.left == STRAIGHT)
+            //     motorState = STRAIGHT;
 
             if (motorState == STRAIGHT) {
                 /* Make car go forward */
@@ -114,8 +117,22 @@ int main()
                 set_pwm(right_pwmPD7, 0.0f);
                 set_pwm(left_pwmPD3, 0.0f);
                 set_pwm(left_pwmPD4, 0.0f);
-                //cpu_sw_delay_us(100000);
-                //motorState = STRAIGHT;
+
+                if (distances.left > distances.right)
+                    motorState = LEFTD;
+                else motorState = RIGHTD;
+            }
+            else if (motorState == LEFTD) {
+                set_pwm(right_pwmPD6, 0.3f);
+                set_pwm(right_pwmPD7, 0.0f);
+                set_pwm(left_pwmPD3, 0.0f);
+                set_pwm(left_pwmPD4, 0.0f);
+            }
+            else if (motorState == RIGHTD) {
+                set_pwm(right_pwmPD6, 0.0f);
+                set_pwm(right_pwmPD7, 0.0f);
+                set_pwm(left_pwmPD3, 0.0f);
+                set_pwm(left_pwmPD4, 0.3f);
             }
             /*set_pwm(right_pwmPD6, 0.6f);
             set_pwm(right_pwmPD7, 0.0f);

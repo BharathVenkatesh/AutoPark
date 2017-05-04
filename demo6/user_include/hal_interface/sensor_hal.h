@@ -18,6 +18,7 @@ void EXTI15_10_IRQHandler(void);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered, motor_state* ret, double dist);
 
+
 struct ECHOSPINS {
 	uint16_t left;
 	uint16_t right;
@@ -37,4 +38,9 @@ struct EXTIRETURNS
 	motor_state front;
 } extiRet;
 
+struct DISTANCE 
+{
+	double right;
+	double left;
+} distances;
 #endif

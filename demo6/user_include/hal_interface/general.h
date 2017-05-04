@@ -5,7 +5,9 @@
 
 typedef enum {
 	STRAIGHT,
-	STOP
+	STOP,
+	LEFTD,
+	RIGHTD
 } motor_state;
 
 enum {RIGHT, FRONT, LEFT};
