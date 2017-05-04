@@ -204,7 +204,7 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 			/*if (distance < dist) 
 				motorState = STOP;
 			else motorState = STRAIGHT;*/
-			if (distance < dist) {
+			/*if (distance < dist) {
 				if (distances.left > distances.right)
 					motorState = LEFTD;
 				else motorState = RIGHTD;
@@ -212,13 +212,34 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 
 			if (motorState == LEFTD || motorState == RIGHTD)
 				if (distance > 100.0f)
-					motorState = STRAIGHT;
+					motorState = STRAIGHT;*/
 		}
 
-		if(GPIO_Pin == echosPins.right)
+		if(GPIO_Pin == echosPins.right) {
 			distances.right = distance;
-		else if(GPIO_Pin == echosPins.left)
+			if (firstSense.right == 0) {
+				firstSense.right = 1;
+				treshDist.right = distance;
+			}
+		}
+		else if(GPIO_Pin == echosPins.left) {
 			distances.left = distance;
+			if (firstSense.left == 0) {
+				firstSense.left = 1;
+				treshDist.left = distance;
+			}
+		}
 	}
+}
 
+void init_tesh_dist() {
+	HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_SET);
+    // Delay to simulate 10us pulse
+	cpu_sw_delay_us(10);
+    HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_RESET);
+
+    HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_SET);
+    // Delay to simulate 10us pulse
+    cpu_sw_delay_us(10);
+    HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_RESET);
 }

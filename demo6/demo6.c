@@ -47,11 +47,19 @@ int main()
     distances.right = 0.0f;
     distances.left = 0.0f;
 
+    firstSense.left = 0;
+    firstSense.right = 0;
+
+    treshDist.left = 16.0f;
+    treshDist.right = 16.0f;
+
     init_pwm();
     init_triggers();
     init_echos();
     init_timers();
     int i = 0;
+
+    init_tesh_dist();
 
     // set_pwm(right_pwmPD6, 0.6f);
     // set_pwm(right_pwmPD7, 0.0f);
@@ -109,6 +117,33 @@ int main()
                 set_pwm(right_pwmPD7, 0.0f);
                 set_pwm(left_pwmPD3, 0.0f);
                 set_pwm(left_pwmPD4, 0.6f);
+                if (distances.left > distances.right) {
+                    // Read right sensor
+                    if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
+                        treshDist.right = distances.right;
+
+                    if (distances.right < treshDist.right) {
+                        set_pwm(right_pwmPD6, 0.8f);
+                        set_pwm(left_pwmPD4, 0.6f);
+                    }
+                    else if (distances.right > treshDist.right + 0.5f) {
+                        set_pwm(right_pwmPD6, 0.6f);
+                        set_pwm(left_pwmPD4, 0.8f);
+                    }
+                } else {
+                    // Read left sensor
+                    if (distances.left > treshDist.left + 10.0f || distances.left < treshDist.left - 10.0f)
+                        treshDist.left = distances.left;
+
+                    if (distances.left < treshDist.left) {
+                        set_pwm(right_pwmPD6, 0.6f);
+                        set_pwm(left_pwmPD4, 0.8f);
+                    }
+                    else if (distances.left > treshDist.left + 0.5f) {
+                        set_pwm(right_pwmPD6, 0.8f);
+                        set_pwm(left_pwmPD4, 0.6f);
+                    }
+                }
                 //cpu_sw_delay_us(100000);
             }
             // else if (motorState == STOP) {
