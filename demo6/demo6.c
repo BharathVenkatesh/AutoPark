@@ -111,19 +111,19 @@ int main()
                 set_pwm(left_pwmPD4, 0.6f);
                 //cpu_sw_delay_us(100000);
             }
-            else if (motorState == STOP) {
-                /* Stop car */
-                set_pwm(right_pwmPD6, 0.0f);
-                set_pwm(right_pwmPD7, 0.0f);
-                set_pwm(left_pwmPD3, 0.0f);
-                set_pwm(left_pwmPD4, 0.0f);
+            // else if (motorState == STOP) {
+            //     /* Stop car */
+            //     set_pwm(right_pwmPD6, 0.0f);
+            //     set_pwm(right_pwmPD7, 0.0f);
+            //     set_pwm(left_pwmPD3, 0.0f);
+            //     set_pwm(left_pwmPD4, 0.0f);
 
-                if (distances.left > distances.right)
-                    motorState = LEFTD;
-                else motorState = RIGHTD;
-            }
+            //     if (distances.left > distances.right)
+            //         motorState = LEFTD;
+            //     else motorState = RIGHTD;
+            // }
             else if (motorState == LEFTD) {
-                set_pwm(right_pwmPD6, 0.3f);
+                set_pwm(right_pwmPD6, 0.6f);
                 set_pwm(right_pwmPD7, 0.0f);
                 set_pwm(left_pwmPD3, 0.0f);
                 set_pwm(left_pwmPD4, 0.0f);
@@ -132,7 +132,7 @@ int main()
                 set_pwm(right_pwmPD6, 0.0f);
                 set_pwm(right_pwmPD7, 0.0f);
                 set_pwm(left_pwmPD3, 0.0f);
-                set_pwm(left_pwmPD4, 0.3f);
+                set_pwm(left_pwmPD4, 0.6f);
             }
             /*set_pwm(right_pwmPD6, 0.6f);
             set_pwm(right_pwmPD7, 0.0f);

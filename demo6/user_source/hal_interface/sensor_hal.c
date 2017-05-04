@@ -201,9 +201,18 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 		double distance = period/58;
 
 		if (GPIO_Pin == echosPins.front/* && motorState == STRAIGHT*/) {
-			if (distance < dist) 
+			/*if (distance < dist) 
 				motorState = STOP;
-			else motorState = STRAIGHT;
+			else motorState = STRAIGHT;*/
+			if (distance < dist) {
+				if (distances.left > distances.right)
+					motorState = LEFTD;
+				else motorState = RIGHTD;
+			}
+
+			if (motorState == LEFTD || motorState == RIGHTD)
+				if (distance > 100.0f)
+					motorState = STRAIGHT;
 		}
 
 		if(GPIO_Pin == echosPins.right)
