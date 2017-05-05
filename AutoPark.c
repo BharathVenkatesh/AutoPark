@@ -42,10 +42,10 @@ int main()
     
     firstSense.left = 0;
     firstSense.right = 0;
-    
+
     treshDist.left = 16.0f;
     treshDist.right = 16.0f;
-    
+
     init_pwm();
     init_triggers();
     init_echos();

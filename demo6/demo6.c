@@ -14,6 +14,7 @@
 #include "pwm_hal.h"
 #include "sensor_hal.h"
 #include "general.h"
+#include "uart.h"
 
 // Custom user APIs needed for generic algorithmic libraries that are hardware-independent:
 #include "foo.h"
@@ -24,6 +25,10 @@ int main()
      Initialize the PLL, clock tree to all peripherals, flash and Systick 1 ms time reference:
      */
     cpu_init();
+
+	uart_debug_init();
+	setvbuf(stdin, NULL, _IONBF, 0);
+	setvbuf(stdout, NULL, _IONBF, 0);
 
     /* Initialization state */
     right_triggered = 0;
@@ -83,6 +88,7 @@ int main()
         }
         else
         {
+			printf("Hello!\r\n");
             /* Trigger sensors */
             if (front_triggered == 0) {
                 front_triggered = 1;

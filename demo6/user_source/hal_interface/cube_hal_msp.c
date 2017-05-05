@@ -30,3 +30,34 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_pwm)
 	if(htim_pwm->Instance == TIM4)
 		__HAL_RCC_TIM4_CLK_ENABLE();
 }
+
+void HAL_UART_MspInit(UART_HandleTypeDef *huart)
+{
+	GPIO_InitTypeDef uart;
+
+	if (huart->Instance == USART1)
+	{
+		__HAL_RCC_GPIOA_CLK_ENABLE();
+
+		// TX
+		uart.Pin = GPIO_PIN_9;
+		uart.Mode = GPIO_MODE_AF_PP;
+		uart.Pull = GPIO_PULLUP;
+		uart.Speed = GPIO_SPEED_FREQ_HIGH;
+		uart.Alternate = GPIO_AF7_USART1;
+
+		HAL_GPIO_Init(GPIOA, &uart);
+
+		// RX
+		uart.Pin = GPIO_PIN_10;
+		uart.Mode = GPIO_MODE_AF_OD;
+		uart.Pull = GPIO_NOPULL;
+		uart.Speed = GPIO_SPEED_FREQ_HIGH;
+		uart.Alternate = GPIO_AF7_USART1;
+
+		HAL_GPIO_Init(GPIOA, &uart);
+
+		__HAL_RCC_USART1_CLK_ENABLE();
+	}
+}
+
