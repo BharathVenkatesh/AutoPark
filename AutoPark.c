@@ -5,8 +5,13 @@
 	(c) Abhimanyu Ghosh, 2017
  */
 
+//#include "cpu.h"
+//#include "board_led.h"
+
 #include "cpu.h"
-#include "board_led.h"
+#include "pwm_hal.h"
+#include "sensor_hal.h"
+#include "general.h"
 
 #include "foo.h"
 
@@ -19,24 +24,101 @@ int main()
   /*
     Initialize the GPIO (General-Purpose I/O) subsystem pins that are connected to the LEDs on the board:
    */
-  board_led_init();
 
-  int i = 0;
+    echosPins.right = GPIO_PIN_11;
+    echosPins.front = GPIO_PIN_6;
+    echosPins.left = GPIO_PIN_9;
 
-  /*
-    In an infinite loop, keep toggling the LEDs in an alternating pattern:
-   */
+    triggerPins.right = GPIO_PIN_10;
+    triggerPins.front = GPIO_PIN_0;
+    triggerPins.left = GPIO_PIN_0;
+
+    extiRet.front = STRAIGHT;
+    extiRet.right = STRAIGHT;
+    extiRet.left = STRAIGHT;
+
+    distances.right = 0.0f;
+    distances.left = 0.0f;
+
+    firstSense.left = 0;
+    firstSense.right = 0;
+
+    treshDist.left = 16.0f;
+    treshDist.right = 16.0f;
+
+    init_pwm();
+    init_triggers();
+    init_echos();
+    init_timers();
+    int i = 0;
+
+    init_tesh_dist();
+
+	// Forward
+	set_pwm(right_pwmPD6, 0.6f);
+	set_pwm(right_pwmPD7, 0.0f);
+	set_pwm(left_pwmPD3, 0.0f);
+	set_pwm(left_pwmPD4, 0.6f);
+
+	cpu_sw_delay(100);
+
+	// Stop
+	set_pwm(right_pwmPD6, 0.0f);
+	set_pwm(right_pwmPD7, 0.0f);
+	set_pwm(left_pwmPD3, 0.0f);
+	set_pwm(left_pwmPD4, 0.0f);
+
+	cpu_sw_delay(10);
+/*
+	// Backwards
+	set_pwm(right_pwmPD6, 0.0f);
+	set_pwm(right_pwmPD7, 0.6f);
+	set_pwm(left_pwmPD3, 0.6f);
+	set_pwm(left_pwmPD4, 0.0f);
+
+	cpu_sw_delay(80);
+*/
+	// Left
+	set_pwm(right_pwmPD6, 0.0f);
+	set_pwm(right_pwmPD7, 0.8f);
+	set_pwm(left_pwmPD3, 0.5f);
+	set_pwm(left_pwmPD4, 0.0f);
+
+	cpu_sw_delay(80);
+
+	// Backwards
+	set_pwm(right_pwmPD6, 0.0f);
+	set_pwm(right_pwmPD7, 0.6f);
+	set_pwm(left_pwmPD3, 0.6f);
+	set_pwm(left_pwmPD4, 0.0f);
+
+	cpu_sw_delay(80);
+
+	// Right
+	set_pwm(right_pwmPD6, 0.0f);
+	set_pwm(right_pwmPD7, 0.3f);
+	set_pwm(left_pwmPD3, 0.6f);
+	set_pwm(left_pwmPD4, 0.0f);
+
+	cpu_sw_delay(80);
+
+	// Stop
+	set_pwm(right_pwmPD6, 0.0f);
+	set_pwm(right_pwmPD7, 0.0f);
+	set_pwm(left_pwmPD3, 0.0f);
+	set_pwm(left_pwmPD4, 0.0f);
+
+
+
+/*
+  //In an infinite loop, keep toggling the LEDs in an alternating pattern:
   while(1)
   {
-    /*
-      Carry out a simple unit test of foo() declared in foo.h:
-     */
+    //Carry out a simple unit test of foo() declared in foo.h:
     if(TEST_FOO(i, i+1) < 0)
     {
-      /*
-        If the above fails there is either a hardware, code or other undefined error.
-        Now we're in an undefined state regarding processor core behavior...
-       */
+        //If the above fails there is either a hardware, code or other undefined error.
+        //Now we're in an undefined state regarding processor core behavior...
       while(1); // We probably have had a radiation hit or a major malfunction on the ALU of the processor...
     }
     else
@@ -54,6 +136,6 @@ int main()
       ++i; // Increment i for the next test iteration...
     }
   }
-
+*/
   return 0;
 }
