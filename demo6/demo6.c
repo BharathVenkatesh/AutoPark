@@ -67,6 +67,7 @@ int main()
     // set_pwm(left_pwmPD4, 0.6f);
     // cpu_sw_delay_us(1000000);
 
+    motorState = STRAIGHT;
     while(1)
     {
         /*
@@ -117,58 +118,68 @@ int main()
                 set_pwm(right_pwmPD7, 0.0f);
                 set_pwm(left_pwmPD3, 0.0f);
                 set_pwm(left_pwmPD4, 0.6f);
-                if (distances.left > distances.right) {
-                    // Read right sensor
-                    if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
-                        treshDist.right = distances.right;
 
-                    if (distances.right < treshDist.right) {
-                        set_pwm(right_pwmPD6, 0.8f);
-                        set_pwm(left_pwmPD4, 0.6f);
-                    }
-                    else if (distances.right > treshDist.right + 0.5f) {
-                        set_pwm(right_pwmPD6, 0.6f);
-                        set_pwm(left_pwmPD4, 0.8f);
-                    }
-                } else {
-                    // Read left sensor
-                    if (distances.left > treshDist.left + 10.0f || distances.left < treshDist.left - 10.0f)
-                        treshDist.left = distances.left;
+                // if (distances.left > distances.right) {
+                //     // Read right sensor
+                //     if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
+                //         treshDist.right = distances.right;
 
-                    if (distances.left < treshDist.left) {
-                        set_pwm(right_pwmPD6, 0.6f);
-                        set_pwm(left_pwmPD4, 0.8f);
-                    }
-                    else if (distances.left > treshDist.left + 0.5f) {
-                        set_pwm(right_pwmPD6, 0.8f);
-                        set_pwm(left_pwmPD4, 0.6f);
-                    }
-                }
+                //     if (distances.right < treshDist.right) {
+                //         set_pwm(right_pwmPD6, 0.8f);
+                //         set_pwm(left_pwmPD4, 0.6f);
+                //     }
+                //     else if (distances.right > treshDist.right + 0.5f) {
+                //         set_pwm(right_pwmPD6, 0.6f);
+                //         set_pwm(left_pwmPD4, 0.8f);
+                //     }
+                // } else {
+                //     // Read left sensor
+                //     if (distances.left > treshDist.left + 10.0f || distances.left < treshDist.left - 10.0f)
+                //         treshDist.left = distances.left;
+
+                //     if (distances.left < treshDist.left) {
+                //         set_pwm(right_pwmPD6, 0.6f);
+                //         set_pwm(left_pwmPD4, 0.8f);
+                //     }
+                //     else if (distances.left > treshDist.left + 0.5f) {
+                //         set_pwm(right_pwmPD6, 0.8f);
+                //         set_pwm(left_pwmPD4, 0.6f);
+                //     }
+                // }
                 //cpu_sw_delay_us(100000);
             }
-            // else if (motorState == STOP) {
-            //     /* Stop car */
-            //     set_pwm(right_pwmPD6, 0.0f);
-            //     set_pwm(right_pwmPD7, 0.0f);
-            //     set_pwm(left_pwmPD3, 0.0f);
-            //     set_pwm(left_pwmPD4, 0.0f);
-
-            //     if (distances.left > distances.right)
-            //         motorState = LEFTD;
-            //     else motorState = RIGHTD;
-            // }
-            else if (motorState == LEFTD) {
-                set_pwm(right_pwmPD6, 0.6f);
-                set_pwm(right_pwmPD7, 0.0f);
-                set_pwm(left_pwmPD3, 0.0f);
-                set_pwm(left_pwmPD4, 0.0f);
-            }
-            else if (motorState == RIGHTD) {
+            else if (motorState == STOP) {
+                /* Stop car */
                 set_pwm(right_pwmPD6, 0.0f);
                 set_pwm(right_pwmPD7, 0.0f);
                 set_pwm(left_pwmPD3, 0.0f);
-                set_pwm(left_pwmPD4, 0.6f);
+                set_pwm(left_pwmPD4, 0.0f);
+
+                // if (distances.left > distances.right)
+                //     motorState = LEFTD;
+                // else motorState = RIGHTD;
             }
+            // else if (motorState == LEFTD) {
+            //     set_pwm(right_pwmPD6, 1.0f);
+            //     set_pwm(right_pwmPD7, 0.0f);
+            //     set_pwm(left_pwmPD3, 0.0f);
+            //     set_pwm(left_pwmPD4, 0.2f);
+
+            //     cpu_sw_delay(100U);
+            //     motorState = STRAIGHT;
+
+            //     // if (distances.right <= treshDist.right + 0.1f)
+            //     //     motorState = STRAIGHT;
+            // }
+            // else if (motorState == RIGHTD) {
+            //     set_pwm(right_pwmPD6, 0.2f);
+            //     set_pwm(right_pwmPD7, 0.0f);
+            //     set_pwm(left_pwmPD3, 0.0f);
+            //     set_pwm(left_pwmPD4, 1.0f);
+
+            //     if (distances.left <= treshDist.left + 0.1f)
+            //         motorState = STRAIGHT;
+            // }
             /*set_pwm(right_pwmPD6, 0.6f);
             set_pwm(right_pwmPD7, 0.0f);
             set_pwm(left_pwmPD3, 0.0f);

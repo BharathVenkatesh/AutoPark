@@ -40,14 +40,14 @@ struct EXTIRETURNS
 
 struct DISTANCE 
 {
-	double right;
-	double left;
+	float right;
+	float left;
 } distances;
 
 struct TRESHHOLD
 {
-	double left;
-	double right;
+	float left;
+	float right;
 } treshDist;
 
 struct FIRSTSENSE

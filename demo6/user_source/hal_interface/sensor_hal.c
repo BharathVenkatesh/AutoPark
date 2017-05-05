@@ -39,9 +39,9 @@ void init_echos(void)
 	HAL_GPIO_Init(GPIOF, &Left);
 	//HAL_GPIO_Init(GPIOF, &Front);
 
-	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 3, 4);
+	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 3, 3);
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 4);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 3, 3);
     HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
@@ -89,17 +89,17 @@ void init_timers() {
 		tim_init_vec[i].Channel = HAL_TIM_ACTIVE_CHANNEL_1;
 	
 		tim_init_vec[i].Init.CounterMode = TIM_COUNTERMODE_UP;
-		tim_init_vec[i].Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;
-		tim_init_vec[i].Init.Prescaler = 100;
+		tim_init_vec[i].Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+		tim_init_vec[i].Init.Prescaler = 72;
 		tim_init_vec[i].Init.Period = /*TIMER_PERIOD_1KHZ*/0xFFFF; /* max value for counter*/
 		tim_init_vec[i].Init.AutoReloadPreload = 0;
 
 		HAL_TIM_Base_Init(&tim_init_vec[i]);
 
-		tim_conf_vec[i].Prescaler = 100;
+		tim_conf_vec[i].Prescaler = 72;
 		tim_conf_vec[i].CounterMode = TIM_COUNTERMODE_UP;
 		tim_conf_vec[i].Period = /*TIMER_PERIOD_1KHZ*/0xFFFF;
-		tim_conf_vec[i].ClockDivision = TIM_CLOCKDIVISION_DIV4;
+		tim_conf_vec[i].ClockDivision = TIM_CLOCKDIVISION_DIV1;
 		tim_conf_vec[i].RepetitionCounter = 0x00; // was 0xFF;
 		tim_conf_vec[i].AutoReloadPreload = 0;
 	}
@@ -179,9 +179,9 @@ void EXTI9_5_IRQHandler(void)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == echosPins.right)
-		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered, &extiRet.right, 5.0f);
+		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered, &extiRet.right, 10.0f);
 	else if (GPIO_Pin == echosPins.front)
-		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered, &extiRet.front, 15.0f);
+		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered, &extiRet.front, 10.0f);
 	else if (GPIO_Pin == echosPins.left)
 		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered, &extiRet.left, 5.0f);
 }
@@ -194,33 +194,39 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 	}
 	else if (state == LOW_STATE) {
 		*triggered = 0;
-		HAL_TIM_Base_Stop(&tim_init);
-		double counter = __HAL_TIM_GET_COUNTER(&tim_init);
-		double period = counter/((double)(CPU_TICKS_PER_S)/(tim1_conf.Prescaler+1)/**(tim1_conf.ClockDivision+1)*/);
-		period = period*1000000;
-		double distance = period/58;
+		//HAL_TIM_Base_Stop(&tim_init);
+		float counter = __HAL_TIM_GET_COUNTER(&tim_init);
+		//float period = counter/(/*(double)(CPU_TICKS_PER_S)/(tim1_conf.Prescaler+1)*/(float)1000000f);
+		//period = period*(float)1000000.0f;
+		float distance = counter/58;
 
 		if (GPIO_Pin == echosPins.front/* && motorState == STRAIGHT*/) {
 			/*if (distance < dist) 
 				motorState = STOP;
 			else motorState = STRAIGHT;*/
-			/*if (distance < dist) {
+			if (distance <= dist) {
+			// 	motorState = STOP;
 				if (distances.left > distances.right)
 					motorState = LEFTD;
 				else motorState = RIGHTD;
 			}
+			// else motorState = STRAIGHT;
+			
 
-			if (motorState == LEFTD || motorState == RIGHTD)
+			/*if (motorState == LEFTD || motorState == RIGHTD)
 				if (distance > 100.0f)
 					motorState = STRAIGHT;*/
 		}
 
 		if(GPIO_Pin == echosPins.right) {
-			distances.right = distance;
-			if (firstSense.right == 0) {
-				firstSense.right = 1;
-				treshDist.right = distance;
-			}
+			// distances.right = distance;
+			// if (firstSense.right == 0) {
+			// 	firstSense.right = 1;
+			// 	treshDist.right = distance;
+			// }
+			if (distance < dist)
+				motorState = STOP;
+			else motorState = STRAIGHT;
 		}
 		else if(GPIO_Pin == echosPins.left) {
 			distances.left = distance;
