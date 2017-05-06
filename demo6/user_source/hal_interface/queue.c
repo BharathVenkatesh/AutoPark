@@ -58,6 +58,7 @@ void init_queue() {
    queue_init = 1;
 
    while (count < 5) {
+      printf("count = %d\n", count);
       if (front_triggered == 0) {
          count++;
          front_triggered = 1;

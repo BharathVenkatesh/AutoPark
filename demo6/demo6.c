@@ -57,6 +57,8 @@ int main()
 
     /* Initialize motor state */
     motorState = STRAIGHT;
+    searching = 1;
+    found = 0;
 
     /* Initialize pwm to control motors */
     init_pwm();
@@ -121,7 +123,20 @@ int main()
 
             if (motorState == STRAIGHT) {
                 /* Make car go forward */
+                // printf("STRAIGHT\n");
                 motors_control(0.5f, 0.0f, 0.0f, 0.5f);
+                // if (searching == 1) {
+                //    if (distances.right > treshDist.right + 10.0f) {
+                //     cpu_sw_delay(10U);
+                //     motorState = RIGHTD;
+                //     searching = 0;
+                //    }
+                // } else {
+                //     if (distances.right > treshDist.right + 25.0f)
+                //         found = 1;
+                //     else if (found == 1 && distances.right < treshDist.right - 25.0f)
+                //         motorState = STOP;
+                // }
                 adjust();
                 // set_pwm(right_pwmPD6, 0.5f);
                 // set_pwm(right_pwmPD7, 0.0f);
@@ -160,9 +175,9 @@ int main()
             else if (motorState == STOP) {
                 motors_control(0.0f,0.0f,0.0f,0.0f);
 
-                if (distances.left > distances.right)
-                    motorState = LEFTD;
-                else motorState = RIGHTD;
+                // if (distances.left > distances.right)
+                //     motorState = LEFTD;
+                // else motorState = RIGHTD;
 
                 // set_pwm(right_pwmPD6, 0.0f);
                 // set_pwm(right_pwmPD7, 0.0f);
@@ -174,10 +189,13 @@ int main()
                 // else motorState = RIGHTD;
             }
             else if (motorState == LEFTD) {
+                // printf("left\n");
                 motors_control(0.8f, 0.0f, 0.0f, 0.0f);
 
-                if (distances.right <= treshDist.right + 0.1f)
-                    motorState = STRAIGHT;
+                cpu_sw_delay(50U);
+
+                // if (distances.right <= treshDist.right + 0.1f)
+                //     motorState = STRAIGHT;
 
                 // set_pwm(right_pwmPD6, 0.8f);
                 // set_pwm(right_pwmPD7, 0.0f);
@@ -185,13 +203,18 @@ int main()
                 // set_pwm(left_pwmPD4, 0.0f);
 
                 // cpu_sw_delay(100U);
-                // motorState = STRAIGHT;
+                motorState = STRAIGHT;
             }
             else if (motorState == RIGHTD) {
+                // printf("right\n");
                 motors_control(0.0f, 0.0f, 0.0f, 0.8f);
 
-                if (distances.left <= treshDist.left + 0.1f)
-                    motorState = STRAIGHT;
+                cpu_sw_delay(50U);
+
+                motorState = STRAIGHT;
+
+                // if (distances.left <= treshDist.left + 0.01f)
+                //     motorState = STRAIGHT;
 
                 // set_pwm(right_pwmPD6, 0.0f);
                 // set_pwm(right_pwmPD7, 0.0f);

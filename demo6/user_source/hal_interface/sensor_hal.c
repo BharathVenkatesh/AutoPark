@@ -41,7 +41,7 @@ void init_echos(void)
 
 	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 3, 3);
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 3, 3);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 3);
     HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
@@ -181,7 +181,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == echosPins.right)
 		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered/*, &extiRet.right*/, 10.0f);
 	else if (GPIO_Pin == echosPins.front)
-		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered/*, &extiRet.front*/, 15.0f);
+		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered/*, &extiRet.front*/, 17.5f);
 	else if (GPIO_Pin == echosPins.left)
 		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered/*, &extiRet.left*/, 5.0f);
 }
@@ -204,21 +204,21 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 			// if (distance < dist) 
 			// 	motorState = STOP;
 			// else motorState = STRAIGHT;
-			if (queue_init == 1) {
-				insert(distance);
-			} else {
-				removeData();
-				insert(distance);
-				distance = average();
+			// if (queue_init == 1) {
+			// 	insert(distance);
+			// } else {
+			// 	removeData();
+			// 	insert(distance);
+				//distance = average();
 
 				if (distance <= dist) {
 					printf("distance: %f\n", distance);
-					motorState = STOP;
-					// if (distances.left > distances.right)
-					// 	motorState = LEFTD;
-					// else motorState = RIGHTD;
+					//motorState = STOP;
+					if (distances.left > distances.right)
+						motorState = LEFTD;
+					else motorState = RIGHTD;
 				}
-			}
+			// }
 			// else motorState = STRAIGHT;
 
 			/*if (motorState == LEFTD || motorState == RIGHTD)
@@ -227,6 +227,7 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 		}
 		else if(GPIO_Pin == echosPins.right) {
 			distances.right = distance;	
+			printf("distance r: %f\n", distance);
 			if (firstSense.right == 0) {
 				firstSense.right = 1;
 				treshDist.right = distance;

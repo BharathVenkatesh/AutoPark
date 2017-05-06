@@ -17,5 +17,7 @@ motor_state motorState;
 int right_triggered;
 int front_triggered;
 int left_triggered;
+int searching;
+int found;
 
 #endif

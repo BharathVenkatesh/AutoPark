@@ -62,13 +62,13 @@ void adjust() {
         if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
             treshDist.right = distances.right;
 
-        if (distances.right < treshDist.right) {
-            set_pwm(right_pwmPD6, 0.7f);
+        if (distances.right < treshDist.right - 0.25f) {
+            set_pwm(right_pwmPD6, 0.6f);
             set_pwm(left_pwmPD4, 0.5f);
         }
-        else if (distances.right > treshDist.right + 0.5f) {
+        else if (distances.right > treshDist.right + 0.25f) {
             set_pwm(right_pwmPD6, 0.5f);
-            set_pwm(left_pwmPD4, 0.7f);
+            set_pwm(left_pwmPD4, 0.6f);
         }
     } else {
         // Read left sen
@@ -77,10 +77,10 @@ void adjust() {
 
         if (distances.left < treshDist.left) {
             set_pwm(right_pwmPD6, 0.5f);
-            set_pwm(left_pwmPD4, 0.7f);
+            set_pwm(left_pwmPD4, 0.6f);
         }
         else if (distances.left > treshDist.left + 0.5f) {
-            set_pwm(right_pwmPD6, 0.7f);
+            set_pwm(right_pwmPD6, 0.6f);
             set_pwm(left_pwmPD4, 0.5f);
         }
     }
