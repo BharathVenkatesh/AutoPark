@@ -2,6 +2,7 @@
 #define PWM_HAL_H_	1
 
 #include "hal_common_includes.h"
+#include "sensor_hal.h"
 
 #define TIMER_PERIOD_1KHZ	6545
 
@@ -14,5 +15,7 @@ typedef enum {
 
 void init_pwm(void);
 void set_pwm(pwm_channel ch, float duty);
+void adjust();
+void motors_control(float PD6, float PD7, float PD3, float PD4);
 
 #endif

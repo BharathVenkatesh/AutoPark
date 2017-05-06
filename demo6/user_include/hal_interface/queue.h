@@ -11,17 +11,12 @@
 int queue_init;
 
 float peek();
-
 bool isEmpty();
-
 bool isFull();
-
 int size();
-
 void insert(float data);
-
 float removeData();
-
 void init_queue();
-
 float average();
+
+#endif

@@ -1,5 +1,4 @@
 #include "sensor_hal.h"
-#include "queue.h"
 
 // TIM_HandleTypeDef right_tim_init;
 // TIM_Base_InitTypeDef right_tim1_conf;
@@ -105,6 +104,10 @@ void init_timers() {
 		tim_conf_vec[i].AutoReloadPreload = 0;
 	}
 
+	TIM_ClockConfigTypeDef tim_clk_init;
+	tim_clk_init.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+	tim_clk_init.ClockPrescaler = TIM_CLOCKPRESCALER_DIV1;
+
 	/* Initialize right sensor's timer */
 	// right_tim_init.Instance = TIM1;
 	// right_tim_init.Channel = HAL_TIM_ACTIVE_CHANNEL_1;
@@ -114,10 +117,6 @@ void init_timers() {
 	// right_tim_init.Init.Prescaler = 100;
 	// right_tim_init.Init.Period = /*TIMER_PERIOD_1KHZ*/0xFFFF; /* max value for counter*/
 	// right_tim_init.Init.AutoReloadPreload = 0;
-
-	TIM_ClockConfigTypeDef tim_clk_init;
-	tim_clk_init.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-	tim_clk_init.ClockPrescaler = TIM_CLOCKPRESCALER_DIV1;
 
 	// HAL_TIM_Base_Init(&right_tim_init);
 
@@ -180,14 +179,14 @@ void EXTI9_5_IRQHandler(void)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == echosPins.right)
-		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered, &extiRet.right, 10.0f);
+		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered/*, &extiRet.right*/, 10.0f);
 	else if (GPIO_Pin == echosPins.front)
-		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered, &extiRet.front, 15.0f);
+		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered/*, &extiRet.front*/, 15.0f);
 	else if (GPIO_Pin == echosPins.left)
-		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered, &extiRet.left, 5.0f);
+		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered/*, &extiRet.left*/, 5.0f);
 }
 
-void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered, motor_state* ret, double dist) {
+void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered/*, motor_state* ret*/, double dist) {
 	state = HAL_GPIO_ReadPin(GPIO, GPIO_Pin);
 	if (state == HIGH_STATE) {
 		HAL_TIM_Base_Start(&tim_init);
@@ -205,7 +204,7 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 			// if (distance < dist) 
 			// 	motorState = STOP;
 			// else motorState = STRAIGHT;
-			if (init_queue == 1) {
+			if (queue_init == 1) {
 				insert(distance);
 			} else {
 				removeData();
@@ -226,7 +225,6 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 				if (distance > 100.0f)
 					motorState = STRAIGHT;*/
 		}
-
 		else if(GPIO_Pin == echosPins.right) {
 			distances.right = distance;	
 			if (firstSense.right == 0) {
@@ -251,13 +249,25 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 }
 
 void init_tresh_dist() {
-	HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_SET);
+	trigger_sensor(GPIOE, triggerPins.right);
+
+	trigger_sensor(GPIOB, triggerPins.left);
+
+	// HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_SET);
+ //    // Delay to simulate 10us pulse
+	// cpu_sw_delay_us(10);
+ //    HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_RESET);
+
+ //    HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_SET);
+ //    // Delay to simulate 10us pulse
+ //    cpu_sw_delay_us(10);
+ //    HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_RESET);
+}
+
+void trigger_sensor(GPIO_TypeDef* GPIO, uint16_t GPIO_Pin) {
+	HAL_GPIO_WritePin(GPIO, GPIO_Pin, GPIO_PIN_SET);
     // Delay to simulate 10us pulse
 	cpu_sw_delay_us(10);
-    HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(GPIO, GPIO_Pin, GPIO_PIN_RESET);
 
-    HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_SET);
-    // Delay to simulate 10us pulse
-    cpu_sw_delay_us(10);
-    HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_RESET);
 }

@@ -1,10 +1,3 @@
-/*
-	This is the main user software application
-	In this case, we have below the code necessary to use PWM with LEDs on an STM32 F3 Discovery PCB.
- 
-	(c) Abhimanyu Ghosh, 2017
- */
-
 // C standard include(s):
 #include <math.h>
 #include <stdio.h>
@@ -15,31 +8,15 @@
 #include "sensor_hal.h"
 #include "general.h"
 #include "uart.h"
+#include "queue.h"
 
 // Custom user APIs needed for generic algorithmic libraries that are hardware-independent:
 #include "foo.h"
 
-int main()
-{
-    /*
-     Initialize the PLL, clock tree to all peripherals, flash and Systick 1 ms time reference:
-     */
-    cpu_init();
-    uart_debug_init();
-
-    setvbuf(stdin,NULL,_IONBF,0);   // Sets stdin in unbuffered mode (normal for usart com)
-    setvbuf(stdout,NULL,_IONBF,0);  // Sets stdin in unbuffered mode (normal for usart com)
-
-    printf("Hello World!!\r\n");
-
-    /* Initialization state */
+void init_sensors_values() {
     right_triggered = 0;
     front_triggered = 0;
     left_triggered = 0;
-
-    extiRet.front = STRAIGHT;
-    extiRet.right = STRAIGHT;
-    extiRet.left = STRAIGHT;
 
     distances.right = 0.0f;
     distances.left = 0.0f;
@@ -50,9 +27,12 @@ int main()
     treshDist.left = 16.0f;
     treshDist.right = 16.0f;
 
-    motorState = STRAIGHT;
+    // extiRet.front = STRAIGHT;
+    // extiRet.right = STRAIGHT;
+    // extiRet.left = STRAIGHT;
+}
 
-    /* Initialize Pins definitions */
+void init_pins() {
     echosPins.right = GPIO_PIN_11;
     echosPins.front = GPIO_PIN_6;
     echosPins.left = GPIO_PIN_9;
@@ -60,20 +40,37 @@ int main()
     triggerPins.right = GPIO_PIN_10;
     triggerPins.front = GPIO_PIN_0;
     triggerPins.left = GPIO_PIN_0;
+}
 
+int main()
+{
+    /*
+     Initialize the PLL, clock tree to all peripherals, flash and Systick 1 ms time reference:
+     */
+    cpu_init();
+
+    /* Debug uart port initialization and test */
+    uart_debug_init();
+    setvbuf(stdin,NULL,_IONBF,0);   // Sets stdin in unbuffered mode (normal for usart com)
+    setvbuf(stdout,NULL,_IONBF,0);  // Sets stdin in unbuffered mode (normal for usart com)
+    printf("Hello World!!\r\n");
+
+    /* Initialize motor state */
+    motorState = STRAIGHT;
+
+    /* Initialize pwm to control motors */
     init_pwm();
+
+    /* Initialize sensors */
+    init_pins();
+    init_sensors_values();
     init_triggers();
     init_echos();
     init_timers();
-    int i = 0;
-
     init_tresh_dist();
+    init_queue(); // Initialize sensor value averaging
 
-    // set_pwm(right_pwmPD6, 0.6f);
-    // set_pwm(right_pwmPD7, 0.0f);
-    // set_pwm(left_pwmPD3, 0.0f);
-    // set_pwm(left_pwmPD4, 0.6f);
-    // cpu_sw_delay_us(1000000);
+    int i = 0;
 
     while(1)
     {
@@ -93,24 +90,27 @@ int main()
             /* Trigger sensors */
             if (front_triggered == 0) {
                 front_triggered = 1;
-                HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_SET);
-                // Delay to simulate 10us pulse
-                cpu_sw_delay_us(10);
-                HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_RESET);
+                trigger_sensor(GPIOD, triggerPins.front);
+                // HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_SET);
+                // // Delay to simulate 10us pulse
+                // cpu_sw_delay_us(10);
+                // HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_RESET);
             }
             if (right_triggered == 0) {
                 right_triggered = 1;
-                HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_SET);
-                // Delay to simulate 10us pulse
-                cpu_sw_delay_us(10);
-                HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_RESET);
+                trigger_sensor(GPIOE, triggerPins.right);
+                // HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_SET);
+                // // Delay to simulate 10us pulse
+                // cpu_sw_delay_us(10);
+                // HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_RESET);
             }
             if (left_triggered == 0) {
                 left_triggered = 1;
-                HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_SET);
-                // Delay to simulate 10us pulse
-                cpu_sw_delay_us(10);
-                HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_RESET);
+                trigger_sensor(GPIOB, triggerPins.left);
+                // HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_SET);
+                // // Delay to simulate 10us pulse
+                // cpu_sw_delay_us(10);
+                // HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_RESET);
             }
 
             /* Car movement */
@@ -121,89 +121,85 @@ int main()
 
             if (motorState == STRAIGHT) {
                 /* Make car go forward */
-                set_pwm(right_pwmPD6, 0.5f);
-                set_pwm(right_pwmPD7, 0.0f);
-                set_pwm(left_pwmPD3, 0.0f);
-                set_pwm(left_pwmPD4, 0.5f);
+                motors_control(0.5f, 0.0f, 0.0f, 0.5f);
+                adjust();
+                // set_pwm(right_pwmPD6, 0.5f);
+                // set_pwm(right_pwmPD7, 0.0f);
+                // set_pwm(left_pwmPD3, 0.0f);
+                // set_pwm(left_pwmPD4, 0.5f);
 
-                if (distances.left > distances.right) {
-                    // Read right sensor
-                    if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
-                        treshDist.right = distances.right;
+                // if (distances.left > distances.right) {
+                //     // Read right sensor
+                //     if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
+                //         treshDist.right = distances.right;
 
-                    if (distances.right < treshDist.right) {
-                        set_pwm(right_pwmPD6, 0.7f);
-                        set_pwm(left_pwmPD4, 0.5f);
-                    }
-                    else if (distances.right > treshDist.right + 0.5f) {
-                        set_pwm(right_pwmPD6, 0.5f);
-                        set_pwm(left_pwmPD4, 0.7f);
-                    }
-                } else {
-                    // Read left sen
-                    if (distances.left > treshDist.left + 10.0f || distances.left < treshDist.left - 10.0f)
-                        treshDist.left = distances.left;
+                //     if (distances.right < treshDist.right) {
+                //         set_pwm(right_pwmPD6, 0.7f);
+                //         set_pwm(left_pwmPD4, 0.5f);
+                //     }
+                //     else if (distances.right > treshDist.right + 0.5f) {
+                //         set_pwm(right_pwmPD6, 0.5f);
+                //         set_pwm(left_pwmPD4, 0.7f);
+                //     }
+                // } else {
+                //     // Read left sen
+                //     if (distances.left > treshDist.left + 10.0f || distances.left < treshDist.left - 10.0f)
+                //         treshDist.left = distances.left;
 
-                    if (distances.left < treshDist.left) {
-                        set_pwm(right_pwmPD6, 0.5f);
-                        set_pwm(left_pwmPD4, 0.7f);
-                    }
-                    else if (distances.left > treshDist.left + 0.5f) {
-                        set_pwm(right_pwmPD6, 0.7f);
-                        set_pwm(left_pwmPD4, 0.5f);
-                    }
-                }
+                //     if (distances.left < treshDist.left) {
+                //         set_pwm(right_pwmPD6, 0.5f);
+                //         set_pwm(left_pwmPD4, 0.7f);
+                //     }
+                //     else if (distances.left > treshDist.left + 0.5f) {
+                //         set_pwm(right_pwmPD6, 0.7f);
+                //         set_pwm(left_pwmPD4, 0.5f);
+                //     }
+                // }
                 //cpu_sw_delay_us(100000);
             }
             else if (motorState == STOP) {
-                /* Stop car */
-                set_pwm(right_pwmPD6, 0.0f);
-                set_pwm(right_pwmPD7, 0.0f);
-                set_pwm(left_pwmPD3, 0.0f);
-                set_pwm(left_pwmPD4, 0.0f);
+                motors_control(0.0f,0.0f,0.0f,0.0f);
 
                 if (distances.left > distances.right)
                     motorState = LEFTD;
                 else motorState = RIGHTD;
+
+                // set_pwm(right_pwmPD6, 0.0f);
+                // set_pwm(right_pwmPD7, 0.0f);
+                // set_pwm(left_pwmPD3, 0.0f);
+                // set_pwm(left_pwmPD4, 0.0f);
 
                 // if (distances.left > distances.right)
                 //     motorState = LEFTD;
                 // else motorState = RIGHTD;
             }
             else if (motorState == LEFTD) {
-                set_pwm(right_pwmPD6, 0.8f);
-                set_pwm(right_pwmPD7, 0.0f);
-                set_pwm(left_pwmPD3, 0.0f);
-                set_pwm(left_pwmPD4, 0.0f);
-
-                // cpu_sw_delay(100U);
-                // motorState = STRAIGHT;
+                motors_control(0.8f, 0.0f, 0.0f, 0.0f);
 
                 if (distances.right <= treshDist.right + 0.1f)
                     motorState = STRAIGHT;
+
+                // set_pwm(right_pwmPD6, 0.8f);
+                // set_pwm(right_pwmPD7, 0.0f);
+                // set_pwm(left_pwmPD3, 0.0f);
+                // set_pwm(left_pwmPD4, 0.0f);
+
+                // cpu_sw_delay(100U);
+                // motorState = STRAIGHT;
             }
             else if (motorState == RIGHTD) {
-                set_pwm(right_pwmPD6, 0.0f);
-                set_pwm(right_pwmPD7, 0.0f);
-                set_pwm(left_pwmPD3, 0.0f);
-                set_pwm(left_pwmPD4, 0.8f);
+                motors_control(0.0f, 0.0f, 0.0f, 0.8f);
 
                 if (distances.left <= treshDist.left + 0.1f)
                     motorState = STRAIGHT;
+
+                // set_pwm(right_pwmPD6, 0.0f);
+                // set_pwm(right_pwmPD7, 0.0f);
+                // set_pwm(left_pwmPD3, 0.0f);
+                // set_pwm(left_pwmPD4, 0.8f);
             }
-            /*set_pwm(right_pwmPD6, 0.6f);
-            set_pwm(right_pwmPD7, 0.0f);
-            set_pwm(left_pwmPD3, 0.0f);
-            set_pwm(left_pwmPD4, 0.6f);
-            cpu_sw_delay_us(1000000);*/
-            //triggered = 1;
-            // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_SET);
-            // cpu_sw_delay_us(10);
-            // HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_RESET);
-            // cpu_sw_delay_us(1000000);
         }
     }
-    
     return 0;
 }
 

@@ -65,4 +65,8 @@ user_source/hal_interface/pwm_hal.o: user_source/hal_interface/pwm_hal.c \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_uart_ex.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_usart.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_usart_ex.h \
- ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_wwdg.h
+ ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_wwdg.h \
+ user_include/hal_interface/sensor_hal.h \
+ user_include/hal_interface/pwm_hal.h \
+ user_include/hal_interface/general.h user_include/hal_interface/cpu.h \
+ user_include/hal_interface/queue.h

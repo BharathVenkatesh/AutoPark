@@ -6,6 +6,7 @@ float intArray[MAX];
 int front = 0;
 int rear = -1;
 int itemCount = 0;
+float sum = 0;
 
 float peek() {
    return intArray[front];
@@ -31,6 +32,8 @@ void insert(float data) {
          rear = -1;            
       }       
 
+      sum += data;
+
       intArray[++rear] = data;
       itemCount++;
    }
@@ -43,6 +46,8 @@ float removeData() {
       front = 0;
    }
 	
+   sum -= data;
+
    itemCount--;
    return data;
 }
@@ -50,22 +55,23 @@ float removeData() {
 void init_queue() {
    int count = 0;
 
-   init_queue = 1;
+   queue_init = 1;
 
    while (count < 5) {
       if (front_triggered == 0) {
          count++;
          front_triggered = 1;
-         HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_SET);
-         // Delay to simulate 10us pulse
-         cpu_sw_delay_us(10);
-         HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_RESET);
+
+         trigger_sensor(GPIOD, triggerPins.front);
+         // HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_SET);
+         // // Delay to simulate 10us pulse
+         // cpu_sw_delay_us(10);
+         // HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_RESET);
       }
    }
-
-   init_queue = 0;
+   queue_init = 0;
 }
 
 float average() {
-
+   return sum/MAX;
 }

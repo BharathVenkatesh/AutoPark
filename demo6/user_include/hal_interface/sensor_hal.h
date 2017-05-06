@@ -4,6 +4,7 @@
 #include "hal_common_includes.h"
 #include "pwm_hal.h"
 #include "general.h"
+#include "queue.h"
 
 #define TIMER_PERIOD_1KHZ	6545
 #define LOW_STATE GPIO_PIN_RESET
@@ -16,8 +17,9 @@ void init_triggers(void);
 void init_timers();
 void EXTI15_10_IRQHandler(void);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
-void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered, motor_state* ret, double dist);
+void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered/*, motor_state* ret*/, double dist);
 void init_tresh_dist();
+void trigger_sensor(GPIO_TypeDef* GPIO, uint16_t GPIO_Pin);
 
 struct ECHOSPINS {
 	uint16_t left;
@@ -30,13 +32,6 @@ struct TRIGGERPINS {
 	uint16_t right;
 	uint16_t front;
 } triggerPins;
-
-struct EXTIRETURNS
-{
-	motor_state left;
-	motor_state right;
-	motor_state front;
-} extiRet;
 
 struct DISTANCE 
 {
@@ -55,4 +50,12 @@ struct FIRSTSENSE
 	int left;
 	int right;
 } firstSense;
+
+// struct EXTIRETURNS
+// {
+// 	motor_state left;
+// 	motor_state right;
+// 	motor_state front;
+// } extiRet;
+
 #endif
