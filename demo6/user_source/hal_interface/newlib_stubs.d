@@ -1,4 +1,6 @@
-demo6.o: demo6.c user_include/hal_interface/cpu.h \
+user_source/hal_interface/newlib_stubs.o: \
+ user_source/hal_interface/newlib_stubs.c user_include/uart.h \
+ user_include/hal_interface/uart_hal.h \
  user_include/hal_interface/hal_common_includes.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_conf.h \
@@ -64,10 +66,4 @@ demo6.o: demo6.c user_include/hal_interface/cpu.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_uart_ex.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_usart.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_usart_ex.h \
- ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_wwdg.h \
- user_include/hal_interface/pwm_hal.h \
- user_include/hal_interface/sensor_hal.h \
- user_include/hal_interface/pwm_hal.h \
- user_include/hal_interface/general.h user_include/hal_interface/cpu.h \
- user_include/hal_interface/general.h user_include/uart.h \
- user_include/hal_interface/uart_hal.h user_include/foo.h
+ ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_wwdg.h

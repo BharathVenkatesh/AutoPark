@@ -1,12 +1,12 @@
 # Based on https://github.com/sergioprado/bare-metal-arm/blob/master/Makefile
 # But heavily-edited for our purposes:
 # (c) Abhimanyu Ghosh, 2016
-TOOLCHAIN_ROOT=../../../../../gcc-arm-none-eabi-5_4-2016q3
+TOOLCHAIN_ROOT=../../../../gcc-arm-none-eabi-5_4-2016q3
 TOOLCHAIN=$(TOOLCHAIN_ROOT)/bin/
 PREFIX=$(TOOLCHAIN)/arm-none-eabi-
 
 ARCHFLAGS=-mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -I$(TOOLCHAIN_ROOT)/arm-none-eabi/include -fsingle-precision-constant 
-CFLAGS=-nostdlib -I../../../arctic_awesomeness/arch/stm32/f3/inc/ -I../../../arctic_awesomeness/arch/stm32/f3/inc/CMSIS -I../../../arctic_awesomeness/arch/stm32/f3/inc/Legacy -I./user_include -I./user_include/hal_interface -g -O2 -Wall
+CFLAGS=-nostdlib -I../../arctic_awesomeness/arch/stm32/f3/inc/ -I../../arctic_awesomeness/arch/stm32/f3/inc/CMSIS -I../../arctic_awesomeness/arch/stm32/f3/inc/Legacy -I./user_include -I./user_include/hal_interface -g -O2 -Wall
 LDFLAGS=--specs=nosys.specs -Wl,--gc-sections,-Map,$(TARGET).map,-Tlinker.ld
 LDFLAGS+=$(ARCHFLAGS)
 

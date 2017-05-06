@@ -1,4 +1,5 @@
 #include "sensor_hal.h"
+#include "queue.h"
 
 // TIM_HandleTypeDef right_tim_init;
 // TIM_Base_InitTypeDef right_tim1_conf;
@@ -181,7 +182,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == echosPins.right)
 		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered, &extiRet.right, 10.0f);
 	else if (GPIO_Pin == echosPins.front)
-		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered, &extiRet.front, 10.0f);
+		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered, &extiRet.front, 15.0f);
 	else if (GPIO_Pin == echosPins.left)
 		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered, &extiRet.left, 5.0f);
 }
@@ -201,32 +202,40 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 		float distance = counter/58;
 
 		if (GPIO_Pin == echosPins.front/* && motorState == STRAIGHT*/) {
-			/*if (distance < dist) 
-				motorState = STOP;
-			else motorState = STRAIGHT;*/
-			if (distance <= dist) {
+			// if (distance < dist) 
 			// 	motorState = STOP;
-				if (distances.left > distances.right)
-					motorState = LEFTD;
-				else motorState = RIGHTD;
+			// else motorState = STRAIGHT;
+			if (init_queue == 1) {
+				insert(distance);
+			} else {
+				removeData();
+				insert(distance);
+				distance = average();
+
+				if (distance <= dist) {
+					printf("distance: %f\n", distance);
+					motorState = STOP;
+					// if (distances.left > distances.right)
+					// 	motorState = LEFTD;
+					// else motorState = RIGHTD;
+				}
 			}
 			// else motorState = STRAIGHT;
-			
 
 			/*if (motorState == LEFTD || motorState == RIGHTD)
 				if (distance > 100.0f)
 					motorState = STRAIGHT;*/
 		}
 
-		if(GPIO_Pin == echosPins.right) {
-			// distances.right = distance;
-			// if (firstSense.right == 0) {
-			// 	firstSense.right = 1;
-			// 	treshDist.right = distance;
-			// }
-			if (distance < dist)
-				motorState = STOP;
-			else motorState = STRAIGHT;
+		else if(GPIO_Pin == echosPins.right) {
+			distances.right = distance;	
+			if (firstSense.right == 0) {
+				firstSense.right = 1;
+				treshDist.right = distance;
+			}
+			// if (distance < dist)
+			// 	motorState = STOP;
+			// else motorState = STRAIGHT;
 		}
 		else if(GPIO_Pin == echosPins.left) {
 			distances.left = distance;
@@ -234,11 +243,14 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 				firstSense.left = 1;
 				treshDist.left = distance;
 			}
+			// if (distance < dist)
+			// 	motorState = STOP;
+			// else motorState = STRAIGHT;
 		}
 	}
 }
 
-void init_tesh_dist() {
+void init_tresh_dist() {
 	HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_SET);
     // Delay to simulate 10us pulse
 	cpu_sw_delay_us(10);

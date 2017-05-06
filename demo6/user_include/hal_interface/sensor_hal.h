@@ -17,7 +17,7 @@ void init_timers();
 void EXTI15_10_IRQHandler(void);
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered, motor_state* ret, double dist);
-void init_tesh_dist();
+void init_tresh_dist();
 
 struct ECHOSPINS {
 	uint16_t left;
