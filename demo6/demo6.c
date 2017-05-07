@@ -145,11 +145,11 @@ int main()
                 //         encoders_distances.right = 0;
                 //         encoders_distances.left = 0;
                 //     }
-                //     else if ((found == 1) && (distances.right <= treshDist.right + 5.0f) && (encoders_distances.right >= 50 || encoders_distances.left >= 50))
+                //     else if ((found == 1) && (distances.right <= wall + 5.0f) && (encoders_distances.right >= 100 || encoders_distances.left >= 100))
                 //         motorState = STOP;
                 // }
                 else {
-                    if (encoders_distances.left >= 250 && encoders_distances.right >= 250)
+                    if (encoders_distances.left >= 250 && encoders_distances.right >= 250 && distances.right < 25.0f)
                         motorState = STOP;
                 }
                 
