@@ -7,7 +7,7 @@
 #define HIGH_STATE GPIO_PIN_SET
 
 void init_encoders(void);
-void EXTI2_TSC_IRQHandler(void);
+void EXTI4_IRQHandler(void);
 void EXTI3_IRQHandler(void);
 void encoders_Callback(uint16_t GPIO_Pin);
 
@@ -21,5 +21,7 @@ struct ENCODERDISTANCE
 	long right;
 	long left;
 } encoders_distances;
+
+long enc_diff;
 
 #endif
