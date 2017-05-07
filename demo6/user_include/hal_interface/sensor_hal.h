@@ -5,6 +5,7 @@
 #include "pwm_hal.h"
 #include "general.h"
 #include "queue.h"
+#include "encoder_hal.h"
 
 #define TIMER_PERIOD_1KHZ	6545
 #define LOW_STATE GPIO_PIN_RESET

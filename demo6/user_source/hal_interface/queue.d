@@ -69,4 +69,5 @@ user_source/hal_interface/queue.o: user_source/hal_interface/queue.c \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_wwdg.h \
  user_include/hal_interface/pwm_hal.h \
  user_include/hal_interface/general.h user_include/hal_interface/cpu.h \
- user_include/hal_interface/queue.h
+ user_include/hal_interface/queue.h \
+ user_include/hal_interface/encoder_hal.h

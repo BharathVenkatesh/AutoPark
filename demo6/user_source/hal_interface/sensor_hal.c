@@ -184,6 +184,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered/*, &extiRet.front*/, 17.5f);
 	else if (GPIO_Pin == echosPins.left)
 		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered/*, &extiRet.left*/, 5.0f);
+	else if (GPIO_Pin == encodersPins.right) {
+		printf("Here\n");
+		encoders_Callback(encodersPins.right);
+	}
+	else if (GPIO_Pin == encodersPins.left)
+		encoders_Callback(encodersPins.left);
 }
 
 void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered/*, motor_state* ret*/, double dist) {
@@ -212,11 +218,11 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 				//distance = average();
 
 				if (distance <= dist) {
-					printf("distance: %f\n", distance);
+					//printf("distance: %f\n", distance);
 					//motorState = STOP;
 					if (distances.left > distances.right)
 						motorState = LEFTD;
-					else motorState = RIGHTD;
+					// else motorState = RIGHTD;
 				}
 			// }
 			// else motorState = STRAIGHT;
@@ -227,7 +233,7 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 		}
 		else if(GPIO_Pin == echosPins.right) {
 			distances.right = distance;	
-			printf("distance r: %f\n", distance);
+			//printf("distance r: %f\n", distance);
 			if (firstSense.right == 0) {
 				firstSense.right = 1;
 				treshDist.right = distance;
