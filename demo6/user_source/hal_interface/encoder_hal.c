@@ -30,7 +30,7 @@ void encoders_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == encodersPins.right) {
 		// if (HAL_GPIO_ReadPin(GPIOA, GPIO_Pin) == HIGH_STATE) {
 			++encoders_distances.right;
-			printf("%ld\n", encoders_distances.right);
+			//printf("%ld\n", encoders_distances.right);
 		// }
 	}
 	else if (GPIO_Pin == encodersPins.left)

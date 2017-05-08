@@ -17,7 +17,7 @@ Archive member included to satisfy reference by file (symbol)
 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-__atexit.o)
                               /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-atexit.o) (__register_exitproc)
 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
-                              user_source/hal_interface/encoder_hal.o (printf)
+                              user_source/hal_interface/queue.o (printf)
 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
                               demo6.o (puts)
 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reent.o)
@@ -960,7 +960,6 @@ Discarded input sections
  .text          0x0000000000000000       0x14 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
  .data          0x0000000000000000        0x0 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
  .bss           0x0000000000000000        0x0 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
- .text          0x0000000000000000       0x84 demo6.o
  .data          0x0000000000000000        0x0 demo6.o
  .bss           0x0000000000000000        0x0 demo6.o
  .data          0x0000000000000000        0x0 user_source/foo.o
@@ -1000,6 +999,10 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
  .text._printf_r
                 0x0000000000000000       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
+ .text.printf   0x0000000000000000       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
+ .debug_frame   0x0000000000000000       0x74 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
@@ -1018,14 +1021,34 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+ .text._vfprintf_r
+                0x0000000000000000     0x1728 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
  .text.vfprintf
                 0x0000000000000000       0x18 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+ .text.__sbprintf
+                0x0000000000000000       0x6c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+ .rodata.zeroes.7273
+                0x0000000000000000       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+ .rodata.str1.4
+                0x0000000000000000       0x42 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+ .rodata.blanks.7272
+                0x0000000000000000       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+ .debug_frame   0x0000000000000000       0x88 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
+ .text.quorem   0x0000000000000000      0x128 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
+ .text._dtoa_r  0x0000000000000000      0xe34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
+ .rodata.str1.4
+                0x0000000000000000       0x12 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
+ .debug_frame   0x0000000000000000       0x88 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
@@ -1065,8 +1088,13 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
  .text.__localeconv_l
                 0x0000000000000000        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
+ .text._localeconv_r
+                0x0000000000000000       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
  .text.localeconv
                 0x0000000000000000       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
+ .debug_frame   0x0000000000000000       0x40 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
@@ -1090,9 +1118,27 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text._Balloc  0x0000000000000000       0x4c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text._Bfree   0x0000000000000000       0x14 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__multadd
+                0x0000000000000000       0x80 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .text.__s2b    0x0000000000000000       0x98 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__hi0bits
+                0x0000000000000000       0x40 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__lo0bits
+                0x0000000000000000       0x5c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__i2b    0x0000000000000000       0x14 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__multiply
+                0x0000000000000000      0x130 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__pow5mult
+                0x0000000000000000       0xa0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__lshift
+                0x0000000000000000       0xb0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__mcmp   0x0000000000000000       0x44 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__mdiff  0x0000000000000000      0x114 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .text.__ulp    0x0000000000000000       0x54 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .text.__b2d    0x0000000000000000       0xd0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .text.__d2b    0x0000000000000000       0xbc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .text.__ratio  0x0000000000000000       0x60 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .text._mprec_log10
                 0x0000000000000000       0x38 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
@@ -1100,8 +1146,17 @@ Discarded input sections
                 0x0000000000000000       0x48 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .text.__any_on
                 0x0000000000000000       0x60 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .rodata.__mprec_tens
+                0x0000000000000000       0xc8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .rodata.__mprec_bigtens
+                0x0000000000000000       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .rodata.p05.6087
+                0x0000000000000000        0xc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .rodata.__mprec_tinytens
                 0x0000000000000000       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .debug_frame   0x0000000000000000      0x264 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
@@ -1116,6 +1171,10 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
+ .text.__sprint_r.part.0
+                0x0000000000000000       0x78 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
+ .text.__sprint_r
+                0x0000000000000000       0x14 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
  .text._vfiprintf_r
                 0x0000000000000000      0xdfc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
  .text.vfiprintf
@@ -1128,12 +1187,20 @@ Discarded input sections
                 0x0000000000000000       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
  .rodata.str1.4
                 0x0000000000000000       0x2f /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
+ .debug_frame   0x0000000000000000       0xc8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
+ .text._calloc_r
+                0x0000000000000000       0x60 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
+ .debug_frame   0x0000000000000000       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
@@ -1144,7 +1211,14 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
+ .text.__fputwc
+                0x0000000000000000       0x98 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
+ .text._fputwc_r
+                0x0000000000000000       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
  .text.fputwc   0x0000000000000000       0x40 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
+ .debug_frame   0x0000000000000000       0x8c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
@@ -1158,6 +1232,8 @@ Discarded input sections
                 0x0000000000000000       0x18 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
  .text._setlocale_r
                 0x0000000000000000       0x40 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
+ .text.__locale_mb_cur_max
+                0x0000000000000000       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
  .text.__locale_ctype_ptr_l
                 0x0000000000000000        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
  .text.__locale_ctype_ptr
@@ -1166,6 +1242,13 @@ Discarded input sections
                 0x0000000000000000       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
  .bss._PathLocale
                 0x0000000000000000        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
+ .rodata.str1.4
+                0x0000000000000000       0x12 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
+ .data.__global_locale
+                0x0000000000000000      0x16c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
+ .debug_frame   0x0000000000000000       0x84 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
@@ -1174,6 +1257,11 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mbtowc_r.o)
  .text._mbtowc_r
                 0x0000000000000000       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mbtowc_r.o)
+ .text.__ascii_mbtowc
+                0x0000000000000000       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mbtowc_r.o)
+ .debug_frame   0x0000000000000000       0x4c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mbtowc_r.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mbtowc_r.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
@@ -1186,36 +1274,76 @@ Discarded input sections
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
+ .text.__swbuf_r
+                0x0000000000000000       0xac /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
  .text.__swbuf  0x0000000000000000       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
+ .debug_frame   0x0000000000000000       0x40 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
+ .text._wcrtomb_r
+                0x0000000000000000       0x54 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
  .text.wcrtomb  0x0000000000000000       0x4c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
+ .debug_frame   0x0000000000000000       0x5c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
  .text._wctomb_r
                 0x0000000000000000       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
+ .text.__ascii_wctomb
+                0x0000000000000000       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
+ .debug_frame   0x0000000000000000       0x3c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-ctype_.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-ctype_.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-ctype_.o)
+ .rodata._ctype_
+                0x0000000000000000      0x101 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-ctype_.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-ctype_.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
+ .text          0x0000000000000000      0x424 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
+ .ARM.attributes
+                0x0000000000000000       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
+ .text          0x0000000000000000       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_unorddf2.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_unorddf2.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_unorddf2.o)
+ .ARM.attributes
+                0x0000000000000000       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_unorddf2.o)
+ .text          0x0000000000000000       0x50 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
+ .ARM.attributes
+                0x0000000000000000       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
+ .text          0x0000000000000000       0x30 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_aeabi_uldivmod.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_aeabi_uldivmod.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x0000000000000000       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_aeabi_uldivmod.o)
+ .ARM.attributes
+                0x0000000000000000       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_aeabi_uldivmod.o)
+ .text          0x0000000000000000      0x2e4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
  .ARM.extab     0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
+ .ARM.exidx     0x0000000000000000        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
+ .ARM.attributes
+                0x0000000000000000       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
+ .text          0x0000000000000000        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_dvmd_tls.o)
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_dvmd_tls.o)
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x0000000000000000       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_dvmd_tls.o)
  .text          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtend.o
  .data          0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtend.o
  .bss           0x0000000000000000        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtend.o
@@ -1251,7 +1379,7 @@ LOAD /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sa
                 0x0000000008000000                g_pfnVectors
                 0x0000000008000188                . = ALIGN (0x4)
 
-.text           0x00000000080001c0     0xc2a8
+.text           0x00000000080001c0     0x8960
                 0x00000000080001c0                . = ALIGN (0x4)
  *(.text)
  .text          0x00000000080001c0       0x5c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
@@ -1526,501 +1654,383 @@ LOAD /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sa
  .text          0x0000000008005b44       0xd0 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
                 0x0000000008005b44                SystemInit
                 0x0000000008005bb4                SystemCoreClockUpdate
- .text          0x0000000008005c14       0x10 user_source/foo.o
-                0x0000000008005c14                foo
-                0x0000000008005c18                TEST_FOO
- .text          0x0000000008005c24       0x58 user_source/uart.o
-                0x0000000008005c24                uart_debug_init
-                0x0000000008005c2c                uart_init
-                0x0000000008005c34                uart_get_byte_blocking
-                0x0000000008005c38                uart_send_byte_blocking
-                0x0000000008005c3c                uart_get_data_blocking
-                0x0000000008005c5c                uart_send_data_blocking
- .text          0x0000000008005c7c       0x7c user_source/hal_interface/cpu.o
-                0x0000000008005c7c                cpu_init
-                0x0000000008005ccc                cpu_sw_delay
-                0x0000000008005ce4                cpu_sw_delay_us
- .text          0x0000000008005cf8      0x148 user_source/hal_interface/cube_hal_msp.o
-                0x0000000008005cf8                HAL_TIM_PWM_MspInit
-                0x0000000008005d50                HAL_TIM_Base_MspInit
-                0x0000000008005dc4                HAL_UART_MspInit
- .text          0x0000000008005e40       0xbc user_source/hal_interface/encoder_hal.o
-                0x0000000008005e40                init_encoders
-                0x0000000008005eb0                EXTI4_IRQHandler
-                0x0000000008005ebc                EXTI3_IRQHandler
-                0x0000000008005ec8                encoders_Callback
- .text          0x0000000008005efc      0x190 user_source/hal_interface/newlib_stubs.o
-                0x0000000008005efc                _exit
-                0x0000000008005f18                _close
-                0x0000000008005f20                _execve
-                0x0000000008005f30                _fork
-                0x0000000008005f40                _fstat
-                0x0000000008005f4c                _getpid
-                0x0000000008005f50                _isatty
-                0x0000000008005f68                _kill
-                0x0000000008005f78                _link
-                0x0000000008005f88                _lseek
-                0x0000000008005f8c                _read
-                0x0000000008005fc0                _stat
-                0x0000000008005fcc                _times
-                0x0000000008005fd4                _unlink
-                0x0000000008005fe4                _wait
-                0x0000000008005ff4                _write
-                0x0000000008006044                _sbrk
- .text          0x000000000800608c      0x1f0 user_source/hal_interface/pwm_hal.o
-                0x000000000800608c                init_pwm
-                0x00000000080060e4                set_pwm
-                0x00000000080061a0                adjust
-                0x000000000800623c                motors_control
- *fill*         0x000000000800627c        0x4 
- .text          0x0000000008006280      0x480 user_source/hal_interface/sensor_hal.o
-                0x0000000008006280                init_echos
-                0x0000000008006320                init_triggers
-                0x00000000080063c4                init_timers
-                0x0000000008006448                EXTI15_10_IRQHandler
-                0x0000000008006454                EXTI9_5_IRQHandler
-                0x000000000800646c                sensorsCallbacks
-                0x0000000008006580                HAL_GPIO_EXTI_Callback
-                0x00000000080066bc                trigger_sensor
-                0x00000000080066dc                init_tresh_dist
- .text          0x0000000008006700       0x74 user_source/hal_interface/uart_hal.o
-                0x0000000008006700                uart_hal_init
-                0x0000000008006740                uart_hal_send_byte_blocking
-                0x0000000008006758                uart_hal_get_byte_blocking
- *fill*         0x0000000008006774        0xc 
- .text          0x0000000008006780       0xdc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-strlen.o)
-                0x0000000008006780                strlen
- *fill*         0x000000000800685c        0x4 
- .text          0x0000000008006860       0xa0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memchr.o)
-                0x0000000008006860                memchr
- .text          0x0000000008006900      0x134 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memcpy.o)
-                0x0000000008006900                memcpy
- .text          0x0000000008006a34      0x370 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
-                0x0000000008006a34                __aeabi_drsub
-                0x0000000008006a3c                __subdf3
-                0x0000000008006a3c                __aeabi_dsub
-                0x0000000008006a40                __aeabi_dadd
-                0x0000000008006a40                __adddf3
-                0x0000000008006cb8                __aeabi_ui2d
-                0x0000000008006cb8                __floatunsidf
-                0x0000000008006cd8                __floatsidf
-                0x0000000008006cd8                __aeabi_i2d
-                0x0000000008006cfc                __extendsfdf2
-                0x0000000008006cfc                __aeabi_f2d
-                0x0000000008006d38                __aeabi_ul2d
-                0x0000000008006d38                __floatundidf
-                0x0000000008006d48                __aeabi_l2d
-                0x0000000008006d48                __floatdidf
- .text          0x0000000008006da4      0x424 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
-                0x0000000008006da4                __aeabi_dmul
-                0x0000000008006da4                __muldf3
-                0x0000000008006ff8                __aeabi_ddiv
-                0x0000000008006ff8                __divdf3
- .text          0x00000000080071c8      0x110 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
-                0x00000000080071c8                __gtdf2
-                0x00000000080071c8                __gedf2
-                0x00000000080071d0                __ltdf2
-                0x00000000080071d0                __ledf2
-                0x00000000080071d8                __eqdf2
-                0x00000000080071d8                __nedf2
-                0x00000000080071d8                __cmpdf2
-                0x0000000008007254                __aeabi_cdrcmple
-                0x0000000008007264                __aeabi_cdcmple
-                0x0000000008007264                __aeabi_cdcmpeq
-                0x0000000008007274                __aeabi_dcmpeq
-                0x0000000008007288                __aeabi_dcmplt
-                0x000000000800729c                __aeabi_dcmple
-                0x00000000080072b0                __aeabi_dcmpge
-                0x00000000080072c4                __aeabi_dcmpgt
- .text          0x00000000080072d8       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_unorddf2.o)
-                0x00000000080072d8                __aeabi_dcmpun
-                0x00000000080072d8                __unorddf2
- .text          0x0000000008007304       0x50 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
-                0x0000000008007304                __fixdfsi
-                0x0000000008007304                __aeabi_d2iz
- .text          0x0000000008007354       0x30 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_aeabi_uldivmod.o)
-                0x0000000008007354                __aeabi_uldivmod
- .text          0x0000000008007384      0x2e4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
-                0x0000000008007384                __udivmoddi4
- .text          0x0000000008007668        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_dvmd_tls.o)
-                0x0000000008007668                __aeabi_ldiv0
-                0x0000000008007668                __aeabi_idiv0
+ .text          0x0000000008005c14       0xdc demo6.o
+                0x0000000008005c14                parallel_park
+                0x0000000008005c6c                init_sensors_values
+                0x0000000008005cb4                init_pins
+ .text          0x0000000008005cf0       0x10 user_source/foo.o
+                0x0000000008005cf0                foo
+                0x0000000008005cf4                TEST_FOO
+ .text          0x0000000008005d00       0x58 user_source/uart.o
+                0x0000000008005d00                uart_debug_init
+                0x0000000008005d08                uart_init
+                0x0000000008005d10                uart_get_byte_blocking
+                0x0000000008005d14                uart_send_byte_blocking
+                0x0000000008005d18                uart_get_data_blocking
+                0x0000000008005d38                uart_send_data_blocking
+ .text          0x0000000008005d58       0x7c user_source/hal_interface/cpu.o
+                0x0000000008005d58                cpu_init
+                0x0000000008005da8                cpu_sw_delay
+                0x0000000008005dc0                cpu_sw_delay_us
+ .text          0x0000000008005dd4      0x148 user_source/hal_interface/cube_hal_msp.o
+                0x0000000008005dd4                HAL_TIM_PWM_MspInit
+                0x0000000008005e2c                HAL_TIM_Base_MspInit
+                0x0000000008005ea0                HAL_UART_MspInit
+ .text          0x0000000008005f1c       0xb4 user_source/hal_interface/encoder_hal.o
+                0x0000000008005f1c                init_encoders
+                0x0000000008005f8c                EXTI4_IRQHandler
+                0x0000000008005f98                EXTI3_IRQHandler
+                0x0000000008005fa4                encoders_Callback
+ .text          0x0000000008005fd0      0x190 user_source/hal_interface/newlib_stubs.o
+                0x0000000008005fd0                _exit
+                0x0000000008005fec                _close
+                0x0000000008005ff4                _execve
+                0x0000000008006004                _fork
+                0x0000000008006014                _fstat
+                0x0000000008006020                _getpid
+                0x0000000008006024                _isatty
+                0x000000000800603c                _kill
+                0x000000000800604c                _link
+                0x000000000800605c                _lseek
+                0x0000000008006060                _read
+                0x0000000008006094                _stat
+                0x00000000080060a0                _times
+                0x00000000080060a8                _unlink
+                0x00000000080060b8                _wait
+                0x00000000080060c8                _write
+                0x0000000008006118                _sbrk
+ .text          0x0000000008006160      0x1f0 user_source/hal_interface/pwm_hal.o
+                0x0000000008006160                init_pwm
+                0x00000000080061b8                set_pwm
+                0x0000000008006274                adjust
+                0x0000000008006310                motors_control
+ .text          0x0000000008006350      0x480 user_source/hal_interface/sensor_hal.o
+                0x0000000008006350                init_echos
+                0x00000000080063f0                init_triggers
+                0x0000000008006494                init_timers
+                0x0000000008006518                EXTI15_10_IRQHandler
+                0x0000000008006524                EXTI9_5_IRQHandler
+                0x000000000800653c                sensorsCallbacks
+                0x0000000008006650                HAL_GPIO_EXTI_Callback
+                0x000000000800678c                trigger_sensor
+                0x00000000080067ac                init_tresh_dist
+ .text          0x00000000080067d0       0x74 user_source/hal_interface/uart_hal.o
+                0x00000000080067d0                uart_hal_init
+                0x0000000008006810                uart_hal_send_byte_blocking
+                0x0000000008006828                uart_hal_get_byte_blocking
+ *fill*         0x0000000008006844       0x3c 
+ .text          0x0000000008006880       0xdc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-strlen.o)
+                0x0000000008006880                strlen
+ *fill*         0x000000000800695c        0x4 
+ .text          0x0000000008006960       0xa0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memchr.o)
+                0x0000000008006960                memchr
+ .text          0x0000000008006a00      0x134 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memcpy.o)
+                0x0000000008006a00                memcpy
+ .text          0x0000000008006b34      0x370 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
+                0x0000000008006b34                __aeabi_drsub
+                0x0000000008006b3c                __subdf3
+                0x0000000008006b3c                __aeabi_dsub
+                0x0000000008006b40                __aeabi_dadd
+                0x0000000008006b40                __adddf3
+                0x0000000008006db8                __aeabi_ui2d
+                0x0000000008006db8                __floatunsidf
+                0x0000000008006dd8                __floatsidf
+                0x0000000008006dd8                __aeabi_i2d
+                0x0000000008006dfc                __extendsfdf2
+                0x0000000008006dfc                __aeabi_f2d
+                0x0000000008006e38                __aeabi_ul2d
+                0x0000000008006e38                __floatundidf
+                0x0000000008006e48                __aeabi_l2d
+                0x0000000008006e48                __floatdidf
+ .text          0x0000000008006ea4      0x110 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
+                0x0000000008006ea4                __gtdf2
+                0x0000000008006ea4                __gedf2
+                0x0000000008006eac                __ltdf2
+                0x0000000008006eac                __ledf2
+                0x0000000008006eb4                __eqdf2
+                0x0000000008006eb4                __nedf2
+                0x0000000008006eb4                __cmpdf2
+                0x0000000008006f30                __aeabi_cdrcmple
+                0x0000000008006f40                __aeabi_cdcmple
+                0x0000000008006f40                __aeabi_cdcmpeq
+                0x0000000008006f50                __aeabi_dcmpeq
+                0x0000000008006f64                __aeabi_dcmplt
+                0x0000000008006f78                __aeabi_dcmple
+                0x0000000008006f8c                __aeabi_dcmpge
+                0x0000000008006fa0                __aeabi_dcmpgt
  *(.text*)
  .text.__libc_init_array
-                0x000000000800766c       0x50 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-init.o)
-                0x000000000800766c                __libc_init_array
- .text.memset   0x00000000080076bc       0x9c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memset.o)
-                0x00000000080076bc                memset
+                0x0000000008006fb4       0x50 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-init.o)
+                0x0000000008006fb4                __libc_init_array
+ .text.memset   0x0000000008007004       0x9c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memset.o)
+                0x0000000008007004                memset
  .text.startup.register_fini
-                0x0000000008007758       0x14 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-__call_atexit.o)
- .text.atexit   0x000000000800776c        0xc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-atexit.o)
-                0x000000000800776c                atexit
+                0x00000000080070a0       0x14 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-__call_atexit.o)
+ .text.atexit   0x00000000080070b4        0xc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-atexit.o)
+                0x00000000080070b4                atexit
  .text.__libc_fini_array
-                0x0000000008007778       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fini.o)
-                0x0000000008007778                __libc_fini_array
+                0x00000000080070c0       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fini.o)
+                0x00000000080070c0                __libc_fini_array
  .text.__register_exitproc
-                0x00000000080077a0       0xa4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-__atexit.o)
-                0x00000000080077a0                __register_exitproc
+                0x00000000080070e8       0xa4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-__atexit.o)
+                0x00000000080070e8                __register_exitproc
  .text.Reset_Handler
-                0x0000000008007844       0x50 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
-                0x0000000008007844                Reset_Handler
+                0x000000000800718c       0x50 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
+                0x000000000800718c                Reset_Handler
  .text.Default_Handler
-                0x0000000008007894        0x2 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
-                0x0000000008007894                TIM1_BRK_TIM15_IRQHandler
-                0x0000000008007894                TIM8_TRG_COM_IRQHandler
-                0x0000000008007894                TIM8_CC_IRQHandler
-                0x0000000008007894                DebugMon_Handler
-                0x0000000008007894                TIM1_CC_IRQHandler
-                0x0000000008007894                HardFault_Handler
-                0x0000000008007894                USB_HP_IRQHandler
-                0x0000000008007894                SysTick_Handler
-                0x0000000008007894                PVD_IRQHandler
-                0x0000000008007894                TAMP_STAMP_IRQHandler
-                0x0000000008007894                PendSV_Handler
-                0x0000000008007894                NMI_Handler
-                0x0000000008007894                USB_HP_CAN_TX_IRQHandler
-                0x0000000008007894                EXTI0_IRQHandler
-                0x0000000008007894                I2C2_EV_IRQHandler
-                0x0000000008007894                FPU_IRQHandler
-                0x0000000008007894                TIM1_UP_TIM16_IRQHandler
-                0x0000000008007894                UsageFault_Handler
-                0x0000000008007894                ADC1_2_IRQHandler
-                0x0000000008007894                SPI1_IRQHandler
-                0x0000000008007894                CAN_SCE_IRQHandler
-                0x0000000008007894                TIM8_UP_IRQHandler
-                0x0000000008007894                DMA2_Channel2_IRQHandler
-                0x0000000008007894                DMA1_Channel4_IRQHandler
-                0x0000000008007894                USART3_IRQHandler
-                0x0000000008007894                DMA1_Channel7_IRQHandler
-                0x0000000008007894                UART5_IRQHandler
-                0x0000000008007894                ADC3_IRQHandler
-                0x0000000008007894                TIM4_IRQHandler
-                0x0000000008007894                CAN_RX1_IRQHandler
-                0x0000000008007894                DMA2_Channel1_IRQHandler
-                0x0000000008007894                I2C1_EV_IRQHandler
-                0x0000000008007894                DMA1_Channel6_IRQHandler
-                0x0000000008007894                UART4_IRQHandler
-                0x0000000008007894                DMA2_Channel4_IRQHandler
-                0x0000000008007894                TIM3_IRQHandler
-                0x0000000008007894                RCC_IRQHandler
-                0x0000000008007894                DMA1_Channel1_IRQHandler
-                0x0000000008007894                Default_Handler
-                0x0000000008007894                USBWakeUp_RMP_IRQHandler
-                0x0000000008007894                TIM7_IRQHandler
-                0x0000000008007894                RTC_WKUP_IRQHandler
-                0x0000000008007894                SPI2_IRQHandler
-                0x0000000008007894                USB_LP_CAN_RX0_IRQHandler
-                0x0000000008007894                MemManage_Handler
-                0x0000000008007894                SVC_Handler
-                0x0000000008007894                DMA2_Channel5_IRQHandler
-                0x0000000008007894                DMA1_Channel5_IRQHandler
-                0x0000000008007894                USB_LP_IRQHandler
-                0x0000000008007894                TIM1_TRG_COM_TIM17_IRQHandler
-                0x0000000008007894                DMA1_Channel3_IRQHandler
-                0x0000000008007894                ADC4_IRQHandler
-                0x0000000008007894                WWDG_IRQHandler
-                0x0000000008007894                TIM2_IRQHandler
-                0x0000000008007894                COMP7_IRQHandler
-                0x0000000008007894                COMP1_2_3_IRQHandler
-                0x0000000008007894                EXTI1_IRQHandler
-                0x0000000008007894                USART2_IRQHandler
-                0x0000000008007894                COMP4_5_6_IRQHandler
-                0x0000000008007894                I2C2_ER_IRQHandler
-                0x0000000008007894                DMA1_Channel2_IRQHandler
-                0x0000000008007894                TIM8_BRK_IRQHandler
-                0x0000000008007894                FLASH_IRQHandler
-                0x0000000008007894                BusFault_Handler
-                0x0000000008007894                USART1_IRQHandler
-                0x0000000008007894                SPI3_IRQHandler
-                0x0000000008007894                I2C1_ER_IRQHandler
-                0x0000000008007894                USBWakeUp_IRQHandler
-                0x0000000008007894                DMA2_Channel3_IRQHandler
-                0x0000000008007894                EXTI2_TSC_IRQHandler
-                0x0000000008007894                RTC_Alarm_IRQHandler
- *fill*         0x0000000008007896        0x2 
- .text.startup  0x0000000008007898      0x334 demo6.o
-                0x0000000008007898                main
- .text.printf   0x0000000008007bcc       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
-                0x0000000008007bcc                printf
- .text._puts_r  0x0000000008007bf4       0x68 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
-                0x0000000008007bf4                _puts_r
- .text.puts     0x0000000008007c5c       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
-                0x0000000008007c5c                puts
- .text.setvbuf  0x0000000008007c6c      0x150 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-setvbuf.o)
-                0x0000000008007c6c                setvbuf
- *fill*         0x0000000008007dbc        0x4 
- .text._vfprintf_r
-                0x0000000008007dc0     0x1728 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
-                0x0000000008007dc0                _vfprintf_r
- .text.__sbprintf
-                0x00000000080094e8       0x6c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+                0x00000000080071dc        0x2 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
+                0x00000000080071dc                TIM1_BRK_TIM15_IRQHandler
+                0x00000000080071dc                TIM8_TRG_COM_IRQHandler
+                0x00000000080071dc                TIM8_CC_IRQHandler
+                0x00000000080071dc                DebugMon_Handler
+                0x00000000080071dc                TIM1_CC_IRQHandler
+                0x00000000080071dc                HardFault_Handler
+                0x00000000080071dc                USB_HP_IRQHandler
+                0x00000000080071dc                SysTick_Handler
+                0x00000000080071dc                PVD_IRQHandler
+                0x00000000080071dc                TAMP_STAMP_IRQHandler
+                0x00000000080071dc                PendSV_Handler
+                0x00000000080071dc                NMI_Handler
+                0x00000000080071dc                USB_HP_CAN_TX_IRQHandler
+                0x00000000080071dc                EXTI0_IRQHandler
+                0x00000000080071dc                I2C2_EV_IRQHandler
+                0x00000000080071dc                FPU_IRQHandler
+                0x00000000080071dc                TIM1_UP_TIM16_IRQHandler
+                0x00000000080071dc                UsageFault_Handler
+                0x00000000080071dc                ADC1_2_IRQHandler
+                0x00000000080071dc                SPI1_IRQHandler
+                0x00000000080071dc                CAN_SCE_IRQHandler
+                0x00000000080071dc                TIM8_UP_IRQHandler
+                0x00000000080071dc                DMA2_Channel2_IRQHandler
+                0x00000000080071dc                DMA1_Channel4_IRQHandler
+                0x00000000080071dc                USART3_IRQHandler
+                0x00000000080071dc                DMA1_Channel7_IRQHandler
+                0x00000000080071dc                UART5_IRQHandler
+                0x00000000080071dc                ADC3_IRQHandler
+                0x00000000080071dc                TIM4_IRQHandler
+                0x00000000080071dc                CAN_RX1_IRQHandler
+                0x00000000080071dc                DMA2_Channel1_IRQHandler
+                0x00000000080071dc                I2C1_EV_IRQHandler
+                0x00000000080071dc                DMA1_Channel6_IRQHandler
+                0x00000000080071dc                UART4_IRQHandler
+                0x00000000080071dc                DMA2_Channel4_IRQHandler
+                0x00000000080071dc                TIM3_IRQHandler
+                0x00000000080071dc                RCC_IRQHandler
+                0x00000000080071dc                DMA1_Channel1_IRQHandler
+                0x00000000080071dc                Default_Handler
+                0x00000000080071dc                USBWakeUp_RMP_IRQHandler
+                0x00000000080071dc                TIM7_IRQHandler
+                0x00000000080071dc                RTC_WKUP_IRQHandler
+                0x00000000080071dc                SPI2_IRQHandler
+                0x00000000080071dc                USB_LP_CAN_RX0_IRQHandler
+                0x00000000080071dc                MemManage_Handler
+                0x00000000080071dc                SVC_Handler
+                0x00000000080071dc                DMA2_Channel5_IRQHandler
+                0x00000000080071dc                DMA1_Channel5_IRQHandler
+                0x00000000080071dc                USB_LP_IRQHandler
+                0x00000000080071dc                TIM1_TRG_COM_TIM17_IRQHandler
+                0x00000000080071dc                DMA1_Channel3_IRQHandler
+                0x00000000080071dc                ADC4_IRQHandler
+                0x00000000080071dc                WWDG_IRQHandler
+                0x00000000080071dc                TIM2_IRQHandler
+                0x00000000080071dc                COMP7_IRQHandler
+                0x00000000080071dc                COMP1_2_3_IRQHandler
+                0x00000000080071dc                EXTI1_IRQHandler
+                0x00000000080071dc                USART2_IRQHandler
+                0x00000000080071dc                COMP4_5_6_IRQHandler
+                0x00000000080071dc                I2C2_ER_IRQHandler
+                0x00000000080071dc                DMA1_Channel2_IRQHandler
+                0x00000000080071dc                TIM8_BRK_IRQHandler
+                0x00000000080071dc                FLASH_IRQHandler
+                0x00000000080071dc                BusFault_Handler
+                0x00000000080071dc                USART1_IRQHandler
+                0x00000000080071dc                SPI3_IRQHandler
+                0x00000000080071dc                I2C1_ER_IRQHandler
+                0x00000000080071dc                USBWakeUp_IRQHandler
+                0x00000000080071dc                DMA2_Channel3_IRQHandler
+                0x00000000080071dc                EXTI2_TSC_IRQHandler
+                0x00000000080071dc                RTC_Alarm_IRQHandler
+ *fill*         0x00000000080071de        0x2 
+ .text.startup  0x00000000080071e0      0x114 demo6.o
+                0x00000000080071e0                main
+ .text._puts_r  0x00000000080072f4       0x68 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
+                0x00000000080072f4                _puts_r
+ .text.puts     0x000000000800735c       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
+                0x000000000800735c                puts
+ .text.setvbuf  0x000000000800736c      0x150 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-setvbuf.o)
+                0x000000000800736c                setvbuf
  .text.__swsetup_r
-                0x0000000008009554       0xc8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
-                0x0000000008009554                __swsetup_r
- .text.quorem   0x000000000800961c      0x128 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
- *fill*         0x0000000008009744        0x4 
- .text._dtoa_r  0x0000000008009748      0xe34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
-                0x0000000008009748                _dtoa_r
+                0x00000000080074bc       0xc8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
+                0x00000000080074bc                __swsetup_r
  .text.__sflush_r
-                0x000000000800a57c      0x148 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
-                0x000000000800a57c                __sflush_r
+                0x0000000008007584      0x148 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
+                0x0000000008007584                __sflush_r
  .text._fflush_r
-                0x000000000800a6c4       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
-                0x000000000800a6c4                _fflush_r
+                0x00000000080076cc       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
+                0x00000000080076cc                _fflush_r
  .text._cleanup_r
-                0x000000000800a6f0        0xc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
-                0x000000000800a6f0                _cleanup_r
+                0x00000000080076f8        0xc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
+                0x00000000080076f8                _cleanup_r
  .text.__sinit.part.1
-                0x000000000800a6fc       0xf0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
- .text.__sinit  0x000000000800a7ec        0xc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
-                0x000000000800a7ec                __sinit
+                0x0000000008007704       0xf0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
+ .text.__sinit  0x00000000080077f4        0xc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
+                0x00000000080077f4                __sinit
  .text.__sfp_lock_acquire
-                0x000000000800a7f8        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
-                0x000000000800a7f8                __sfp_lock_acquire
+                0x0000000008007800        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
+                0x0000000008007800                __sfp_lock_acquire
  .text.__sfp_lock_release
-                0x000000000800a7fc        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
-                0x000000000800a7fc                __sfp_lock_release
+                0x0000000008007804        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
+                0x0000000008007804                __sfp_lock_release
  .text._malloc_trim_r
-                0x000000000800a800       0x9c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-freer.o)
-                0x000000000800a800                _malloc_trim_r
- .text._free_r  0x000000000800a89c      0x1d0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-freer.o)
-                0x000000000800a89c                _free_r
+                0x0000000008007808       0x9c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-freer.o)
+                0x0000000008007808                _malloc_trim_r
+ .text._free_r  0x00000000080078a4      0x1d0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-freer.o)
+                0x00000000080078a4                _free_r
  .text.__sfvwrite_r
-                0x000000000800aa6c      0x304 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fvwrite.o)
-                0x000000000800aa6c                __sfvwrite_r
+                0x0000000008007a74      0x304 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fvwrite.o)
+                0x0000000008007a74                __sfvwrite_r
  .text._fwalk_reent
-                0x000000000800ad70       0x54 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fwalk.o)
-                0x000000000800ad70                _fwalk_reent
- .text._localeconv_r
-                0x000000000800adc4       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
-                0x000000000800adc4                _localeconv_r
+                0x0000000008007d78       0x54 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fwalk.o)
+                0x0000000008007d78                _fwalk_reent
  .text.__swhatbuf_r
-                0x000000000800ade0       0x60 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
-                0x000000000800ade0                __swhatbuf_r
+                0x0000000008007dcc       0x60 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
+                0x0000000008007dcc                __swhatbuf_r
  .text.__smakebuf_r
-                0x000000000800ae40       0x88 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
-                0x000000000800ae40                __smakebuf_r
- .text.malloc   0x000000000800aec8       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-malloc.o)
-                0x000000000800aec8                malloc
+                0x0000000008007e2c       0x88 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
+                0x0000000008007e2c                __smakebuf_r
+ .text.malloc   0x0000000008007eb4       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-malloc.o)
+                0x0000000008007eb4                malloc
  .text._malloc_r
-                0x000000000800aed8      0x570 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
-                0x000000000800aed8                _malloc_r
- .text.memmove  0x000000000800b448       0xc8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memmove.o)
-                0x000000000800b448                memmove
+                0x0000000008007ec4      0x570 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
+                0x0000000008007ec4                _malloc_r
+ .text.memmove  0x0000000008008434       0xc8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memmove.o)
+                0x0000000008008434                memmove
  .text.__malloc_lock
-                0x000000000800b510        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mlock.o)
-                0x000000000800b510                __malloc_lock
+                0x00000000080084fc        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mlock.o)
+                0x00000000080084fc                __malloc_lock
  .text.__malloc_unlock
-                0x000000000800b514        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mlock.o)
-                0x000000000800b514                __malloc_unlock
- .text._Balloc  0x000000000800b518       0x4c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b518                _Balloc
- .text._Bfree   0x000000000800b564       0x14 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b564                _Bfree
- .text.__multadd
-                0x000000000800b578       0x80 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b578                __multadd
- .text.__hi0bits
-                0x000000000800b5f8       0x40 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b5f8                __hi0bits
- .text.__lo0bits
-                0x000000000800b638       0x5c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b638                __lo0bits
- .text.__i2b    0x000000000800b694       0x14 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b694                __i2b
- .text.__multiply
-                0x000000000800b6a8      0x130 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b6a8                __multiply
- .text.__pow5mult
-                0x000000000800b7d8       0xa0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b7d8                __pow5mult
- .text.__lshift
-                0x000000000800b878       0xb0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b878                __lshift
- .text.__mcmp   0x000000000800b928       0x44 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b928                __mcmp
- .text.__mdiff  0x000000000800b96c      0x114 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800b96c                __mdiff
- .text.__d2b    0x000000000800ba80       0xbc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800ba80                __d2b
+                0x0000000008008500        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mlock.o)
+                0x0000000008008500                __malloc_unlock
  .text._realloc_r
-                0x000000000800bb3c      0x3e0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
-                0x000000000800bb3c                _realloc_r
- .text._sbrk_r  0x000000000800bf1c       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-sbrkr.o)
-                0x000000000800bf1c                _sbrk_r
- .text.__sread  0x000000000800bf40       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
-                0x000000000800bf40                __sread
+                0x0000000008008504      0x3e0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
+                0x0000000008008504                _realloc_r
+ .text._sbrk_r  0x00000000080088e4       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-sbrkr.o)
+                0x00000000080088e4                _sbrk_r
+ .text.__sread  0x0000000008008908       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
+                0x0000000008008908                __sread
  .text.__swrite
-                0x000000000800bf64       0x3c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
-                0x000000000800bf64                __swrite
- .text.__sseek  0x000000000800bfa0       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
-                0x000000000800bfa0                __sseek
+                0x000000000800892c       0x3c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
+                0x000000000800892c                __swrite
+ .text.__sseek  0x0000000008008968       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
+                0x0000000008008968                __sseek
  .text.__sclose
-                0x000000000800bfc0        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
-                0x000000000800bfc0                __sclose
- .text.__sprint_r.part.0
-                0x000000000800bfc8       0x78 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
- .text.__sprint_r
-                0x000000000800c040       0x14 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
-                0x000000000800c040                __sprint_r
+                0x0000000008008988        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
+                0x0000000008008988                __sclose
  .text._write_r
-                0x000000000800c054       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
-                0x000000000800c054                _write_r
- .text._calloc_r
-                0x000000000800c080       0x60 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
-                0x000000000800c080                _calloc_r
+                0x0000000008008990       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
+                0x0000000008008990                _write_r
  .text._close_r
-                0x000000000800c0e0       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
-                0x000000000800c0e0                _close_r
+                0x00000000080089bc       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
+                0x00000000080089bc                _close_r
  .text._fclose_r
-                0x000000000800c104       0x84 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fclose.o)
-                0x000000000800c104                _fclose_r
- .text.__fputwc
-                0x000000000800c188       0x98 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
-                0x000000000800c188                __fputwc
- .text._fputwc_r
-                0x000000000800c220       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
-                0x000000000800c220                _fputwc_r
+                0x00000000080089e0       0x84 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fclose.o)
+                0x00000000080089e0                _fclose_r
  .text._fstat_r
-                0x000000000800c248       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
-                0x000000000800c248                _fstat_r
+                0x0000000008008a64       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
+                0x0000000008008a64                _fstat_r
  .text._isatty_r
-                0x000000000800c270       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-isattyr.o)
-                0x000000000800c270                _isatty_r
- .text.__locale_mb_cur_max
-                0x000000000800c294       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
-                0x000000000800c294                __locale_mb_cur_max
+                0x0000000008008a8c       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-isattyr.o)
+                0x0000000008008a8c                _isatty_r
  .text._lseek_r
-                0x000000000800c2b0       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
-                0x000000000800c2b0                _lseek_r
- .text.__ascii_mbtowc
-                0x000000000800c2dc       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mbtowc_r.o)
-                0x000000000800c2dc                __ascii_mbtowc
- .text._read_r  0x000000000800c308       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
-                0x000000000800c308                _read_r
- .text.__swbuf_r
-                0x000000000800c334       0xac /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
-                0x000000000800c334                __swbuf_r
- .text._wcrtomb_r
-                0x000000000800c3e0       0x54 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
-                0x000000000800c3e0                _wcrtomb_r
- .text.__ascii_wctomb
-                0x000000000800c434       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
-                0x000000000800c434                __ascii_wctomb
+                0x0000000008008ab0       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
+                0x0000000008008ab0                _lseek_r
+ .text._read_r  0x0000000008008adc       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
+                0x0000000008008adc                _read_r
  *(.glue_7)
- .glue_7        0x000000000800c450        0x0 linker stubs
+ .glue_7        0x0000000008008b08        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x000000000800c450        0x0 linker stubs
+ .glue_7t       0x0000000008008b08        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x000000000800c450        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .eh_frame      0x0000000008008b08        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
  *(.init)
- .init          0x000000000800c450        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
-                0x000000000800c450                _init
- .init          0x000000000800c454        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+ .init          0x0000000008008b08        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
+                0x0000000008008b08                _init
+ .init          0x0000000008008b0c        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
  *(.fini)
- .fini          0x000000000800c45c        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
-                0x000000000800c45c                _fini
- .fini          0x000000000800c460        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
-                0x000000000800c468                . = ALIGN (0x4)
-                0x000000000800c468                _etext = .
+ .fini          0x0000000008008b14        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crti.o
+                0x0000000008008b14                _fini
+ .fini          0x0000000008008b18        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+                0x0000000008008b20                . = ALIGN (0x4)
+                0x0000000008008b20                _etext = .
 
-.vfp11_veneer   0x000000000800c468        0x0
- .vfp11_veneer  0x000000000800c468        0x0 linker stubs
+.vfp11_veneer   0x0000000008008b20        0x0
+ .vfp11_veneer  0x0000000008008b20        0x0 linker stubs
 
-.v4_bx          0x000000000800c468        0x0
- .v4_bx         0x000000000800c468        0x0 linker stubs
+.v4_bx          0x0000000008008b20        0x0
+ .v4_bx         0x0000000008008b20        0x0 linker stubs
 
-.iplt           0x000000000800c468        0x0
- .iplt          0x000000000800c468        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.iplt           0x0000000008008b20        0x0
+ .iplt          0x0000000008008b20        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.rodata         0x000000000800c468      0x300
-                0x000000000800c468                . = ALIGN (0x4)
+.rodata         0x0000000008008b20       0x74
+                0x0000000008008b20                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x000000000800c468       0x20 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_rcc.o
-                0x000000000800c468                aPLLMULFactorTable
-                0x000000000800c478                aPredivFactorTable
- .rodata        0x000000000800c488        0x4 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart.o
- .rodata        0x000000000800c48c       0x18 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
-                0x000000000800c48c                AHBPrescTable
-                0x000000000800c49c                APBPrescTable
+ .rodata        0x0000000008008b20       0x20 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_rcc.o
+                0x0000000008008b20                aPLLMULFactorTable
+                0x0000000008008b30                aPredivFactorTable
+ .rodata        0x0000000008008b40        0x4 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart.o
+ .rodata        0x0000000008008b44       0x18 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
+                0x0000000008008b44                AHBPrescTable
+                0x0000000008008b54                APBPrescTable
  *(.rodata*)
  .rodata._global_impure_ptr
-                0x000000000800c4a4        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-impure.o)
-                0x000000000800c4a4                _global_impure_ptr
+                0x0000000008008b5c        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-impure.o)
+                0x0000000008008b5c                _global_impure_ptr
  .rodata.str1.4
-                0x000000000800c4a8        0xf demo6.o
- *fill*         0x000000000800c4b7        0x1 
+                0x0000000008008b60        0xf demo6.o
+ *fill*         0x0000000008008b6f        0x1 
  .rodata.str1.4
-                0x000000000800c4b8        0x5 user_source/hal_interface/encoder_hal.o
- *fill*         0x000000000800c4bd        0x3 
+                0x0000000008008b70       0x22 user_source/hal_interface/newlib_stubs.o
  .rodata.str1.4
-                0x000000000800c4c0       0x22 user_source/hal_interface/newlib_stubs.o
- .rodata.str1.4
-                0x000000000800c4e2       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
+                0x0000000008008b92       0x24 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
                                           0x2 (size before relaxing)
- *fill*         0x000000000800c4e2        0x2 
- .rodata.zeroes.7273
-                0x000000000800c4e4       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
- .rodata.str1.4
-                0x000000000800c4f4       0x42 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
- *fill*         0x000000000800c536        0x2 
- .rodata.blanks.7272
-                0x000000000800c538       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
- .rodata.str1.4
-                0x000000000800c548       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
-                                         0x12 (size before relaxing)
- .rodata.__mprec_tens
-                0x000000000800c558       0xc8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800c558                __mprec_tens
- .rodata.__mprec_bigtens
-                0x000000000800c620       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
-                0x000000000800c620                __mprec_bigtens
- .rodata.p05.6087
-                0x000000000800c648        0xc /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
- .rodata.str1.4
-                0x000000000800c654       0x10 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
-                                         0x12 (size before relaxing)
- .rodata._ctype_
-                0x000000000800c664      0x101 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-ctype_.o)
-                0x000000000800c664                _ctype_
-                0x000000000800c768                . = ALIGN (0x4)
- *fill*         0x000000000800c765        0x3 
+                0x0000000008008bb8                . = ALIGN (0x4)
+ *fill*         0x0000000008008b92        0x2 
+
+.rel.dyn        0x0000000008008b94        0x0
+ .rel.iplt      0x0000000008008b94        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x000000000800c768        0x8
-                0x000000000800c768                __exidx_start = .
+.ARM            0x0000000008008b94        0x0
+                0x0000000008008b94                __exidx_start = .
  *(.ARM.exidx*)
- .ARM.exidx     0x000000000800c768        0x8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
-                0x000000000800c770                __exidx_end = .
+                0x0000000008008b94                __exidx_end = .
 
-.rel.dyn        0x000000000800c770        0x0
- .rel.iplt      0x000000000800c770        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
-
-.preinit_array  0x000000000800c770        0x0
-                0x000000000800c770                PROVIDE (__preinit_array_start, .)
+.preinit_array  0x0000000008008b94        0x0
+                0x0000000008008b94                PROVIDE (__preinit_array_start, .)
  *(.preinit_array*)
-                0x000000000800c770                PROVIDE (__preinit_array_end, .)
+                0x0000000008008b94                PROVIDE (__preinit_array_end, .)
 
-.init_array     0x000000000800c770        0x8
-                0x000000000800c770                PROVIDE (__init_array_start, .)
+.init_array     0x0000000008008b94        0x8
+                0x0000000008008b94                PROVIDE (__init_array_start, .)
  *(SORT(.init_array.*))
  .init_array.00000
-                0x000000000800c770        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-__call_atexit.o)
+                0x0000000008008b94        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-__call_atexit.o)
  *(.init_array*)
- .init_array    0x000000000800c774        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
-                0x000000000800c778                PROVIDE (__init_array_end, .)
+ .init_array    0x0000000008008b98        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+                0x0000000008008b9c                PROVIDE (__init_array_end, .)
 
-.fini_array     0x000000000800c778        0x4
-                0x000000000800c778                PROVIDE (__fini_array_start, .)
+.fini_array     0x0000000008008b9c        0x4
+                0x0000000008008b9c                PROVIDE (__fini_array_start, .)
  *(SORT(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x000000000800c778        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
-                0x000000000800c77c                PROVIDE (__fini_array_end, .)
-                0x000000000800c77c                _sidata = LOADADDR (.data)
+ .fini_array    0x0000000008008b9c        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+                0x0000000008008ba0                PROVIDE (__fini_array_end, .)
+                0x0000000008008ba0                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000      0x9b0 load address 0x000000000800c77c
+.data           0x0000000020000000      0x844 load address 0x0000000008008ba0
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -2042,20 +2052,17 @@ LOAD /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sa
  .data.__malloc_sbrk_base
                 0x0000000020000840        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
                 0x0000000020000840                __malloc_sbrk_base
- .data.__global_locale
-                0x0000000020000844      0x16c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
-                0x0000000020000844                __global_locale
-                0x00000000200009b0                . = ALIGN (0x4)
-                0x00000000200009b0                _edata = .
-                0x000000000800d12c                _siccmram = LOADADDR (.ccmram)
+                0x0000000020000844                . = ALIGN (0x4)
+                0x0000000020000844                _edata = .
+                0x00000000080093e4                _siccmram = LOADADDR (.ccmram)
 
-.jcr            0x00000000200009b0        0x0 load address 0x000000000800d12c
- .jcr           0x00000000200009b0        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.jcr            0x0000000020000844        0x0 load address 0x00000000080093e4
+ .jcr           0x0000000020000844        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.igot.plt       0x00000000200009b0        0x0 load address 0x000000000800d12c
- .igot.plt      0x00000000200009b0        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+.igot.plt       0x0000000020000844        0x0 load address 0x00000000080093e4
+ .igot.plt      0x0000000020000844        0x0 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
 
-.ccmram         0x0000000010000000        0x0 load address 0x000000000800d12c
+.ccmram         0x0000000010000000        0x0 load address 0x00000000080093e4
                 0x0000000010000000                . = ALIGN (0x4)
                 0x0000000010000000                _sccmram = .
  *(.ccmram)
@@ -2064,76 +2071,76 @@ LOAD /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sa
                 0x0000000010000000                _eccmram = .
                 0x0000000010000000                . = ALIGN (0x4)
 
-.bss            0x00000000200009b0      0x34c
-                0x00000000200009b0                _sbss = .
-                0x00000000200009b0                __bss_start__ = _sbss
+.bss            0x0000000020000844      0x34c
+                0x0000000020000844                _sbss = .
+                0x0000000020000844                __bss_start__ = _sbss
  *(.bss)
- .bss           0x00000000200009b0       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
- .bss           0x00000000200009cc       0x14 user_source/hal_interface/encoder_hal.o
- .bss           0x00000000200009e0        0x8 user_source/hal_interface/newlib_stubs.o
-                0x00000000200009e4                __env
- .bss           0x00000000200009e8       0x64 user_source/hal_interface/sensor_hal.o
+ .bss           0x0000000020000844       0x1c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtbegin.o
+ .bss           0x0000000020000860       0x14 user_source/hal_interface/encoder_hal.o
+ .bss           0x0000000020000874        0x8 user_source/hal_interface/newlib_stubs.o
+                0x0000000020000878                __env
+ .bss           0x000000002000087c       0x64 user_source/hal_interface/sensor_hal.o
  *(.bss*)
  .bss.__malloc_max_total_mem
-                0x0000000020000a4c        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
-                0x0000000020000a4c                __malloc_max_total_mem
+                0x00000000200008e0        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
+                0x00000000200008e0                __malloc_max_total_mem
  .bss.__malloc_max_sbrked_mem
-                0x0000000020000a50        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
-                0x0000000020000a50                __malloc_max_sbrked_mem
+                0x00000000200008e4        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
+                0x00000000200008e4                __malloc_max_sbrked_mem
  .bss.__malloc_top_pad
-                0x0000000020000a54        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
-                0x0000000020000a54                __malloc_top_pad
+                0x00000000200008e8        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
+                0x00000000200008e8                __malloc_top_pad
  .bss.__malloc_current_mallinfo
-                0x0000000020000a58       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
-                0x0000000020000a58                __malloc_current_mallinfo
+                0x00000000200008ec       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
+                0x00000000200008ec                __malloc_current_mallinfo
  *(COMMON)
- COMMON         0x0000000020000a80        0x4 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
-                0x0000000020000a80                uwTick
- COMMON         0x0000000020000a84       0x40 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_timebase_tim.o
-                0x0000000020000a84                TimHandle
- COMMON         0x0000000020000ac4       0x60 demo6.o
-                0x0000000020000ac4                treshDist
-                0x0000000020000acc                searching
-                0x0000000020000ad0                straight
-                0x0000000020000ad4                encoders_distances
-                0x0000000020000adc                firstSense
-                0x0000000020000ae4                right_triggered
-                0x0000000020000ae8                turn_adjustment
-                0x0000000020000aec                state
-                0x0000000020000af0                enc_diff
-                0x0000000020000af4                echosPins
-                0x0000000020000afc                left_triggered
-                0x0000000020000b00                encodersPins
-                0x0000000020000b04                front_triggered
-                0x0000000020000b08                distances
-                0x0000000020000b10                found
-                0x0000000020000b14                motorState
-                0x0000000020000b18                triggerPins
-                0x0000000020000b20                queue_init
- COMMON         0x0000000020000b24       0x5c user_source/hal_interface/pwm_hal.o
-                0x0000000020000b24                timWheels_init
-                0x0000000020000b64                timWheels_conf
- COMMON         0x0000000020000b80      0x108 user_source/hal_interface/sensor_hal.o
-                0x0000000020000b80                tim_conf_vec
-                0x0000000020000bc8                tim_init_vec
- COMMON         0x0000000020000c88       0x70 user_source/hal_interface/uart_hal.o
-                0x0000000020000c88                UartHandle
- COMMON         0x0000000020000cf8        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reent.o)
-                0x0000000020000cf8                errno
-                0x0000000020000cfc                . = ALIGN (0x4)
-                0x0000000020000cfc                _ebss = .
-                0x0000000020000cfc                __bss_end__ = _ebss
+ COMMON         0x0000000020000914        0x4 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
+                0x0000000020000914                uwTick
+ COMMON         0x0000000020000918       0x40 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_timebase_tim.o
+                0x0000000020000918                TimHandle
+ COMMON         0x0000000020000958       0x60 demo6.o
+                0x0000000020000958                treshDist
+                0x0000000020000960                searching
+                0x0000000020000964                straight
+                0x0000000020000968                encoders_distances
+                0x0000000020000970                firstSense
+                0x0000000020000978                right_triggered
+                0x000000002000097c                turn_adjustment
+                0x0000000020000980                state
+                0x0000000020000984                enc_diff
+                0x0000000020000988                echosPins
+                0x0000000020000990                left_triggered
+                0x0000000020000994                encodersPins
+                0x0000000020000998                front_triggered
+                0x000000002000099c                distances
+                0x00000000200009a4                found
+                0x00000000200009a8                motorState
+                0x00000000200009ac                triggerPins
+                0x00000000200009b4                queue_init
+ COMMON         0x00000000200009b8       0x5c user_source/hal_interface/pwm_hal.o
+                0x00000000200009b8                timWheels_init
+                0x00000000200009f8                timWheels_conf
+ COMMON         0x0000000020000a14      0x108 user_source/hal_interface/sensor_hal.o
+                0x0000000020000a14                tim_conf_vec
+                0x0000000020000a5c                tim_init_vec
+ COMMON         0x0000000020000b1c       0x70 user_source/hal_interface/uart_hal.o
+                0x0000000020000b1c                UartHandle
+ COMMON         0x0000000020000b8c        0x4 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reent.o)
+                0x0000000020000b8c                errno
+                0x0000000020000b90                . = ALIGN (0x4)
+                0x0000000020000b90                _ebss = .
+                0x0000000020000b90                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000020000cfc     0x1e00
-                0x0000000020000cfc                . = ALIGN (0x4)
+                0x0000000020000b90     0x1e00
+                0x0000000020000b90                . = ALIGN (0x4)
                 [!provide]                        PROVIDE (end, .)
                 [!provide]                        PROVIDE (_end, .)
-                0x0000000020001bfc                . = (. + _Min_Heap_Size)
- *fill*         0x0000000020000cfc      0xf00 
-                0x0000000020002afc                . = (. + _Min_Stack_Size)
- *fill*         0x0000000020001bfc      0xf00 
-                0x0000000020002afc                . = ALIGN (0x4)
+                0x0000000020001a90                . = (. + _Min_Heap_Size)
+ *fill*         0x0000000020000b90      0xf00 
+                0x0000000020002990                . = (. + _Min_Stack_Size)
+ *fill*         0x0000000020001a90      0xf00 
+                0x0000000020002990                . = ALIGN (0x4)
 
 /DISCARD/
  libc.a(*)
@@ -2194,105 +2201,65 @@ LOAD /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sa
  .ARM.attributes
                 0x0000000000000524       0x39 user_source/hal_interface/uart_hal.o
  .ARM.attributes
-                0x000000000000055d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
+                0x000000000000055d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
  .ARM.attributes
-                0x0000000000000591       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
+                0x0000000000000591       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reent.o)
  .ARM.attributes
-                0x00000000000005c5       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reent.o)
+                0x00000000000005c5       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-setvbuf.o)
  .ARM.attributes
-                0x00000000000005f9       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-setvbuf.o)
+                0x00000000000005f9       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-strlen.o)
  .ARM.attributes
-                0x000000000000062d       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-strlen.o)
+                0x0000000000000619       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
  .ARM.attributes
-                0x000000000000064d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
+                0x000000000000064d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
  .ARM.attributes
-                0x0000000000000681       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
+                0x0000000000000681       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
  .ARM.attributes
-                0x00000000000006b5       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
+                0x00000000000006b5       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-freer.o)
  .ARM.attributes
-                0x00000000000006e9       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
+                0x00000000000006e9       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fvwrite.o)
  .ARM.attributes
-                0x000000000000071d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
+                0x000000000000071d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fwalk.o)
  .ARM.attributes
-                0x0000000000000751       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-freer.o)
+                0x0000000000000751       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
  .ARM.attributes
-                0x0000000000000785       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fvwrite.o)
+                0x0000000000000785       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-malloc.o)
  .ARM.attributes
-                0x00000000000007b9       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fwalk.o)
+                0x00000000000007b9       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
  .ARM.attributes
-                0x00000000000007ed       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
+                0x00000000000007ed       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memchr.o)
  .ARM.attributes
-                0x0000000000000821       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
+                0x000000000000080d       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memcpy.o)
  .ARM.attributes
-                0x0000000000000855       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-malloc.o)
+                0x000000000000082d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memmove.o)
  .ARM.attributes
-                0x0000000000000889       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
+                0x0000000000000861       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mlock.o)
  .ARM.attributes
-                0x00000000000008bd       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memchr.o)
+                0x0000000000000895       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
  .ARM.attributes
-                0x00000000000008dd       0x20 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memcpy.o)
+                0x00000000000008c9       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-sbrkr.o)
  .ARM.attributes
-                0x00000000000008fd       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memmove.o)
+                0x00000000000008fd       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
  .ARM.attributes
-                0x0000000000000931       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mlock.o)
+                0x0000000000000931       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
  .ARM.attributes
-                0x0000000000000965       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
+                0x0000000000000965       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
  .ARM.attributes
-                0x0000000000000999       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
+                0x0000000000000999       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fclose.o)
  .ARM.attributes
-                0x00000000000009cd       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-sbrkr.o)
+                0x00000000000009cd       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
  .ARM.attributes
-                0x0000000000000a01       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
+                0x0000000000000a01       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-isattyr.o)
  .ARM.attributes
-                0x0000000000000a35       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
+                0x0000000000000a35       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
  .ARM.attributes
-                0x0000000000000a69       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
+                0x0000000000000a69       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
  .ARM.attributes
-                0x0000000000000a9d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
+                0x0000000000000a9d       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
  .ARM.attributes
-                0x0000000000000ad1       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
+                0x0000000000000abf       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
  .ARM.attributes
-                0x0000000000000b05       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fclose.o)
- .ARM.attributes
-                0x0000000000000b39       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
- .ARM.attributes
-                0x0000000000000b6d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
- .ARM.attributes
-                0x0000000000000ba1       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-isattyr.o)
- .ARM.attributes
-                0x0000000000000bd5       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
- .ARM.attributes
-                0x0000000000000c09       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
- .ARM.attributes
-                0x0000000000000c3d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mbtowc_r.o)
- .ARM.attributes
-                0x0000000000000c71       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
- .ARM.attributes
-                0x0000000000000ca5       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
- .ARM.attributes
-                0x0000000000000cd9       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
- .ARM.attributes
-                0x0000000000000d0d       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
- .ARM.attributes
-                0x0000000000000d41       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-ctype_.o)
- .ARM.attributes
-                0x0000000000000d75       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_addsubdf3.o)
- .ARM.attributes
-                0x0000000000000d97       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_muldivdf3.o)
- .ARM.attributes
-                0x0000000000000db9       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_cmpdf2.o)
- .ARM.attributes
-                0x0000000000000ddb       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_unorddf2.o)
- .ARM.attributes
-                0x0000000000000dfd       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_arm_fixdfsi.o)
- .ARM.attributes
-                0x0000000000000e1f       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_aeabi_uldivmod.o)
- .ARM.attributes
-                0x0000000000000e41       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
- .ARM.attributes
-                0x0000000000000e75       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_dvmd_tls.o)
- .ARM.attributes
-                0x0000000000000e97       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
+                0x0000000000000ae1       0x22 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
 LOAD ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
 LOAD ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_adc.o
 LOAD ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_adc_ex.o
@@ -2390,7 +2357,7 @@ LOAD /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sa
 LOAD /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/crtn.o
 OUTPUT(demo6.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000    0x105f5
+.debug_info     0x0000000000000000    0x102d7
  .debug_info    0x0000000000000000      0x6ed ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
  .debug_info    0x00000000000006ed      0xe6d ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_cortex.o
  .debug_info    0x000000000000155a      0x7d5 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_dma.o
@@ -2404,18 +2371,18 @@ OUTPUT(demo6.elf elf32-littlearm)
  .debug_info    0x000000000000a13c      0x8db ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart_ex.o
  .debug_info    0x000000000000aa17      0x3f2 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
  .debug_info    0x000000000000ae09       0xf3 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
- .debug_info    0x000000000000aefc     0x10af demo6.o
- .debug_info    0x000000000000bfab       0x96 user_source/foo.o
- .debug_info    0x000000000000c041      0x2b1 user_source/uart.o
- .debug_info    0x000000000000c2f2      0x335 user_source/hal_interface/cpu.o
- .debug_info    0x000000000000c627      0xbe2 user_source/hal_interface/cube_hal_msp.o
- .debug_info    0x000000000000d209      0x64b user_source/hal_interface/encoder_hal.o
- .debug_info    0x000000000000d854      0x880 user_source/hal_interface/newlib_stubs.o
- .debug_info    0x000000000000e0d4      0xc47 user_source/hal_interface/pwm_hal.o
- .debug_info    0x000000000000ed1b     0x11a9 user_source/hal_interface/sensor_hal.o
- .debug_info    0x000000000000fec4      0x731 user_source/hal_interface/uart_hal.o
+ .debug_info    0x000000000000aefc      0xdb1 demo6.o
+ .debug_info    0x000000000000bcad       0x96 user_source/foo.o
+ .debug_info    0x000000000000bd43      0x2b1 user_source/uart.o
+ .debug_info    0x000000000000bff4      0x335 user_source/hal_interface/cpu.o
+ .debug_info    0x000000000000c329      0xbe2 user_source/hal_interface/cube_hal_msp.o
+ .debug_info    0x000000000000cf0b      0x62b user_source/hal_interface/encoder_hal.o
+ .debug_info    0x000000000000d536      0x880 user_source/hal_interface/newlib_stubs.o
+ .debug_info    0x000000000000ddb6      0xc47 user_source/hal_interface/pwm_hal.o
+ .debug_info    0x000000000000e9fd     0x11a9 user_source/hal_interface/sensor_hal.o
+ .debug_info    0x000000000000fba6      0x731 user_source/hal_interface/uart_hal.o
 
-.debug_abbrev   0x0000000000000000     0x2c00
+.debug_abbrev   0x0000000000000000     0x2be7
  .debug_abbrev  0x0000000000000000      0x1d0 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
  .debug_abbrev  0x00000000000001d0      0x304 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_cortex.o
  .debug_abbrev  0x00000000000004d4      0x219 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_dma.o
@@ -2429,18 +2396,18 @@ OUTPUT(demo6.elf elf32-littlearm)
  .debug_abbrev  0x0000000000001702      0x1ee ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart_ex.o
  .debug_abbrev  0x00000000000018f0      0x101 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
  .debug_abbrev  0x00000000000019f1       0x12 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
- .debug_abbrev  0x0000000000001a03      0x299 demo6.o
- .debug_abbrev  0x0000000000001c9c       0x94 user_source/foo.o
- .debug_abbrev  0x0000000000001d30      0x16a user_source/uart.o
- .debug_abbrev  0x0000000000001e9a      0x16a user_source/hal_interface/cpu.o
- .debug_abbrev  0x0000000000002004      0x1b3 user_source/hal_interface/cube_hal_msp.o
- .debug_abbrev  0x00000000000021b7      0x1a8 user_source/hal_interface/encoder_hal.o
- .debug_abbrev  0x000000000000235f      0x28e user_source/hal_interface/newlib_stubs.o
- .debug_abbrev  0x00000000000025ed      0x1c3 user_source/hal_interface/pwm_hal.o
- .debug_abbrev  0x00000000000027b0      0x2a5 user_source/hal_interface/sensor_hal.o
- .debug_abbrev  0x0000000000002a55      0x1ab user_source/hal_interface/uart_hal.o
+ .debug_abbrev  0x0000000000001a03      0x29f demo6.o
+ .debug_abbrev  0x0000000000001ca2       0x94 user_source/foo.o
+ .debug_abbrev  0x0000000000001d36      0x16a user_source/uart.o
+ .debug_abbrev  0x0000000000001ea0      0x16a user_source/hal_interface/cpu.o
+ .debug_abbrev  0x000000000000200a      0x1b3 user_source/hal_interface/cube_hal_msp.o
+ .debug_abbrev  0x00000000000021bd      0x189 user_source/hal_interface/encoder_hal.o
+ .debug_abbrev  0x0000000000002346      0x28e user_source/hal_interface/newlib_stubs.o
+ .debug_abbrev  0x00000000000025d4      0x1c3 user_source/hal_interface/pwm_hal.o
+ .debug_abbrev  0x0000000000002797      0x2a5 user_source/hal_interface/sensor_hal.o
+ .debug_abbrev  0x0000000000002a3c      0x1ab user_source/hal_interface/uart_hal.o
 
-.debug_loc      0x0000000000000000     0x9c4b
+.debug_loc      0x0000000000000000     0x9bc6
  .debug_loc     0x0000000000000000       0x4b ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
  .debug_loc     0x000000000000004b      0x658 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_cortex.o
  .debug_loc     0x00000000000006a3      0x6f1 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_dma.o
@@ -2452,16 +2419,14 @@ OUTPUT(demo6.elf elf32-littlearm)
  .debug_loc     0x00000000000073fc     0x1748 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart.o
  .debug_loc     0x0000000000008b44      0x32b ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart_ex.o
  .debug_loc     0x0000000000008e6f      0x11a ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
- .debug_loc     0x0000000000008f89       0x64 demo6.o
- .debug_loc     0x0000000000008fed       0x4e user_source/foo.o
- .debug_loc     0x000000000000903b      0x205 user_source/uart.o
- .debug_loc     0x0000000000009240       0xcf user_source/hal_interface/cpu.o
- .debug_loc     0x000000000000930f       0x42 user_source/hal_interface/cube_hal_msp.o
- .debug_loc     0x0000000000009351       0x21 user_source/hal_interface/encoder_hal.o
- .debug_loc     0x0000000000009372      0x4e7 user_source/hal_interface/newlib_stubs.o
- .debug_loc     0x0000000000009859      0x1ab user_source/hal_interface/pwm_hal.o
- .debug_loc     0x0000000000009a04      0x1cb user_source/hal_interface/sensor_hal.o
- .debug_loc     0x0000000000009bcf       0x7c user_source/hal_interface/uart_hal.o
+ .debug_loc     0x0000000000008f89       0x4e user_source/foo.o
+ .debug_loc     0x0000000000008fd7      0x205 user_source/uart.o
+ .debug_loc     0x00000000000091dc       0xcf user_source/hal_interface/cpu.o
+ .debug_loc     0x00000000000092ab       0x42 user_source/hal_interface/cube_hal_msp.o
+ .debug_loc     0x00000000000092ed      0x4e7 user_source/hal_interface/newlib_stubs.o
+ .debug_loc     0x00000000000097d4      0x1ab user_source/hal_interface/pwm_hal.o
+ .debug_loc     0x000000000000997f      0x1cb user_source/hal_interface/sensor_hal.o
+ .debug_loc     0x0000000000009b4a       0x7c user_source/hal_interface/uart_hal.o
 
 .debug_aranges  0x0000000000000000      0x2f0
  .debug_aranges
@@ -2511,7 +2476,7 @@ OUTPUT(demo6.elf elf32-littlearm)
  .debug_aranges
                 0x00000000000002d0       0x20 user_source/hal_interface/uart_hal.o
 
-.debug_line     0x0000000000000000     0x67a2
+.debug_line     0x0000000000000000     0x668f
  .debug_line    0x0000000000000000      0x2b8 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
  .debug_line    0x00000000000002b8      0x3ca ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_cortex.o
  .debug_line    0x0000000000000682      0x547 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_dma.o
@@ -2525,18 +2490,18 @@ OUTPUT(demo6.elf elf32-littlearm)
  .debug_line    0x0000000000004400      0x39d ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart_ex.o
  .debug_line    0x000000000000479d      0x22e ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
  .debug_line    0x00000000000049cb       0xa5 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
- .debug_line    0x0000000000004a70      0x511 demo6.o
- .debug_line    0x0000000000004f81       0x44 user_source/foo.o
- .debug_line    0x0000000000004fc5      0x200 user_source/uart.o
- .debug_line    0x00000000000051c5      0x27f user_source/hal_interface/cpu.o
- .debug_line    0x0000000000005444      0x2cb user_source/hal_interface/cube_hal_msp.o
- .debug_line    0x000000000000570f      0x31e user_source/hal_interface/encoder_hal.o
- .debug_line    0x0000000000005a2d      0x2f1 user_source/hal_interface/newlib_stubs.o
- .debug_line    0x0000000000005d1e      0x352 user_source/hal_interface/pwm_hal.o
- .debug_line    0x0000000000006070      0x483 user_source/hal_interface/sensor_hal.o
- .debug_line    0x00000000000064f3      0x2af user_source/hal_interface/uart_hal.o
+ .debug_line    0x0000000000004a70      0x492 demo6.o
+ .debug_line    0x0000000000004f02       0x44 user_source/foo.o
+ .debug_line    0x0000000000004f46      0x200 user_source/uart.o
+ .debug_line    0x0000000000005146      0x27f user_source/hal_interface/cpu.o
+ .debug_line    0x00000000000053c5      0x2cb user_source/hal_interface/cube_hal_msp.o
+ .debug_line    0x0000000000005690      0x28a user_source/hal_interface/encoder_hal.o
+ .debug_line    0x000000000000591a      0x2f1 user_source/hal_interface/newlib_stubs.o
+ .debug_line    0x0000000000005c0b      0x352 user_source/hal_interface/pwm_hal.o
+ .debug_line    0x0000000000005f5d      0x483 user_source/hal_interface/sensor_hal.o
+ .debug_line    0x00000000000063e0      0x2af user_source/hal_interface/uart_hal.o
 
-.debug_str      0x0000000000000000     0x3dfa
+.debug_str      0x0000000000000000     0x3e01
  .debug_str     0x0000000000000000      0x8db ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
                                         0x930 (size before relaxing)
  .debug_str     0x00000000000008db      0x401 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_cortex.o
@@ -2561,25 +2526,25 @@ OUTPUT(demo6.elf elf32-littlearm)
                                         0x8c0 (size before relaxing)
  .debug_str     0x00000000000031d6       0x84 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
                                         0x362 (size before relaxing)
- .debug_str     0x000000000000325a      0x5c5 demo6.o
-                                        0x88f (size before relaxing)
- .debug_str     0x000000000000381f       0x2d user_source/foo.o
+ .debug_str     0x000000000000325a      0x5bd demo6.o
+                                        0x82f (size before relaxing)
+ .debug_str     0x0000000000003817       0x2d user_source/foo.o
                                         0x165 (size before relaxing)
- .debug_str     0x000000000000384c       0xd5 user_source/uart.o
+ .debug_str     0x0000000000003844       0xd5 user_source/uart.o
                                         0x2ed (size before relaxing)
- .debug_str     0x0000000000003921       0x5e user_source/hal_interface/cpu.o
+ .debug_str     0x0000000000003919       0x5e user_source/hal_interface/cpu.o
                                         0x3cc (size before relaxing)
- .debug_str     0x000000000000397f       0x6b user_source/hal_interface/cube_hal_msp.o
+ .debug_str     0x0000000000003977       0x6b user_source/hal_interface/cube_hal_msp.o
                                         0x9ab (size before relaxing)
- .debug_str     0x00000000000039ea       0x6c user_source/hal_interface/encoder_hal.o
-                                        0x820 (size before relaxing)
- .debug_str     0x0000000000003a56      0x1fa user_source/hal_interface/newlib_stubs.o
+ .debug_str     0x00000000000039e2       0x65 user_source/hal_interface/encoder_hal.o
+                                        0x819 (size before relaxing)
+ .debug_str     0x0000000000003a47      0x1fa user_source/hal_interface/newlib_stubs.o
                                         0x4c8 (size before relaxing)
- .debug_str     0x0000000000003c50       0x9a user_source/hal_interface/pwm_hal.o
+ .debug_str     0x0000000000003c41       0xa1 user_source/hal_interface/pwm_hal.o
                                         0x905 (size before relaxing)
- .debug_str     0x0000000000003cea       0xd5 user_source/hal_interface/sensor_hal.o
+ .debug_str     0x0000000000003ce2       0xe4 user_source/hal_interface/sensor_hal.o
                                         0xe96 (size before relaxing)
- .debug_str     0x0000000000003dbf       0x3b user_source/hal_interface/uart_hal.o
+ .debug_str     0x0000000000003dc6       0x3b user_source/hal_interface/uart_hal.o
                                         0x767 (size before relaxing)
 
 .comment        0x0000000000000000       0x6e
@@ -2607,7 +2572,7 @@ OUTPUT(demo6.elf elf32-littlearm)
  .comment       0x000000000000006e       0x6f user_source/hal_interface/sensor_hal.o
  .comment       0x000000000000006e       0x6f user_source/hal_interface/uart_hal.o
 
-.debug_frame    0x0000000000000000     0x3190
+.debug_frame    0x0000000000000000     0x2a00
  .debug_frame   0x0000000000000000      0x168 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal.o
  .debug_frame   0x0000000000000168      0x188 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_cortex.o
  .debug_frame   0x00000000000002f0      0x18c ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_dma.o
@@ -2620,57 +2585,42 @@ OUTPUT(demo6.elf elf32-littlearm)
  .debug_frame   0x0000000000001514      0x5f4 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart.o
  .debug_frame   0x0000000000001b08       0xd4 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart_ex.o
  .debug_frame   0x0000000000001bdc       0x3c ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/system_stm32f3xx.o
- .debug_frame   0x0000000000001c18       0x80 demo6.o
- .debug_frame   0x0000000000001c98       0x30 user_source/foo.o
- .debug_frame   0x0000000000001cc8       0x98 user_source/uart.o
- .debug_frame   0x0000000000001d60       0x50 user_source/hal_interface/cpu.o
- .debug_frame   0x0000000000001db0       0x80 user_source/hal_interface/cube_hal_msp.o
- .debug_frame   0x0000000000001e30       0x60 user_source/hal_interface/encoder_hal.o
- .debug_frame   0x0000000000001e90      0x150 user_source/hal_interface/newlib_stubs.o
- .debug_frame   0x0000000000001fe0       0xc8 user_source/hal_interface/pwm_hal.o
- .debug_frame   0x00000000000020a8      0x164 user_source/hal_interface/sensor_hal.o
- .debug_frame   0x000000000000220c       0x4c user_source/hal_interface/uart_hal.o
- .debug_frame   0x0000000000002258       0x74 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-printf.o)
- .debug_frame   0x00000000000022cc       0x48 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
- .debug_frame   0x0000000000002314       0x58 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reent.o)
- .debug_frame   0x000000000000236c       0x50 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-setvbuf.o)
- .debug_frame   0x00000000000023bc       0x88 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfprintf.o)
- .debug_frame   0x0000000000002444       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
- .debug_frame   0x0000000000002470       0x88 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-dtoa.o)
- .debug_frame   0x00000000000024f8       0x6c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
- .debug_frame   0x0000000000002564      0x124 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
- .debug_frame   0x0000000000002688       0x74 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-freer.o)
- .debug_frame   0x00000000000026fc       0x68 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fvwrite.o)
- .debug_frame   0x0000000000002764       0x54 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fwalk.o)
- .debug_frame   0x00000000000027b8       0x40 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-localeconv.o)
- .debug_frame   0x00000000000027f8       0x68 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
- .debug_frame   0x0000000000002860       0x30 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-malloc.o)
- .debug_frame   0x0000000000002890       0x58 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
- .debug_frame   0x00000000000028e8       0x30 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memmove.o)
- .debug_frame   0x0000000000002918       0x30 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mlock.o)
- .debug_frame   0x0000000000002948      0x264 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mprec.o)
- .debug_frame   0x0000000000002bac       0x60 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
- .debug_frame   0x0000000000002c0c       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-sbrkr.o)
- .debug_frame   0x0000000000002c38       0x88 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
- .debug_frame   0x0000000000002cc0       0xc8 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-vfiprintf.o)
- .debug_frame   0x0000000000002d88       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
- .debug_frame   0x0000000000002db4       0x28 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-callocr.o)
- .debug_frame   0x0000000000002ddc       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
- .debug_frame   0x0000000000002e08       0x44 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fclose.o)
- .debug_frame   0x0000000000002e4c       0x8c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fputwc.o)
- .debug_frame   0x0000000000002ed8       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
- .debug_frame   0x0000000000002f04       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-isattyr.o)
- .debug_frame   0x0000000000002f30       0x84 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-locale.o)
- .debug_frame   0x0000000000002fb4       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
- .debug_frame   0x0000000000002fe0       0x4c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mbtowc_r.o)
- .debug_frame   0x000000000000302c       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
- .debug_frame   0x0000000000003058       0x40 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wbuf.o)
- .debug_frame   0x0000000000003098       0x5c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wcrtomb.o)
- .debug_frame   0x00000000000030f4       0x3c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wctomb_r.o)
- .debug_frame   0x0000000000003130       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x000000000000315c       0x34 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/armv7e-m/fpu/libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x0000000000001c18       0x9c demo6.o
+ .debug_frame   0x0000000000001cb4       0x30 user_source/foo.o
+ .debug_frame   0x0000000000001ce4       0x98 user_source/uart.o
+ .debug_frame   0x0000000000001d7c       0x50 user_source/hal_interface/cpu.o
+ .debug_frame   0x0000000000001dcc       0x80 user_source/hal_interface/cube_hal_msp.o
+ .debug_frame   0x0000000000001e4c       0x60 user_source/hal_interface/encoder_hal.o
+ .debug_frame   0x0000000000001eac      0x150 user_source/hal_interface/newlib_stubs.o
+ .debug_frame   0x0000000000001ffc       0xc8 user_source/hal_interface/pwm_hal.o
+ .debug_frame   0x00000000000020c4      0x164 user_source/hal_interface/sensor_hal.o
+ .debug_frame   0x0000000000002228       0x4c user_source/hal_interface/uart_hal.o
+ .debug_frame   0x0000000000002274       0x48 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-puts.o)
+ .debug_frame   0x00000000000022bc       0x58 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reent.o)
+ .debug_frame   0x0000000000002314       0x50 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-setvbuf.o)
+ .debug_frame   0x0000000000002364       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-wsetup.o)
+ .debug_frame   0x0000000000002390       0x6c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fflush.o)
+ .debug_frame   0x00000000000023fc      0x124 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-findfp.o)
+ .debug_frame   0x0000000000002520       0x74 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-freer.o)
+ .debug_frame   0x0000000000002594       0x68 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fvwrite.o)
+ .debug_frame   0x00000000000025fc       0x54 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fwalk.o)
+ .debug_frame   0x0000000000002650       0x68 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-makebuf.o)
+ .debug_frame   0x00000000000026b8       0x30 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-malloc.o)
+ .debug_frame   0x00000000000026e8       0x58 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mallocr.o)
+ .debug_frame   0x0000000000002740       0x30 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-memmove.o)
+ .debug_frame   0x0000000000002770       0x30 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-mlock.o)
+ .debug_frame   0x00000000000027a0       0x60 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-reallocr.o)
+ .debug_frame   0x0000000000002800       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-sbrkr.o)
+ .debug_frame   0x000000000000282c       0x88 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-stdio.o)
+ .debug_frame   0x00000000000028b4       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-writer.o)
+ .debug_frame   0x00000000000028e0       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-closer.o)
+ .debug_frame   0x000000000000290c       0x44 /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fclose.o)
+ .debug_frame   0x0000000000002950       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-fstatr.o)
+ .debug_frame   0x000000000000297c       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-isattyr.o)
+ .debug_frame   0x00000000000029a8       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-lseekr.o)
+ .debug_frame   0x00000000000029d4       0x2c /Users/karlboukhalil/Documents/NYU/Semester 2/Real Time Embedded Systems/sandbox/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libc.a(lib_a-readr.o)
 
-.debug_ranges   0x0000000000000000      0x840
+.debug_ranges   0x0000000000000000      0x858
  .debug_ranges  0x0000000000000000       0xe0 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_cortex.o
  .debug_ranges  0x00000000000000e0       0xb0 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_dma.o
  .debug_ranges  0x0000000000000190       0x18 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_gpio.o
@@ -2679,7 +2629,7 @@ OUTPUT(demo6.elf elf32-littlearm)
  .debug_ranges  0x00000000000005c8       0x18 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_timebase_tim.o
  .debug_ranges  0x00000000000005e0       0x18 ../../arctic_awesomeness/arch/stm32/f3/src/stm32f3xx_hal_uart.o
  .debug_ranges  0x00000000000005f8       0x20 ../../arctic_awesomeness/arch/stm32/f3/src/CMSIS/startup_stm32f303xc.o
- .debug_ranges  0x0000000000000618       0x88 demo6.o
- .debug_ranges  0x00000000000006a0       0x78 user_source/hal_interface/cube_hal_msp.o
- .debug_ranges  0x0000000000000718       0x30 user_source/hal_interface/encoder_hal.o
- .debug_ranges  0x0000000000000748       0xf8 user_source/hal_interface/sensor_hal.o
+ .debug_ranges  0x0000000000000618       0xa0 demo6.o
+ .debug_ranges  0x00000000000006b8       0x78 user_source/hal_interface/cube_hal_msp.o
+ .debug_ranges  0x0000000000000730       0x30 user_source/hal_interface/encoder_hal.o
+ .debug_ranges  0x0000000000000760       0xf8 user_source/hal_interface/sensor_hal.o

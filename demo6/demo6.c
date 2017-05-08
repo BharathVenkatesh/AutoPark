@@ -11,8 +11,14 @@
 #include "queue.h"
 #include "encoder_hal.h"
 
-// Custom user APIs needed for generic algorithmic libraries that are hardware-independent:
+// // Custom user APIs needed for generic algorithmic libraries that are hardware-independent:
 #include "foo.h"
+
+// void parallel_park() {
+//     while (encoders_distances.right < 200 && encoders_distances.left < 200)
+//         motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
+//     motors_control(0.0f,0.0f,0.0f,0.0f);
+// }
 
 void init_sensors_values() {
     right_triggered = 0;
@@ -341,6 +347,8 @@ int main()
             //     // cpu_sw_delay_us(10);
             //     // HAL_GPIO_WritePin(GPIOB, triggerPins.left, GPIO_PIN_RESET);
             // }
+
+            //parallel_park();
         }
     }
     return 0;
@@ -353,13 +361,6 @@ int main()
     (c) Abhimanyu Ghosh, 2017
  */
 
-// #include "cpu.h"
-// #include "pwm_hal.h"
-// #include "sensor_hal.h"
-// #include "general.h"
-
-// #include "foo.h"
-
 // int main()
 // {
 //     /*
@@ -370,42 +371,17 @@ int main()
 //      Initialize the GPIO (General-Purpose I/O) subsystem pins that are connected to the LEDs on the board:
 //      */
     
-//     echosPins.right = GPIO_PIN_11;
-//     echosPins.front = GPIO_PIN_6;
-//     echosPins.left = GPIO_PIN_9;
-    
-//     triggerPins.right = GPIO_PIN_10;
-//     triggerPins.front = GPIO_PIN_0;
-//     triggerPins.left = GPIO_PIN_0;
-    
-//     extiRet.front = STRAIGHT;
-//     extiRet.right = STRAIGHT;
-//     extiRet.left = STRAIGHT;
-    
-//     distances.right = 0.0f;
-//     distances.left = 0.0f;
-    
-//     firstSense.left = 0;
-//     firstSense.right = 0;
-    
-//     treshDist.left = 16.0f;
-//     treshDist.right = 16.0f;
-    
 //     init_pwm();
-//     init_triggers();
-//     init_echos();
-//     init_timers();
-//     int i = 0;
+//     encodersPins.right = GPIO_PIN_3;
+//     encodersPins.left = GPIO_PIN_4;
+//     init_encoders();
+//     encoders_distances.left = 0;
+//     encoders_distances.right = 0;
+
+//     while (encoders_distances.right < 50 || encoders_distances.left < 50)
+//         motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
     
-//     init_tresh_dist();
-    
-//     // Forward
-//     set_pwm(right_pwmPD6, 0.6f);
-//     set_pwm(right_pwmPD7, 0.0f);
-//     set_pwm(left_pwmPD3, 0.0f);
-//     set_pwm(left_pwmPD4, 0.6f);
-    
-//     cpu_sw_delay(70);
+//     //cpu_sw_delay(70);
     
 //     // Stop
 //     set_pwm(right_pwmPD6, 0.0f);
