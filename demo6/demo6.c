@@ -295,7 +295,7 @@ int main()
                 } else {
                     motors_control(0.0f, 0.0f, 0.0f, NORMAL);
 
-                    if (encoders_distances.left >= 100) {
+                    if (encoders_distances.left >= 90) {
                         motorState = STRAIGHT;
                         straight = 1;
                         encoders_distances.left = 0;
