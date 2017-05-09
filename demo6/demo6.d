@@ -74,4 +74,5 @@ demo6.o: demo6.c user_include/hal_interface/cpu.h \
  user_include/hal_interface/sensor_hal.h \
  user_include/hal_interface/general.h user_include/uart.h \
  user_include/hal_interface/uart_hal.h user_include/hal_interface/queue.h \
- user_include/hal_interface/encoder_hal.h user_include/foo.h
+ user_include/hal_interface/encoder_hal.h \
+ user_include/hal_interface/board_led.h user_include/foo.h

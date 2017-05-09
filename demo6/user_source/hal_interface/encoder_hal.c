@@ -1,4 +1,5 @@
 #include "encoder_hal.h"
+int count = 0;
 
 void init_encoders(void) {
 	static GPIO_InitTypeDef  Encoders;
@@ -20,21 +21,29 @@ void init_encoders(void) {
 
 void EXTI4_IRQHandler(void) {
 	HAL_GPIO_EXTI_IRQHandler(encodersPins.left);
+	//printf("in: %d\n", count++);
 }
 
 void EXTI3_IRQHandler(void) {
 	HAL_GPIO_EXTI_IRQHandler(encodersPins.right);
+	// printf("in: %d\n", count++);
 }
 
 void encoders_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == encodersPins.right) {
-		// if (HAL_GPIO_ReadPin(GPIOA, GPIO_Pin) == HIGH_STATE) {
-			++encoders_distances.right;
-			//printf("%ld\n", encoders_distances.right);
-		// }
+		//if (HAL_GPIO_ReadPin(GPIOA, GPIO_Pin) == HIGH_STATE) {
+		//cpu_sw_delay_us(1700U);
+		encoders_distances.right++;
+			// printf("%ld\n", encoders_distances.right);
+		//}
 	}
-	else if (GPIO_Pin == encodersPins.left)
+	else if (GPIO_Pin == encodersPins.left) {
 		// if (HAL_GPIO_ReadPin(GPIOA, GPIO_Pin) == HIGH_STATE) {
+		//cpu_sw_delay_us(100);
+		//if (HAL_GPIO_ReadPin(GPIOA, GPIO_Pin) == HIGH_STATE) {
 			encoders_distances.left++;
+			//printf("a: %ld\n", encoders_distances.left);
+		//}
+	}
 		// }
 }

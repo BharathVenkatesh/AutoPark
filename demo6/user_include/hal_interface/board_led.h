@@ -4,9 +4,9 @@
 #include "hal_common_includes.h"
 
 typedef enum {
-	LED1,
-	LED2,
-	LED3
+	LED9,
+	LED6,
+	LED8
 } led;
 
 void board_led_init(void);

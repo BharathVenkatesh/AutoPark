@@ -10,15 +10,16 @@
 #include "uart.h"
 #include "queue.h"
 #include "encoder_hal.h"
+#include "board_led.h"
 
 // // Custom user APIs needed for generic algorithmic libraries that are hardware-independent:
 #include "foo.h"
 
-// void parallel_park() {
-//     while (encoders_distances.right < 200 && encoders_distances.left < 200)
-//         motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
-//     motors_control(0.0f,0.0f,0.0f,0.0f);
-// }
+void parallel_park() {
+    while (encoders_distances.right < 100 && encoders_distances.left < 100)
+        motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
+    motors_control(0.0f,0.0f,0.0f,0.0f);
+}
 
 void init_sensors_values() {
     right_triggered = 0;
@@ -28,8 +29,8 @@ void init_sensors_values() {
     distances.right = 0.0f;
     distances.left = 0.0f;
 
-    firstSense.left = 0;
-    firstSense.right = 0;
+    // firstSense.left = 0;
+    // firstSense.right = 0;
 
     treshDist.left = 10.0f;
     treshDist.right = 10.0f;
@@ -68,8 +69,8 @@ int main()
     /* Initialize motor state */
     motorState = STRAIGHT;
     searching = 1;
-    straight = 0;
-    found = 0;
+    // straight = 0;
+    // found = 0;
 
     /* Initialize pwm to control motors */
     init_pwm();
@@ -88,10 +89,14 @@ int main()
     init_encoders();
     encoders_distances.left = 0;
     encoders_distances.right = 0;
-    turn_adjustment = 0;
-    enc_diff = 0;
+    // turn_adjustment = 0;
+    // enc_diff = 0;
     int firstTurn = 0;
-    float wall = 0.0f;
+    delay = 0;
+    // float wall = 0.0f;
+
+    /* Initialize leds for debugging */
+    board_led_init();
 
     int i = 0;
 
@@ -117,45 +122,54 @@ int main()
             //     motorState = STRAIGHT;
 
             if (motorState == STRAIGHT) {
-                HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-                HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
+                board_led_on(LED6);
+                board_led_off(LED9);
+                board_led_off(LED8);
+                //printf("%ld\n", encoders_distances.right);
                 /* Make car go forward */
                // printf("STRAIGHT////////////////////////////////////////////////////////////////////////\n");
-                //motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
+                // motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
+                // if (encoders_distances.right >= 20)
+                //     motorState = STOP;
                 adjust();
                 if (searching == 1) {
-                    if (distances.right > 25.0f) {
-                        if (firstTurn == 0) {
-                            encoders_distances.right = 0;
-                            firstTurn = 1;
-                        }
-                        if (encoders_distances.right >= 70) {
-                            motorState = RIGHTD;
-                            searching = 0;
-                            encoders_distances.left = 0;
-                            encoders_distances.right = 0;
-                            turn_adjustment = 0;
+                    if (delay == 1) {
+                        if (encoders_distances.right >= 100)
+                            delay = 0;
+                    } else {
+                        if (distances.right > 50.0f) {
+                            // if (firstTurn == 0) {
+                            //     encoders_distances.right = 0;
+                            //     firstTurn = 1;
+                            // }
+                            //if (encoders_distances.right >= 90) {
+                                motorState = RIGHTD;
+                                searching = 0;
+                                encoders_distances.left = 0;
+                                encoders_distances.right = 0;
+                                // turn_adjustment = 0;
+                           // }
                         }
                     }
                 } 
-                // else if (straight == 1) {
-                //     if (encoders_distances.left >= 50 || encoders_distances.right >= 50)
-                //         straight = 0;
+                // // else if (straight == 1) {
+                // //     if (encoders_distances.left >= 50 || encoders_distances.right >= 50)
+                // //         straight = 0;
 
-                //     wall = treshDist.right;
-                // }
-                // else if (straight == 0 && searching == 0) {
-                //     if (distances.right > treshDist.right + 10.0f) {
-                //         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET);
-                //         found = 1;
-                //         encoders_distances.right = 0;
-                //         encoders_distances.left = 0;
-                //     }
-                //     else if ((found == 1) && (distances.right <= wall + 5.0f) && (encoders_distances.right >= 100 || encoders_distances.left >= 100))
-                //         motorState = STOP;
-                // }
+                // //     wall = treshDist.right;
+                // // }
+                // // else if (straight == 0 && searching == 0) {
+                // //     if (distances.right > treshDist.right + 10.0f) {
+                // //         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET);
+                // //         found = 1;
+                // //         encoders_distances.right = 0;
+                // //         encoders_distances.left = 0;
+                // //     }
+                // //     else if ((found == 1) && (distances.right <= wall + 5.0f) && (encoders_distances.right >= 100 || encoders_distances.left >= 100))
+                // //         motorState = STOP;
+                // // }
                 else {
-                    if (encoders_distances.left >= 250 && encoders_distances.right >= 250 && distances.right < 25.0f)
+                    if (encoders_distances.left >= 350 && encoders_distances.right >= 350 && distances.right < 25.0f)
                         motorState = STOP;
                 }
                 
@@ -196,8 +210,11 @@ int main()
                 //cpu_sw_delay_us(100000);
             }
             else if (motorState == STOP) {
-                HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
                 motors_control(0.0f,0.0f,0.0f,0.0f);
+
+                board_led_off(LED6);
+                board_led_on(LED9);
+                board_led_off(LED8);
 
                 // enc_diff = abs(encoders_distances.right - encoders_distances.left);
 
@@ -243,28 +260,36 @@ int main()
                 // else motorState = RIGHTD;
             }
             else if (motorState == LEFTD) {
-                HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
+                board_led_off(LED6);
+                board_led_off(LED9);
+                board_led_on(LED8);
+
+
                 // printf("left\n");
                 // printf("LEFT////////////////////////////////////////////////////////////////////////\n");
 
-                enc_diff = abs(encoders_distances.right - encoders_distances.left);
+                // enc_diff = abs(encoders_distances.right - encoders_distances.left);
 
-                if (turn_adjustment == 1) {
-                    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-                    //if (encoders_distances.right == encoders_distances.left/*>= enc_diff*//*encoders_distances.left - 5 && encoders_distances.right <= encoders_distances.left + 5*/) {
-                    //     motorState = STOP;
-                    //     enc_diff = 0;
-                    // }
-                    if (enc_diff <= 20) {
-                        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-                        motorState = STOP;
-                    }
-                }
-                else if (turn_adjustment == 0) {
-                    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-                    if (encoders_distances.right >= 90)
+                // if (turn_adjustment == 1) {
+                //     HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
+                //     //if (encoders_distances.right == encoders_distances.left/*>= enc_diff*//*encoders_distances.left - 5 && encoders_distances.right <= encoders_distances.left + 5*/) {
+                //     //     motorState = STOP;
+                //     //     enc_diff = 0;
+                //     // }
+                //     if (enc_diff <= 20) {
+                //         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
+                //         motorState = STOP;
+                //     }
+                // }
+                // else if (turn_adjustment == 0) {
+                    if (encoders_distances.right >= 75 && (distances.right <= treshDist.right + 5.0f && distances.right >= treshDist.right - 5.0f)) {
                         motorState = STRAIGHT;
-                }
+                        delay = 1;
+                        distances.right = 0;
+                        encoders_distances.right = 0;
+                        encoders_distances.left = 0;
+                    }
+                // }
 
                 motors_control(NORMAL, 0.0f, 0.0f, 0.0f);
 
@@ -282,32 +307,34 @@ int main()
                 // motorState = STRAIGHT;
             }
             else if (motorState == RIGHTD) {
-                HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-                HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
+                board_led_on(LED6);
+                board_led_off(LED9);
+                board_led_on(LED8);
+
                 // printf("right\n");
-                enc_diff = abs(encoders_distances.right - encoders_distances.left);
+                // enc_diff = abs(encoders_distances.right - encoders_distances.left);
 
-                if (turn_adjustment == 1) {
+                // if (turn_adjustment == 1) {
+                //     motors_control(0.0f, 0.0f, 0.0f, NORMAL);
+
+                //     //if (encoders_distances.left == encoders_distances.right /*>= enc_diff*/ /*>= encoders_distances.right - 5 && encoders_distances.left <= encoders_distances.right + 5*/) {} 
+                //         // motorState = STOP;
+                //         // enc_diff = 0;
+
+                //     if (enc_diff <= 20) {
+                //         HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET);
+                //         motorState = STOP;
+                //     }
+                // } else {
                     motors_control(0.0f, 0.0f, 0.0f, NORMAL);
 
-                    //if (encoders_distances.left == encoders_distances.right /*>= enc_diff*/ /*>= encoders_distances.right - 5 && encoders_distances.left <= encoders_distances.right + 5*/) {} 
-                        // motorState = STOP;
-                        // enc_diff = 0;
-
-                    if (enc_diff <= 20) {
-                        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET);
-                        motorState = STOP;
-                    }
-                } else {
-                    motors_control(0.0f, 0.0f, 0.0f, NORMAL);
-
-                    if (encoders_distances.left >= 90) {
+                    if (encoders_distances.left >= 100) {
                         motorState = STRAIGHT;
-                        straight = 1;
+                        // straight = 1;
                         encoders_distances.left = 0;
                         encoders_distances.right = 0;
                     }
-                }
+                // }
 
                 // cpu_sw_delay(100U);
 

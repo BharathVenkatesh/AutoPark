@@ -59,17 +59,22 @@ void set_pwm(pwm_channel ch, float duty)
 void adjust() {
 	// if (distances.left > distances.right) {
         // Read right sensor
+	if (searching == 0) {
         if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
             treshDist.right = distances.right;
+    } else {
+    	treshDist.right = 10.0f;
+    	treshDist.left = 10.0f;
+    }
 
-        if (distances.right < treshDist.right - 0.25f) {
-            set_pwm(right_pwmPD6, NORMAL1);
-            set_pwm(left_pwmPD4, NORMAL);
-        }
-        else if (distances.right > treshDist.right + 0.25f) {
-            set_pwm(right_pwmPD6, NORMAL);
-            set_pwm(left_pwmPD4, NORMAL1);
-        }
+    if (distances.right < treshDist.right - 0.25f) {
+        set_pwm(right_pwmPD6, NORMAL1);
+        set_pwm(left_pwmPD4, NORMAL);
+    }
+    else if (distances.right > treshDist.right + 0.25f) {
+        set_pwm(right_pwmPD6, NORMAL);
+        set_pwm(left_pwmPD4, NORMAL1);
+    }
 
 		// if (encoders_distances.right > encoders_distances.left) {
 		// 	set_pwm(right_pwmPD6, 0.0f);

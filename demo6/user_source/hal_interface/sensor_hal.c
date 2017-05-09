@@ -50,7 +50,7 @@ void init_triggers(void)
 {
 	static GPIO_InitTypeDef  Right, Left, Front;
 
-	Right.Pin = triggerPins.right | GPIO_PIN_8 | GPIO_PIN_9 | GPIO_PIN_14;
+	Right.Pin = triggerPins.right | GPIO_PIN_9 /*| GPIO_PIN_8 | GPIO_PIN_14*/;
 	Right.Mode = GPIO_MODE_OUTPUT_PP;
 	Right.Pull = GPIO_PULLDOWN;
 	Right.Speed = GPIO_SPEED_FREQ_LOW;
@@ -236,20 +236,20 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 		else if(GPIO_Pin == echosPins.right) {
 			distances.right = distance;	
 			//printf("distance r: %f\n", distance);
-			if (firstSense.right == 0) {
-				firstSense.right = 1;
-				treshDist.right = distance;
-			}
+			// if (firstSense.right == 0) {
+			// 	firstSense.right = 1;
+			// 	//treshDist.right = distance;
+			// }
 			// if (distance < dist)
 			// 	motorState = STOP;
 			// else motorState = STRAIGHT;
 		}
 		else if(GPIO_Pin == echosPins.left) {
 			distances.left = distance;
-			if (firstSense.left == 0) {
-				firstSense.left = 1;
-				treshDist.left = distance;
-			}
+			// if (firstSense.left == 0) {
+			// 	firstSense.left = 1;
+			// 	//treshDist.left = distance;
+			// }
 			// if (distance < dist)
 			// 	motorState = STOP;
 			// else motorState = STRAIGHT;

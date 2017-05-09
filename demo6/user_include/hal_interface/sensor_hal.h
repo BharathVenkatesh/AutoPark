@@ -46,11 +46,11 @@ struct TRESHHOLD
 	float right;
 } treshDist;
 
-struct FIRSTSENSE
-{
-	int left;
-	int right;
-} firstSense;
+// struct FIRSTSENSE
+// {
+// 	int left;
+// 	int right;
+// } firstSense;
 
 // struct EXTIRETURNS
 // {

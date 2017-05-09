@@ -22,6 +22,6 @@ struct ENCODERDISTANCE
 	long left;
 } encoders_distances;
 
-long enc_diff;
+// long enc_diff;
 
 #endif

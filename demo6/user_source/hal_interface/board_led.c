@@ -4,7 +4,7 @@ void board_led_init(void)
 {
 	static GPIO_InitTypeDef Leds;
 
-	Leds.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14
+	Leds.Pin = GPIO_PIN_12 | GPIO_PIN_15 | GPIO_PIN_14;
 	Leds.Mode = GPIO_MODE_OUTPUT_PP;
 	Leds.Pull = GPIO_PULLDOWN;
 	Leds.Speed = GPIO_SPEED_FREQ_LOW;
@@ -17,13 +17,13 @@ void board_led_on(led led_id)
 {
 	switch(led_id)
 	{
-		case LED1:
+		case LED9:
 			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_SET);
 			break;
-		case LED2:
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET);
+		case LED6:
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_SET);
 			break;
-		case LED3:
+		case LED8:
 			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET);
 			break;
 	}
@@ -33,13 +33,13 @@ void board_led_off(led led_id)
 {
 	switch(led_id)
 	{
-		case LED1:
+		case LED9:
 			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
 			break;
-		case LED2:
-			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
+		case LED6:
+			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_RESET);
 			break;
-		case LED3:
+		case LED8:
 			HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
 			break;
 	}
@@ -48,7 +48,7 @@ void board_led_off(led led_id)
 void board_led_all_off()
 {
 	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
 }
 
@@ -56,13 +56,13 @@ void board_led_toggle(led led_id)
 {
 	switch(led_id)
 	{
-		case LED1:
+		case LED9:
 			HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_12);
 			break;
-		case LED2:
-			HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_13);
+		case LED6:
+			HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
 			break;
-		case LED3:
+		case LED8:
 			HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_14);
 			break;
 	}
