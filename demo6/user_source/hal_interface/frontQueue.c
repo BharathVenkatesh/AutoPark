@@ -1,8 +1,6 @@
 #include "frontQueue.h"
 
-#define MAX 5
-
-float frontBuffer[MAX];
+float frontBuffer[FRONTQUEUEMAX];
 int front = 0;
 int rear = -1;
 int itemCount = 0;
@@ -17,7 +15,7 @@ bool isEmpty() {
 }
 
 bool isFull() {
-   return itemCount == MAX;
+   return itemCount == FRONTQUEUEMAX;
 }
 
 int size() {
@@ -28,7 +26,7 @@ void insert(float data) {
 
    if(!isFull()) {
 	
-      if(rear == MAX-1) {
+      if(rear == FRONTQUEUEMAX-1) {
          rear = -1;            
       }       
 
@@ -42,7 +40,7 @@ void insert(float data) {
 float removeData() {
    float data = frontBuffer[front++];
 	
-   if(front == MAX) {
+   if(front == FRONTQUEUEMAX) {
       front = 0;
    }
 	
@@ -56,10 +54,10 @@ void init_queue() {
    int count = 0;
 
 
-   for (count = 0; count < 5; count++)
+   for (count = 0; count < FRONTQUEUEMAX; count++)
       frontBuffer[count] = 30.0f;
 
-   sum = 30.0f*5;
+   sum = 30.0f*FRONTQUEUEMAX;
    // queue_init = 1;
 
    // while (count < 5) {
@@ -80,5 +78,5 @@ void init_queue() {
 }
 
 float average() {
-   return sum/MAX;
+   return sum/FRONTQUEUEMAX;
 }

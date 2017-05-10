@@ -8,6 +8,8 @@
 #include "sensor_hal.h"
 #include "general.h"
 
+#define FRONTQUEUEMAX 3
+
 // int queue_init;
 
 float peek();

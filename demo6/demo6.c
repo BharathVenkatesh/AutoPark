@@ -101,6 +101,7 @@ int main()
     int firstTurn = 0;
     int count = 0;
     int countRight = 0;
+    int turned_left = 0;
     delay = 0;
     // float wall = 0.0f;
 
@@ -149,10 +150,18 @@ int main()
                 //     motorState = STOP;
                 if (searching == 1) {
                     if (delay == 1) {
-                        if (encoders_distances.right >= 15/*100*/)
+                        if (encoders_distances.right >= 0/*100*/) {
                             delay = 0;
+                            turned_left = 1;
+                        }
                     } else {
                         if (distances.right > 50.0f) {
+                            if (firstTurn == 0) {
+                                encoders_distances.right = 0;
+                                firstTurn = 1;
+                            }
+
+                            if (turned_left == 1) {
                             // if (firstTurn == 0) {
                             //     encoders_distances.right = 0;
                             //     firstTurn = 1;
@@ -162,7 +171,15 @@ int main()
                                 searching = 0;
                                 encoders_distances.left = 0;
                                 encoders_distances.right = 0;
+                            } else {
                                 // turn_adjustment = 0;
+                                if (encoders_distances.right >= 0) {
+                                    motorState = RIGHTD;
+                                    searching = 0;
+                                    encoders_distances.left = 0;
+                                    encoders_distances.right = 0; 
+                                }
+                            }
                            // }
                         }
                     }
@@ -232,7 +249,7 @@ int main()
                 board_led_on(LED9);
                 board_led_off(LED8);
 
-                if (count == 5 && countRight == RIGHTQUEUEMAX)
+                if (count == FRONTQUEUEMAX && countRight == RIGHTQUEUEMAX)
                     motorState = STRAIGHT;
 
                 // enc_diff = abs(encoders_distances.right - encoders_distances.left);
@@ -305,7 +322,7 @@ int main()
                 //     }
                 // }
                 // else if (turn_adjustment == 0) {
-                    if (encoders_distances.right >= 20/*75*/ && (distances.right <= treshDist.right + 10.0f && distances.right >= treshDist.right - 5.0f)) {
+                    if (encoders_distances.right >= 20/*75*/ && (distances.right <= treshDist.right + 5.0f && distances.right >= treshDist.right - 5.0f)) {
                         motorState = STRAIGHT;
                         delay = 1;
                         distances.right = 0;
@@ -354,9 +371,9 @@ int main()
                 //         motorState = STOP;
                 //     }
                 // } else {
-                    motors_control(0.0f, 0.0f, 0.0f, NORMAL);
+                    motors_control(0.3f, 0.0f, 0.0f, NORMAL);
 
-                    if (encoders_distances.left >= 20) {
+                    if (encoders_distances.left >= 20 && (distances.right <= treshDist.right + 10.0f && distances.right >= treshDist.right - 5.0f)) {
                         motorState = STRAIGHT;
                         // straight = 1;
                         encoders_distances.left = 0;
@@ -379,7 +396,7 @@ int main()
 
             /* Trigger sensors */
             if (front_triggered == 0) {
-                if (count < 5)
+                if (count < FRONTQUEUEMAX)
                     count++;
 
                 front_triggered = 1;
