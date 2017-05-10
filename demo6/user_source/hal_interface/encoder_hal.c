@@ -31,17 +31,25 @@ void EXTI3_IRQHandler(void) {
 
 void encoders_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == encodersPins.right) {
+		enc_counter.right++;
+		if (enc_counter.right == 5) {
 		//if (HAL_GPIO_ReadPin(GPIOA, GPIO_Pin) == HIGH_STATE) {
 		//cpu_sw_delay_us(1700U);
-		encoders_distances.right++;
+			encoders_distances.right++;
+			enc_counter.right = 0;
+		}
 			// printf("%ld\n", encoders_distances.right);
 		//}
 	}
 	else if (GPIO_Pin == encodersPins.left) {
+		enc_counter.left++;
+		if (enc_counter.left == 5) {
 		// if (HAL_GPIO_ReadPin(GPIOA, GPIO_Pin) == HIGH_STATE) {
 		//cpu_sw_delay_us(100);
 		//if (HAL_GPIO_ReadPin(GPIOA, GPIO_Pin) == HIGH_STATE) {
 			encoders_distances.left++;
+			enc_counter.left = 0;
+		}
 			//printf("a: %ld\n", encoders_distances.left);
 		//}
 	}

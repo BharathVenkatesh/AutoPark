@@ -58,10 +58,10 @@ void init_queue() {
    queue_init = 1;
 
    while (count < 5) {
-      printf("count = %d\n", count);
+      //printf("count = %d\n", count);
       if (front_triggered == 0) {
          count++;
-         front_triggered = 1;
+         //front_triggered = 1;
 
          trigger_sensor(GPIOD, triggerPins.front);
          // HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_SET);

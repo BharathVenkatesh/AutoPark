@@ -16,7 +16,7 @@
 #include "foo.h"
 
 void parallel_park() {
-    while (encoders_distances.right < 100 && encoders_distances.left < 100)
+    while (encoders_distances.right < 20/*100*/ && encoders_distances.left < 20/*100*/)
         motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
     motors_control(0.0f,0.0f,0.0f,0.0f);
 }
@@ -83,12 +83,15 @@ int main()
     init_echos();
     init_timers();
     // init_tresh_dist();
-    //init_queue(); // Initialize sensor value averaging
+    init_queue(); // Initialize sensor value averaging
 
     /* Initialize encoders */
     init_encoders();
     encoders_distances.left = 0;
     encoders_distances.right = 0;
+    enc_counter.right = 0;
+    enc_counter.left = 0;
+
     // turn_adjustment = 0;
     // enc_diff = 0;
     int firstTurn = 0;
@@ -125,6 +128,9 @@ int main()
                 board_led_on(LED6);
                 board_led_off(LED9);
                 board_led_off(LED8);
+               // printf("front: %f\n", distances.front);
+               // printf("right: %f\n", distances.right);
+                printf("straight\n");
                 //printf("%ld\n", encoders_distances.right);
                 /* Make car go forward */
                // printf("STRAIGHT////////////////////////////////////////////////////////////////////////\n");
@@ -132,9 +138,12 @@ int main()
                 // if (encoders_distances.right >= 20)
                 //     motorState = STOP;
                 adjust();
+
+                // if (encoders_distances.left >= 20)
+                //     motorState = STOP;
                 if (searching == 1) {
                     if (delay == 1) {
-                        if (encoders_distances.right >= 100)
+                        if (encoders_distances.right >= 20/*100*/)
                             delay = 0;
                     } else {
                         if (distances.right > 50.0f) {
@@ -169,7 +178,7 @@ int main()
                 // //         motorState = STOP;
                 // // }
                 else {
-                    if (encoders_distances.left >= 350 && encoders_distances.right >= 350 && distances.right < 25.0f)
+                    if (encoders_distances.left >= /*350*/60 && encoders_distances.right >= /*350*/60 && distances.right < 25.0f)
                         motorState = STOP;
                 }
                 
@@ -210,6 +219,7 @@ int main()
                 //cpu_sw_delay_us(100000);
             }
             else if (motorState == STOP) {
+                printf("Stop\n");
                 motors_control(0.0f,0.0f,0.0f,0.0f);
 
                 board_led_off(LED6);
@@ -260,9 +270,13 @@ int main()
                 // else motorState = RIGHTD;
             }
             else if (motorState == LEFTD) {
+                printf("left\n");
+               // printf("%f\n", distances.front);
                 board_led_off(LED6);
                 board_led_off(LED9);
                 board_led_on(LED8);
+
+               // printf("left: %f\n", distances.front);
 
 
                 // printf("left\n");
@@ -282,13 +296,17 @@ int main()
                 //     }
                 // }
                 // else if (turn_adjustment == 0) {
-                    if (encoders_distances.right >= 75 && (distances.right <= treshDist.right + 5.0f && distances.right >= treshDist.right - 5.0f)) {
+                    if (encoders_distances.right >= 20/*75*/ && (distances.right <= treshDist.right + 5.0f && distances.right >= treshDist.right - 5.0f)) {
                         motorState = STRAIGHT;
                         delay = 1;
                         distances.right = 0;
                         encoders_distances.right = 0;
                         encoders_distances.left = 0;
                     }
+
+                // if (encoders_distances.right >= 20) {
+                //         motorState = STOP;
+                //     }
                 // }
 
                 motors_control(NORMAL, 0.0f, 0.0f, 0.0f);
@@ -307,6 +325,7 @@ int main()
                 // motorState = STRAIGHT;
             }
             else if (motorState == RIGHTD) {
+                printf("right\n");
                 board_led_on(LED6);
                 board_led_off(LED9);
                 board_led_on(LED8);
@@ -328,7 +347,7 @@ int main()
                 // } else {
                     motors_control(0.0f, 0.0f, 0.0f, NORMAL);
 
-                    if (encoders_distances.left >= 100) {
+                    if (encoders_distances.left >= 20) {
                         motorState = STRAIGHT;
                         // straight = 1;
                         encoders_distances.left = 0;

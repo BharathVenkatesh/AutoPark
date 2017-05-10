@@ -24,4 +24,10 @@ struct ENCODERDISTANCE
 
 // long enc_diff;
 
+struct ENCODERCOUNTER 
+{
+	int right;
+	int left;
+} enc_counter;
+
 #endif

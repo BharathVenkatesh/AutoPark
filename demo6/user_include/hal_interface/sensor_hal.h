@@ -36,6 +36,7 @@ struct TRIGGERPINS {
 
 struct DISTANCE 
 {
+	float front;
 	float right;
 	float left;
 } distances;
