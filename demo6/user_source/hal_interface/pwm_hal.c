@@ -63,10 +63,11 @@ void adjust() {
         if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
             treshDist.right = distances.right;
     } else {
-    	treshDist.right = 10.0f;
-    	treshDist.left = 10.0f;
+    	treshDist.right = 7.5f;
+    	treshDist.left = 7.5f;
     }
 
+    printf("right: %f\n", distances.right);
     if (distances.right < treshDist.right - 0.25f) {
         set_pwm(right_pwmPD6, NORMAL1);
         set_pwm(left_pwmPD4, NORMAL);

@@ -4,7 +4,8 @@
 #include "hal_common_includes.h"
 #include "pwm_hal.h"
 #include "general.h"
-#include "queue.h"
+#include "frontQueue.h"
+#include "rightQueue.h"
 #include "encoder_hal.h"
 
 #define TIMER_PERIOD_1KHZ	6545

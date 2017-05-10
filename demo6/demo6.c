@@ -8,7 +8,8 @@
 #include "sensor_hal.h"
 #include "general.h"
 #include "uart.h"
-#include "queue.h"
+#include "frontQueue.h"
+#include "rightQueue.h"
 #include "encoder_hal.h"
 #include "board_led.h"
 
@@ -64,10 +65,10 @@ int main()
     uart_debug_init();
     setvbuf(stdin,NULL,_IONBF,0);   // Sets stdin in unbuffered mode (normal for usart com)
     setvbuf(stdout,NULL,_IONBF,0);  // Sets stdin in unbuffered mode (normal for usart com)
-    printf("Hello World!!\r\n");
+    //printf("Hello World!!\r\n");
 
     /* Initialize motor state */
-    motorState = STRAIGHT;
+    motorState = STOP;
     searching = 1;
     // straight = 0;
     // found = 0;
@@ -84,6 +85,9 @@ int main()
     init_timers();
     // init_tresh_dist();
     init_queue(); // Initialize sensor value averaging
+    init_queueRight();
+    // cpu_sw_delay(1000U);
+    // motorState = STRAIGHT;
 
     /* Initialize encoders */
     init_encoders();
@@ -95,6 +99,8 @@ int main()
     // turn_adjustment = 0;
     // enc_diff = 0;
     int firstTurn = 0;
+    int count = 0;
+    int countRight = 0;
     delay = 0;
     // float wall = 0.0f;
 
@@ -130,7 +136,7 @@ int main()
                 board_led_off(LED8);
                // printf("front: %f\n", distances.front);
                // printf("right: %f\n", distances.right);
-                printf("straight\n");
+               // printf("straight\n");
                 //printf("%ld\n", encoders_distances.right);
                 /* Make car go forward */
                // printf("STRAIGHT////////////////////////////////////////////////////////////////////////\n");
@@ -143,7 +149,7 @@ int main()
                 //     motorState = STOP;
                 if (searching == 1) {
                     if (delay == 1) {
-                        if (encoders_distances.right >= 20/*100*/)
+                        if (encoders_distances.right >= 15/*100*/)
                             delay = 0;
                     } else {
                         if (distances.right > 50.0f) {
@@ -178,7 +184,7 @@ int main()
                 // //         motorState = STOP;
                 // // }
                 else {
-                    if (encoders_distances.left >= /*350*/60 && encoders_distances.right >= /*350*/60 && distances.right < 25.0f)
+                    if (encoders_distances.left >= /*350*/50 && encoders_distances.right >= /*350*/50 && distances.right < 25.0f)
                         motorState = STOP;
                 }
                 
@@ -219,12 +225,15 @@ int main()
                 //cpu_sw_delay_us(100000);
             }
             else if (motorState == STOP) {
-                printf("Stop\n");
+                //printf("Stop\n");
                 motors_control(0.0f,0.0f,0.0f,0.0f);
 
                 board_led_off(LED6);
                 board_led_on(LED9);
                 board_led_off(LED8);
+
+                if (count == 5 && countRight == RIGHTQUEUEMAX)
+                    motorState = STRAIGHT;
 
                 // enc_diff = abs(encoders_distances.right - encoders_distances.left);
 
@@ -270,7 +279,7 @@ int main()
                 // else motorState = RIGHTD;
             }
             else if (motorState == LEFTD) {
-                printf("left\n");
+                //printf("left\n");
                // printf("%f\n", distances.front);
                 board_led_off(LED6);
                 board_led_off(LED9);
@@ -296,7 +305,7 @@ int main()
                 //     }
                 // }
                 // else if (turn_adjustment == 0) {
-                    if (encoders_distances.right >= 20/*75*/ && (distances.right <= treshDist.right + 5.0f && distances.right >= treshDist.right - 5.0f)) {
+                    if (encoders_distances.right >= 20/*75*/ && (distances.right <= treshDist.right + 10.0f && distances.right >= treshDist.right - 5.0f)) {
                         motorState = STRAIGHT;
                         delay = 1;
                         distances.right = 0;
@@ -325,7 +334,7 @@ int main()
                 // motorState = STRAIGHT;
             }
             else if (motorState == RIGHTD) {
-                printf("right\n");
+               // printf("right\n");
                 board_led_on(LED6);
                 board_led_off(LED9);
                 board_led_on(LED8);
@@ -370,6 +379,9 @@ int main()
 
             /* Trigger sensors */
             if (front_triggered == 0) {
+                if (count < 5)
+                    count++;
+
                 front_triggered = 1;
                 trigger_sensor(GPIOD, triggerPins.front);
                 // HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_SET);
@@ -378,6 +390,9 @@ int main()
                 // HAL_GPIO_WritePin(GPIOD, triggerPins.front, GPIO_PIN_RESET);
             }
             if (right_triggered == 0) {
+                if (countRight < RIGHTQUEUEMAX)
+                    countRight++;
+
                 right_triggered = 1;
                 trigger_sensor(GPIOE, triggerPins.right);
                 // HAL_GPIO_WritePin(GPIOE, triggerPins.right, GPIO_PIN_SET);

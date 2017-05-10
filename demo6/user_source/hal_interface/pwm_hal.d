@@ -69,5 +69,6 @@ user_source/hal_interface/pwm_hal.o: user_source/hal_interface/pwm_hal.c \
  user_include/hal_interface/sensor_hal.h \
  user_include/hal_interface/pwm_hal.h \
  user_include/hal_interface/general.h user_include/hal_interface/cpu.h \
- user_include/hal_interface/queue.h \
+ user_include/hal_interface/frontQueue.h \
+ user_include/hal_interface/rightQueue.h \
  user_include/hal_interface/encoder_hal.h

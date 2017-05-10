@@ -128,26 +128,32 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 		float counter = __HAL_TIM_GET_COUNTER(&tim_init);
 		*triggered = 0;
 		float distance = counter/58;
-		// printf("\n front sensor: %f\n", distance);
+		// if (front_triggered == 0)
+		// 	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+		//HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+		//printf("\n front sensor: %d\n", front_triggered);
 
 		if (GPIO_Pin == echosPins.front && motorState == STRAIGHT && searching == 1) {
 
 			distances.front = distance;
-			if (queue_init == 1) 
-				insert(distance);
-			else {
+			// if (queue_init == 1)
+			// 	insert(distance);
+			// else {
 				removeData();
 				insert(distance);
 				distance = average();
-			}
 			
-			if (distance <= dist) {
-				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
-				encoders_distances.right = 0; // remove if adjusting
-				motorState = LEFTD;
-			} else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+				if (distance <= dist) {
+					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+					encoders_distances.right = 0; // remove if adjusting
+					motorState = LEFTD;
+				} else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+			// }
 		}
 		else if(GPIO_Pin == echosPins.right) {
+			// removeDataRight();
+			// insertRight(distance);
+			// distance = averageRight();
 			distances.right = distance;
 		}
 		else if(GPIO_Pin == echosPins.left) {
