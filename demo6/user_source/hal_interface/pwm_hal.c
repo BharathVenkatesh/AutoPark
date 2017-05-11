@@ -60,7 +60,7 @@ void adjust() {
 	// if (distances.left > distances.right) {
         // Read right sensor
 	if (searching == 0) {
-        if (distances.right > treshDist.right + 10.0f || distances.right < treshDist.right - 10.0f)
+        if (distances.right > treshDist.right + 12.5f || distances.right < treshDist.right - 12.5f)
             treshDist.right = distances.right;
     } else {
     	treshDist.right = 7.5f;
