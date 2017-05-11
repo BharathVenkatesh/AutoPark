@@ -22,6 +22,12 @@ void parallel_park() {
     motors_control(0.0f,0.0f,0.0f,0.0f);
 }
 
+void perpendicular_park() {
+    while (encoders_distances.right < 10/*100*/ && encoders_distances.left < 10/*100*/)
+        adjust();//motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
+    motors_control(0.0f,0.0f,0.0f,0.0f);
+}
+
 void init_sensors_values() {
     right_triggered = 0;
     front_triggered = 0;
@@ -150,7 +156,7 @@ int main()
                 //     motorState = STOP;
                 if (searching == 1) {
                     if (delay == 1) {
-                        if (encoders_distances.right >= 0/*100*/) {
+                        if (encoders_distances.right >= 5/*100*/) {
                             delay = 0;
                             turned_left = 1;
                         }
@@ -173,7 +179,7 @@ int main()
                                 encoders_distances.right = 0;
                             } else {
                                 // turn_adjustment = 0;
-                                if (encoders_distances.right >= 0) {
+                                if (encoders_distances.right >= 5) {
                                     motorState = RIGHTD;
                                     searching = 0;
                                     encoders_distances.left = 0;
@@ -201,7 +207,9 @@ int main()
                 // //         motorState = STOP;
                 // // }
                 else {
-                    if (encoders_distances.left >= /*350*/50 && encoders_distances.right >= /*350*/50 && distances.right < 25.0f)
+                    if (encoders_distances.left >= /*350*/20 && encoders_distances.right >= /*350*/20 && distances.right < 25.0f)
+                       // perpendicular_park();
+                       // break;
                         motorState = STOP;
                 }
                 
@@ -373,7 +381,7 @@ int main()
                 // } else {
                     motors_control(0.3f, 0.0f, 0.0f, NORMAL);
 
-                    if (encoders_distances.left >= 20 && (distances.right <= treshDist.right + 10.0f && distances.right >= treshDist.right - 5.0f)) {
+                    if (encoders_distances.left >= 30 && (distances.right <= treshDist.right + 5.0f && distances.right >= treshDist.right - 5.0f)) {
                         motorState = STRAIGHT;
                         // straight = 1;
                         encoders_distances.left = 0;
