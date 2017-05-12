@@ -25,8 +25,14 @@ void parallel_park() {
     encoders_distances.right = 0;
     encoders_distances.left = 0;
 
+/*
     while (encoders_distances.left < 20)
         motors_control(0.0f, NORMAL, NORMAL, 0.0f);
+*/
+	while (encoders_distances.right < 10)
+		motors_control(0.0f, 0.3, NORMAL, 0.0f);
+
+    motors_control(0.0f,0.0f, 0.0f,0.0f);
 
     // while (encoders_distances.right < 25/*100*/ || encoders_distances.left < 25/*100*/)
     //     motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
@@ -66,9 +72,11 @@ void parallel_park() {
 }
 
 void perpendicular_park() {
-    while (encoders_distances.right < 25/*100*/ || encoders_distances.left < 25/*100*/)
+	//Forward
+    while (encoders_distances.right < 15/*100*/ || encoders_distances.left < 15/*100*/)
         motors_control(NORMAL, 0.0f, 0.0f, NORMAL);
 
+	//Stop
     motors_control(0.0f,0.0f, 0.0f,0.0f);
     cpu_sw_delay(100U);
     // motors_control(0.0f,0.6f, 0.6f,0.0f);
@@ -76,16 +84,19 @@ void perpendicular_park() {
     encoders_distances.right = 0;
     encoders_distances.left = 0;
 
-    while (encoders_distances.right < 11/*100*/ || encoders_distances.left < 11/*100*/)
+	//Backup
+    while (encoders_distances.right < 6/*100*/ || encoders_distances.left < 6/*100*/)
         motors_control(0.0f, 1.0f, 1.0f, 0.0f);
 
     encoders_distances.right = 0;
     encoders_distances.left = 0;
 
-    while (/*encoders_distances.right < 10100 ||*/ encoders_distances.left < 30/*100*/)
+	//Reverse right turn
+    while (/*encoders_distances.right < 10100 ||*/ encoders_distances.left < 25/*100*/)
         motors_control(0.0f, 0.3f, 1.0f, 0.0f);
 
     motors_control(0.0f, NORMAL, NORMAL, 0.0f);
+	cpu_sw_delay(20U);
 
     encoders_distances.right = 0;
     encoders_distances.left = 0;
@@ -278,7 +289,8 @@ int main()
                 // //         motorState = STOP;
                 // // }
                 else {
-                    if (encoders_distances.left >= /*350*/20 && encoders_distances.right >= /*350*/20 /*&& distances.right < 25.0f*/) {
+                    //if (encoders_distances.left >= /*350*/25){// && encoders_distances.right >= /*350*/20 /*&& distances.right < 25.0f*/) {
+                    if (encoders_distances.left >= 20/*75*/ && (distances.right <= treshDist.right + 5.0f && distances.right >= treshDist.right - 5.0f)) {
                         if (found == 0 && distances.right > 25.0f)
                             found = 1;
                         else if (found == 1 && distances.right < 25.0f) {
@@ -488,7 +500,7 @@ int main()
                 if (distances.right <= 25.4f) {
                     motors_control(0.0f, 0.0f, 0.0f, 0.0f);
                     cpu_sw_delay(100U);
-                    parallel_park();
+                    //parallel_park();
                     motorState = STOP;
                 }
             }
