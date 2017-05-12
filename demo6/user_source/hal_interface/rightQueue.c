@@ -54,10 +54,10 @@ void init_queueRight() {
    int count = 0;
 
 
-   for (count = 0; count < 5; count++)
+   for (count = 0; count < RIGHTQUEUEMAX; count++)
       rightBuffer[count] = 10.0f;
 
-   sumR = 10.0f*5;
+   sumR = 10.0f*RIGHTQUEUEMAX;
    // queue_init = 1;
 
    // while (count < 5) {

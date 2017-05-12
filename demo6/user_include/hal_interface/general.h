@@ -11,7 +11,8 @@ typedef enum {
 	STRAIGHT,
 	STOP,
 	LEFTD,
-	RIGHTD
+	RIGHTD,
+	BACK
 } motor_state;
 
 enum {RIGHT, FRONT, LEFT};
@@ -23,7 +24,7 @@ int right_triggered;
 int front_triggered;
 int left_triggered;
 int searching;
-// int found;
+int found;
 // int straight;
 
 int delay;
