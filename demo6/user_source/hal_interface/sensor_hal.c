@@ -23,7 +23,7 @@ void init_echos(void)
 	HAL_GPIO_Init(GPIOE, &Right);
 	HAL_GPIO_Init(GPIOF, &Left);
 
-	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 3, 3);
+	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 3);
     HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 3);
     HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);

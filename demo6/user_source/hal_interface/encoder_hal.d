@@ -66,4 +66,5 @@ user_source/hal_interface/encoder_hal.o: \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_uart_ex.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_usart.h \
  ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_usart_ex.h \
- ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_wwdg.h
+ ../../arctic_awesomeness/arch/stm32/f3/inc/stm32f3xx_hal_wwdg.h \
+ user_include/hal_interface/cpu.h
