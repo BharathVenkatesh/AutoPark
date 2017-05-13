@@ -85,7 +85,7 @@ void perpendicular_park() {
     encoders_distances.left = 0;
 
 	//Backup
-    while (encoders_distances.right < 15/*100*/ || encoders_distances.left < 15/*100*/)
+    while (encoders_distances.right < 17/*100*/ || encoders_distances.left < 17/*100*/)
         motors_control(0.0f, 1.0f, 1.0f, 0.0f);
 
     encoders_distances.right = 0;
