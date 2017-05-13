@@ -5,7 +5,7 @@ TIM_Base_InitTypeDef tim_conf_vec[3];
 
 void init_echos(void)
 {
-	static GPIO_InitTypeDef  Right, Left;//, Front;
+	static GPIO_InitTypeDef  Right, Left;
 
 	Right.Pin = echosPins.right;
 	Right.Mode = GPIO_MODE_IT_RISING_FALLING;
@@ -34,7 +34,7 @@ void init_triggers(void)
 {
 	static GPIO_InitTypeDef  Right, Left, Front;
 
-	Right.Pin = triggerPins.right | GPIO_PIN_9 /*| GPIO_PIN_8 | GPIO_PIN_14*/;
+	Right.Pin = triggerPins.right | GPIO_PIN_9;
 	Right.Mode = GPIO_MODE_OUTPUT_PP;
 	Right.Pull = GPIO_PULLDOWN;
 	Right.Speed = GPIO_SPEED_FREQ_LOW;
@@ -75,14 +75,14 @@ void init_timers() {
 		tim_init_vec[i].Init.CounterMode = TIM_COUNTERMODE_UP;
 		tim_init_vec[i].Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 		tim_init_vec[i].Init.Prescaler = 72;
-		tim_init_vec[i].Init.Period = /*TIMER_PERIOD_1KHZ*/0xFFFF; /* max value for counter*/
+		tim_init_vec[i].Init.Period = 0xFFFF; /* max value for counter*/
 		tim_init_vec[i].Init.AutoReloadPreload = 0;
 
 		HAL_TIM_Base_Init(&tim_init_vec[i]);
 
 		tim_conf_vec[i].Prescaler = 72;
 		tim_conf_vec[i].CounterMode = TIM_COUNTERMODE_UP;
-		tim_conf_vec[i].Period = /*TIMER_PERIOD_1KHZ*/0xFFFF;
+		tim_conf_vec[i].Period = 0xFFFF;
 		tim_conf_vec[i].ClockDivision = TIM_CLOCKDIVISION_DIV1;
 		tim_conf_vec[i].RepetitionCounter = 0x00; // was 0xFF;
 		tim_conf_vec[i].AutoReloadPreload = 0;
@@ -106,11 +106,11 @@ void EXTI9_5_IRQHandler(void)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == echosPins.right)
-		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered/*, &extiRet.right*/, 10.0f);
+		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered, 10.0f);
 	else if (GPIO_Pin == echosPins.front)
-		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered/*, &extiRet.front*/, 17.5f);
+		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered, 17.5f);
 	else if (GPIO_Pin == echosPins.left)
-		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered/*, &extiRet.left*/, 5.0f);
+		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered, 5.0f);
 	else if (GPIO_Pin == encodersPins.right) {
 		encoders_Callback(encodersPins.right);
 	}
@@ -118,7 +118,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		encoders_Callback(encodersPins.left);
 }
 
-void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered/*, motor_state* ret*/, double dist) {
+void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered, double dist) {
 	state = HAL_GPIO_ReadPin(GPIO, GPIO_Pin);
 	if (state == HIGH_STATE) {
 		HAL_TIM_Base_Start(&tim_init);
@@ -128,32 +128,21 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 		float counter = __HAL_TIM_GET_COUNTER(&tim_init);
 		*triggered = 0;
 		float distance = counter/58;
-		// if (front_triggered == 0)
-		// 	HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
-		//HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
-		//printf("\n front sensor: %d\n", front_triggered);
 
 		if (GPIO_Pin == echosPins.front && motorState == STRAIGHT && searching == 1) {
 
 			distances.front = distance;
-			// if (queue_init == 1)
-			// 	insert(distance);
-			// else {
 				removeData();
 				insert(distance);
 				distance = average();
 			
 				if (distance <= dist) {
 					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
-					encoders_distances.right = 0; // remove if adjusting
+					encoders_distances.right = 0;
 					motorState = LEFTD;
 				} else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
-			// }
 		}
 		else if(GPIO_Pin == echosPins.right) {
-			// removeDataRight();
-			// insertRight(distance);
-			// distance = averageRight();
 			distances.right = distance;
 		}
 		else if(GPIO_Pin == echosPins.left) {

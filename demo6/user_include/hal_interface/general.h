@@ -18,15 +18,12 @@ typedef enum {
 enum {RIGHT, FRONT, LEFT};
 
 motor_state motorState;
-// int turn_adjustment;
 
 int right_triggered;
 int front_triggered;
 int left_triggered;
 int searching;
 int found;
-// int straight;
-
 int delay;
 
 #endif

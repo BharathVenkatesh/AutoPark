@@ -22,8 +22,6 @@ struct ENCODERDISTANCE
 	long left;
 } encoders_distances;
 
-// long enc_diff;
-
 struct ENCODERCOUNTER 
 {
 	int right;

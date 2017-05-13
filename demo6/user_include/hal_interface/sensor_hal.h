@@ -48,17 +48,4 @@ struct TRESHHOLD
 	float right;
 } treshDist;
 
-// struct FIRSTSENSE
-// {
-// 	int left;
-// 	int right;
-// } firstSense;
-
-// struct EXTIRETURNS
-// {
-// 	motor_state left;
-// 	motor_state right;
-// 	motor_state front;
-// } extiRet;
-
 #endif

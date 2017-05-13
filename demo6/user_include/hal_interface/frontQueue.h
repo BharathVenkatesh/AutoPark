@@ -10,8 +10,6 @@
 
 #define FRONTQUEUEMAX 3
 
-// int queue_init;
-
 float peek();
 bool isEmpty();
 bool isFull();

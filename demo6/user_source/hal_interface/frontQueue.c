@@ -57,24 +57,7 @@ void init_queue() {
    for (count = 0; count < FRONTQUEUEMAX; count++)
       frontBuffer[count] = 30.0f;
 
-   sum = 30.0f*FRONTQUEUEMAX;
-   // queue_init = 1;
-
-   // while (count < 5) {
-   //    if (front_triggered == 0) {
-   //       HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
-   //       front_triggered = 1;
-   //       printf("trigerred: %d\n", front_triggered);
-   //       printf("count: %d\n", count);
-   //       count++;
-
-   //       trigger_sensor(GPIOD, triggerPins.front);
-   //    }
-   // }
-   /* Wait for last echo to come back */
-   //while (front_triggered == 1);
-
-   // queue_init = 0;
+   sum = 30.0f * FRONTQUEUEMAX;
 }
 
 float average() {
