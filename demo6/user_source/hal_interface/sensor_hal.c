@@ -3,6 +3,7 @@
 TIM_HandleTypeDef tim_init_vec[3];
 TIM_Base_InitTypeDef tim_conf_vec[3];
 
+// Initializes echo pins - Left and Front pins are in the same group so we can init them together
 void init_echos(void)
 {
 	static GPIO_InitTypeDef  Right, Left;
@@ -30,6 +31,7 @@ void init_echos(void)
 
 }
 
+// Initializes trigger pins for sensors
 void init_triggers(void)
 {
 	static GPIO_InitTypeDef  Right, Left, Front;
@@ -58,6 +60,8 @@ void init_triggers(void)
 	HAL_GPIO_Init(GPIOD, &Front);
 }
 
+// Initialize timers used for sensors
+// We determined the values for the timers by using the equations in the stm32 manual
 void init_timers() {
 	int i = 0;
 
@@ -93,6 +97,7 @@ void init_timers() {
 	tim_clk_init.ClockPrescaler = TIM_CLOCKPRESCALER_DIV1;
 }
 
+// External Interrupt handlers for specific echo pins
 void EXTI15_10_IRQHandler(void)
 {
 	HAL_GPIO_EXTI_IRQHandler(echosPins.right);
@@ -104,6 +109,8 @@ void EXTI9_5_IRQHandler(void)
 	HAL_GPIO_EXTI_IRQHandler(echosPins.left);
 }
 
+// Overwriting external interrupt callback functions
+// This handles interrupts for both the sensors and the encoders
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == echosPins.right)
 		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered, 10.0f);
@@ -118,6 +125,11 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		encoders_Callback(encodersPins.left);
 }
 
+// This function calculates the distance given by the sensors by measuring the 
+// length of the echo response.  We check the value of the given GPIO pin - when it 
+// is high (1), we start the timer and when it goes low we calculate the distance by
+// using values found in the manual.  Depending on this distance, we then change our
+// car's states.
 void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered, double dist) {
 	state = HAL_GPIO_ReadPin(GPIO, GPIO_Pin);
 	if (state == HIGH_STATE) {
@@ -151,16 +163,19 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 	}
 }
 
+/* Deprecated
 void init_tresh_dist() {
 	trigger_sensor(GPIOE, triggerPins.right);
 
 	trigger_sensor(GPIOB, triggerPins.left);
 }
+*/
 
+// Send a pulse on the trigger pin.  We simply write a 1 on the pin
+// then wait for a delay before setting it to 0 again
 void trigger_sensor(GPIO_TypeDef* GPIO, uint16_t GPIO_Pin) {
 	HAL_GPIO_WritePin(GPIO, GPIO_Pin, GPIO_PIN_SET);
     // Delay to simulate 10us pulse
 	cpu_sw_delay_us(10);
     HAL_GPIO_WritePin(GPIO, GPIO_Pin, GPIO_PIN_RESET);
-
 }

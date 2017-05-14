@@ -3,6 +3,7 @@
 TIM_HandleTypeDef timWheels_init;
 TIM_OC_InitTypeDef timWheels_conf;
 
+// Initialize timers and pwm
 void init_pwm(void)
 {
 	timWheels_init.Instance = TIM2;
@@ -29,6 +30,7 @@ void init_pwm(void)
 	HAL_TIM_PWM_Start(&timWheels_init, TIM_CHANNEL_1 | TIM_CHANNEL_2 | TIM_CHANNEL_3 | TIM_CHANNEL_4);
 }
 
+// Config pwm values with func parameters
 void set_pwm(pwm_channel ch, float duty)
 {
 	switch(ch)
@@ -56,6 +58,9 @@ void set_pwm(pwm_channel ch, float duty)
 	}
 }
 
+// Adjust car distance from right wall by checking against a threshold distance. When there is a
+// large change in distance from the sensors, we change the threshold distance so it will
+// stay the same distance from the new wall distance
 void adjust() {
 	if (searching == 0) {
         if (distances.right > treshDist.right + 12.5f || distances.right < treshDist.right - 12.5f)
@@ -76,6 +81,7 @@ void adjust() {
     }
 }
 
+// Set pwm values for all pins
 void motors_control(float PD6, float PD7, float PD3, float PD4) {
 	set_pwm(right_pwmPD6, PD6);
     set_pwm(right_pwmPD7, PD7);

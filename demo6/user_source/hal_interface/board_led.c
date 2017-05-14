@@ -1,10 +1,12 @@
 #include "board_led.h"
 
+// This code initializes pins pe12, pe14, and pe15 for LED use
+// The other functions allow turning the LEDs on/off 
 void board_led_init(void)
 {
 	static GPIO_InitTypeDef Leds;
 
-	Leds.Pin = GPIO_PIN_12 | GPIO_PIN_15 | GPIO_PIN_14;
+	Leds.Pin = GPIO_PIN_12 /* LED 9 */ | GPIO_PIN_15 /* LED 6 */ | GPIO_PIN_14 /* LED 8 */;
 	Leds.Mode = GPIO_MODE_OUTPUT_PP;
 	Leds.Pull = GPIO_PULLDOWN;
 	Leds.Speed = GPIO_SPEED_FREQ_LOW;
