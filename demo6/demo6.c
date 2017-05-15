@@ -196,6 +196,11 @@ int main()
                         if (encoders_distances.right >= 5) {
                             delay = 0;
                             turned_left = 1;
+/* FOR EMERGENCY USE
+							motors_control(0.0f, 0.0f, 0.0f, 0.0f);
+							cpu_sw_delay(20U);
+*/
+
                         }
                     } else {
 						// If very bg=ig gap, then not parking spot, make a right turn
