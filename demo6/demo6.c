@@ -53,8 +53,8 @@ void parallel_park() {
     encoders_distances.left = 0;
 
     // Right forward turn
-    while (encoders_distances.left < 10)
-        motors_control(0.5f, 0.0f, 0.0f, 1.0f);
+    while (encoders_distances.left < 7)
+        motors_control(0.6f, 0.0f, 0.0f, 1.0f);
 
     // Stop
     motors_control(0.0f,0.0f, 0.0f,0.0f);
@@ -139,6 +139,8 @@ int main()
     searching = 1;
     delay = 0;
     found = 0;
+	NORMAL = 0.6f;
+	NORMAL1 = 0.8f;
 
     /* Initialize pwm to control motors */
     init_pwm();

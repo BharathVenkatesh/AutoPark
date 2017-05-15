@@ -4,8 +4,13 @@
 #include "cpu.h"
 #include "math.h"
 
+/*
 #define NORMAL 0.6f
 #define NORMAL1 0.8f
+*/
+
+float NORMAL;
+float NORMAL1;
 
 typedef enum {
 	STRAIGHT,

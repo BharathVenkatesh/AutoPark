@@ -115,7 +115,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == echosPins.right)
 		sensorsCallbacks(tim_init_vec[RIGHT], tim_conf_vec[RIGHT], GPIOE, GPIO_Pin, &right_triggered, 10.0f);
 	else if (GPIO_Pin == echosPins.front)
-		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered, 17.5f);
+		sensorsCallbacks(tim_init_vec[FRONT], tim_conf_vec[FRONT], GPIOF, GPIO_Pin, &front_triggered, 18.5f);
 	else if (GPIO_Pin == echosPins.left)
 		sensorsCallbacks(tim_init_vec[LEFT], tim_conf_vec[LEFT], GPIOF, GPIO_Pin, &left_triggered, 5.0f);
 	else if (GPIO_Pin == encodersPins.right) {
@@ -144,15 +144,16 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 		if (GPIO_Pin == echosPins.front && motorState == STRAIGHT && searching == 1) {
 
 			distances.front = distance;
-				removeData();
-				insert(distance);
-				distance = average();
+
+			removeData();
+			insert(distance);
+			distance = average();
 			
-				if (distance <= dist) {
-					HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
-					encoders_distances.right = 0;
-					motorState = LEFTD;
-				} else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+			if (distance <= dist) {
+				HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+				encoders_distances.right = 0;
+				motorState = LEFTD;
+			} else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
 		}
 		else if(GPIO_Pin == echosPins.right) {
 			distances.right = distance;
