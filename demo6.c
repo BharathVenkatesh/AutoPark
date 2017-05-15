@@ -200,7 +200,6 @@ int main()
 							motors_control(0.0f, 0.0f, 0.0f, 0.0f);
 							cpu_sw_delay(20U);
 */
-
                         }
                     } else {
 						// If very bg=ig gap, then not parking spot, make a right turn
@@ -308,7 +307,7 @@ int main()
                     encoders_distances.right = 0;
                     encoders_distances.left = 0;
 					// Uncomment to parallel park, otherwise perpendicular park done
-                    parallel_park();
+                    //parallel_park();
                     motorState = STOP;
                 }
             }

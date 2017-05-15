@@ -5,8 +5,8 @@ ENTRY(Reset_Handler)
 _estack = 0x2000a000;    /* RAM end */
 
 /* Generate a link error if heap and stack don't fit into RAM */
-_Min_Heap_Size = 0x200;      /* required amount of heap  */
-_Min_Stack_Size = 0x400; /* required amount of stack */
+_Min_Heap_Size = 0xF00;      /* required amount of heap  */
+_Min_Stack_Size = 0xF00; /* required amount of stack */
 
 /* Definition of Flash and RAM layout: */
 MEMORY

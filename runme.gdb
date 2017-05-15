@@ -1,3 +1,3 @@
 target remote localhost:3333
 monitor reset halt
-load AutoPark.elf
+load demo6.elf
