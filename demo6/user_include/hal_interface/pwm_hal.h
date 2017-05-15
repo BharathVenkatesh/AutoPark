@@ -13,9 +13,16 @@ typedef enum {
     left_pwmPD4
 } pwm_channel;
 
+/* Initialize pins and timers for PWM */
 void init_pwm(void);
+
+/* Set duty cycle for PWM */
 void set_pwm(pwm_channel ch, float duty);
+
+/* Function to adjust the car's position to go in a straight line */
 void adjust();
+
+/* Function to set the different duty cycles for the wheels */
 void motors_control(float PD6, float PD7, float PD3, float PD4);
 
 #endif

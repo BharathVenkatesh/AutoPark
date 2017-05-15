@@ -1,3 +1,6 @@
+/*
+	Implement queue to filter front sensor values. sum used to keep track of the sum of all values in the queue to get the average. This is an optimization so we don't need to do go through a for loop 	every time the average() function is called.
+*/
 #include "frontQueue.h"
 
 float frontBuffer[FRONTQUEUEMAX];

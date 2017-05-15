@@ -180,32 +180,40 @@ int main()
         }
         else
         {
-            if (motorState == STRAIGHT) {
-                board_led_on(LED6);
+		    if (motorState == STRAIGHT) {
+               	// Turn on appropriate leds to identify straight state
+				board_led_on(LED6);
                 board_led_off(LED9);
                 board_led_off(LED8);
 
+				// Function call to make car go staright
                 adjust();
 
+				// If still searching for the parking spot
                 if (searching == 1) {
+				// If right after a left turn add a delay before using sensors again
                     if (delay == 1) {
                         if (encoders_distances.right >= 5) {
                             delay = 0;
                             turned_left = 1;
                         }
                     } else {
+						// If very bg=ig gap, then not parking spot, make a right turn
                         if (distances.right > 70.0f) {
+							// reset encoders values
                             if (firstTurn == 0) {
                                 encoders_distances.right = 0;
                                 firstTurn = 1;
                             }
 
+							// If after a left turn, no need to add additional delay
                             if (turned_left == 1) {
                                 motorState = RIGHTD;
                                 searching = 0;
                                 encoders_distances.left = 0;
                                 encoders_distances.right = 0;
                             } else {
+								// Add delay to avoid wall on the right side
                                 if (encoders_distances.right >= 5) {
                                     motorState = RIGHTD;
                                     searching = 0;
@@ -214,19 +222,24 @@ int main()
                                 }
                             }
                         }
+						// If right sensors senses a distance between 25 and 70, spot found
                         else if (distances.right > 25.0f) {
                             searching = 0;
                         }
                     }
                 } 
                 else {
+					// Add delay before checking right sensor
                     if (encoders_distances.left >= 30) {
+						// Gap found
                         if (found == 0 && distances.right > 25.0f)
                             found = 1;
+						// After the gap was seen, if the car is next to the parked car go to perpendicular park routine
                         else if (found == 1 && distances.right < 25.0f) {
                             encoders_distances.right = 0;
                             encoders_distances.left = 0;
                             perpendicular_park();
+							// Make sure that the system will not go from STOP to STRAIGHT state
                             count = FRONTQUEUEMAX + 1;
                             motorState = BACK;
                         }
@@ -236,20 +249,26 @@ int main()
             else if (motorState == STOP) {
                 motors_control(0.0f,0.0f,0.0f,0.0f);
 
+               	// Turn on appropriate leds to identify stop state
                 board_led_off(LED6);
                 board_led_on(LED9);
                 board_led_off(LED8);
-
+				
+				// If buffer initialized with values start
                 if (count == FRONTQUEUEMAX)
                     motorState = STRAIGHT;
             }
             else if (motorState == LEFTD) {
+
+               	// Turn on appropriate leds to identify left state
                 board_led_off(LED6);
                 board_led_off(LED9);
                 board_led_on(LED8);
 
+				// Keep turning left until 90 degree turn done (encoders) and car more or less parallel to the wall (sensors)
                 if (encoders_distances.right >= 62 && (distances.right <= treshDist.right + 5.0f && distances.right >= treshDist.right - 5.0f)) {
                     motorState = STRAIGHT;
+					// Add a delay when in straight mode to give the sensors a chance to read good values again
                     delay = 1;
                     distances.right = 0;
                     encoders_distances.right = 0;
@@ -259,12 +278,15 @@ int main()
                 motors_control(NORMAL, 0.0f, 0.0f, 0.0f);
             }
             else if (motorState == RIGHTD) {
+
+               	// Turn on appropriate leds to identify right state
                 board_led_on(LED6);
                 board_led_off(LED9);
                 board_led_on(LED8);
 
                 motors_control(0.3f, 0.0f, 0.0f, NORMAL);
 
+				// Keep turning right until 90 degree turn done (encoders) and car more or less parallel to the wall (sensors)
                 if (encoders_distances.left > 130 && (distances.right <= treshDist.right + 7.5f && distances.right >= treshDist.right - 2.5f)) {
                     motorState = STRAIGHT;
                     encoders_distances.left = 0;
@@ -273,12 +295,14 @@ int main()
             }
             else if (motorState == BACK) {
                 motors_control(0.0f, NORMAL, NORMAL, 0.0f);
-
+	
+				// Go back until inside the spot
                 if (distances.right <= 25.4f) {
                     motors_control(0.0f, 0.0f, 0.0f, 0.0f);
                     cpu_sw_delay(100U);
                     encoders_distances.right = 0;
                     encoders_distances.left = 0;
+					// Uncomment to parallel park, otherwise perpendicular park done
                     parallel_park();
                     motorState = STOP;
                 }
