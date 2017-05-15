@@ -1,1 +1,30 @@
-Our project is in directory demo6/
+Autonomous Parking
+cbk289, kk3439, kt1629, bv557, dt72
+
+Perpendicular Parking: https://youtu.be/8sjNNQIpSyM
+Parallel Parking: https://www.youtube.com/watch?v=eGY3fchhw5g
+
+Our code uses sensors and encoders to navigate the parking area and pwm to
+control the motors.  We used the demos that Abhi provided over the semester
+as a guide to initalize and control the hardware.  For the front sensor, we
+take the average of three readings to reduce the effect of noisy readings.
+We don't do this with the right sensor because we found that the extra
+latency makes it too slow.
+
+Our car travels forward while using the right sensor to maintain a 
+predetermined distance from the wall.  When our car is 18.5 cm from a wall
+in front of it, we change the car's state to make a left turn.  We use the
+encoders to make sure the car travels a certain distance during the turn.
+We also check the right sensor for good values to make sure the car is 
+parallel with the wall. This is repeated for every left turn.
+
+To differentiate between a right turn and a parking spot, we check the 
+distance read by the right sensor.  If it is a very large value, we know
+it is a right turn.  The distance for a right turn will always be greater
+than a parking gap because of the way the wood blocks are set up.  When we
+sense a gap on the right that is less than our large distance, we know it
+is the parking spot.  The car stops when it senses the second wood block
+and initiates its parking sequence.  The car backs up into the parking space
+until we sense the wall with the right sensor.  This leaves it in the 
+perpendicular parking state.  If we want to do parallel parking, we then
+continue to adjust the car until it is parallel.
