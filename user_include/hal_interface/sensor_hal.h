@@ -32,8 +32,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 /* Callback function for sensors */
 void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf, GPIO_TypeDef* GPIO, uint16_t GPIO_Pin, int* triggered/*, motor_state* ret*/, double dist);
 
-void init_tresh_dist();
-
 /* Set the trigger pin on the sensor to 1 for 10 us */
 void trigger_sensor(GPIO_TypeDef* GPIO, uint16_t GPIO_Pin);
 

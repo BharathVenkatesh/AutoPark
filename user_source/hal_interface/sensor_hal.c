@@ -164,14 +164,6 @@ void sensorsCallbacks(TIM_HandleTypeDef tim_init, TIM_Base_InitTypeDef tim1_conf
 	}
 }
 
-/* Deprecated
-void init_tresh_dist() {
-	trigger_sensor(GPIOE, triggerPins.right);
-
-	trigger_sensor(GPIOB, triggerPins.left);
-}
-*/
-
 // Send a pulse on the trigger pin.  We simply write a 1 on the pin
 // then wait for a delay before setting it to 0 again
 void trigger_sensor(GPIO_TypeDef* GPIO, uint16_t GPIO_Pin) {
